@@ -45,6 +45,227 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
+        /* Dynamic Country Theming Variables */
+        :root {
+            --primary-color: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent-color: #f59e0b;
+            --background-pattern: url('https://www.transparenttextures.com/patterns/black-linen.png');
+        }
+        
+        /* Country-specific themes */
+        .theme-china {
+            --primary-color: #de2910;
+            --primary-dark: #b91c1c;
+            --primary-light: #ef4444;
+            --accent-color: #ffd700;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23ffd700" opacity="0.1"/><circle cx="80" cy="20" r="1" fill="%23ffd700" opacity="0.1"/><circle cx="20" cy="80" r="1" fill="%23ffd700" opacity="0.1"/><circle cx="80" cy="80" r="2" fill="%23ffd700" opacity="0.1"/></svg>');
+        }
+        
+        .theme-germany {
+            --primary-color: #000000;
+            --primary-dark: #1f1f1f;
+            --primary-light: #374151;
+            --accent-color: #ffd700;
+            --background-pattern: linear-gradient(135deg, #000000 33%, #de2910 33%, #de2910 66%, #ffd700 66%);
+        }
+        
+        .theme-southafrica {
+            --primary-color: #007749;
+            --primary-dark: #065f46;
+            --primary-light: #059669;
+            --accent-color: #ffd700;
+            --background-pattern: linear-gradient(135deg, #007749 20%, #ffffff 20%, #ffffff 40%, #ffd700 40%, #ffd700 60%, #de2910 60%, #de2910 80%, #002395 80%);
+        }
+        
+        .theme-brazil {
+            --primary-color: #009c3b;
+            --primary-dark: #065f46;
+            --primary-light: #10b981;
+            --accent-color: #ffd700;
+            --background-pattern: radial-gradient(circle at center, #009c3b 40%, #ffd700 40%);
+        }
+        
+        .theme-argentina {
+            --primary-color: #74acdf;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --accent-color: #ffd700;
+            --background-pattern: linear-gradient(to bottom, #74acdf 33%, #ffffff 33%, #ffffff 66%, #74acdf 66%);
+        }
+        
+        .theme-australia {
+            --primary-color: #012169;
+            --primary-dark: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent-color: #ff4b00;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 55,25 70,25 58,35 63,50 50,40 37,50 42,35 30,25 45,25" fill="%23ffffff" opacity="0.1"/></svg>');
+        }
+        
+        .theme-canada {
+            --primary-color: #ff0000;
+            --primary-dark: #dc2626;
+            --primary-light: #ef4444;
+            --accent-color: #ffffff;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20 L45 35 L30 30 L40 45 L25 50 L40 55 L30 70 L45 65 L50 80 L55 65 L70 70 L60 55 L75 50 L60 45 L70 30 L55 35 Z" fill="%23ff0000" opacity="0.1"/></svg>');
+        }
+        
+        .theme-france {
+            --primary-color: #002395;
+            --primary-dark: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent-color: #ed2939;
+            --background-pattern: linear-gradient(to right, #002395 33%, #ffffff 33%, #ffffff 66%, #ed2939 66%);
+        }
+        
+        .theme-india {
+            --primary-color: #ff9933;
+            --primary-dark: #ea580c;
+            --primary-light: #fb923c;
+            --accent-color: #138808;
+            --background-pattern: linear-gradient(to bottom, #ff9933 33%, #ffffff 33%, #ffffff 66%, #138808 66%);
+        }
+        
+        .theme-italy {
+            --primary-color: #009246;
+            --primary-dark: #065f46;
+            --primary-light: #10b981;
+            --accent-color: #ce2b37;
+            --background-pattern: linear-gradient(to right, #009246 33%, #ffffff 33%, #ffffff 66%, #ce2b37 66%);
+        }
+        
+        .theme-japan {
+            --primary-color: #bc002d;
+            --primary-dark: #991b1b;
+            --primary-light: #dc2626;
+            --accent-color: #ffffff;
+            --background-pattern: radial-gradient(circle at center, #bc002d 30%, #ffffff 31%);
+        }
+        
+        .theme-russia {
+            --primary-color: #0039a6;
+            --primary-dark: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent-color: #d52b1e;
+            --background-pattern: linear-gradient(to bottom, #ffffff 33%, #0039a6 33%, #0039a6 66%, #d52b1e 66%);
+        }
+        
+        .theme-saudiarabia {
+            --primary-color: #006c35;
+            --primary-dark: #065f46;
+            --primary-light: #059669;
+            --accent-color: #ffffff;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial" font-size="20" fill="%23ffffff" opacity="0.1" text-anchor="middle">لا إله إلا الله</text></svg>');
+        }
+        
+        .theme-turkey {
+            --primary-color: #e30a17;
+            --primary-dark: #dc2626;
+            --primary-light: #ef4444;
+            --accent-color: #ffffff;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="40" cy="40" r="15" fill="none" stroke="%23ffffff" stroke-width="2" opacity="0.1"/><polygon points="65,30 70,40 80,40 72,47 75,57 65,50 55,57 58,47 50,40 60,40" fill="%23ffffff" opacity="0.1"/></svg>');
+        }
+        
+        .theme-unitedkingdom {
+            --primary-color: #012169;
+            --primary-dark: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent-color: #c8102e;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 L100,60 M100,0 L0,60 M50,0 L50,100 M0,50 L100,50" stroke="%23c8102e" stroke-width="1" opacity="0.1"/></svg>');
+        }
+        
+        .theme-unitedstates {
+            --primary-color: #b22234;
+            --primary-dark: #991b1b;
+            --primary-light: #dc2626;
+            --accent-color: #3c3b6e;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="0" y="0" width="100" height="8" fill="%23b22234" opacity="0.1"/><rect x="0" y="16" width="100" height="8" fill="%23b22234" opacity="0.1"/><rect x="0" y="32" width="100" height="8" fill="%23b22234" opacity="0.1"/><polygon points="10,5 12,10 17,10 13,13 15,18 10,15 5,18 7,13 3,10 8,10" fill="%23ffffff" opacity="0.1"/></svg>');
+        }
+        
+        .theme-indonesia {
+            --primary-color: #ce1126;
+            --primary-dark: #991b1b;
+            --primary-light: #dc2626;
+            --accent-color: #ffffff;
+            --background-pattern: linear-gradient(to bottom, #ce1126 50%, #ffffff 50%);
+        }
+        
+        .theme-mexico {
+            --primary-color: #006847;
+            --primary-dark: #065f46;
+            --primary-light: #059669;
+            --accent-color: #ce1126;
+            --background-pattern: linear-gradient(to right, #006847 33%, #ffffff 33%, #ffffff 66%, #ce1126 66%);
+        }
+        
+        .theme-southkorea {
+            --primary-color: #c60c30;
+            --primary-dark: #991b1b;
+            --primary-light: #dc2626;
+            --accent-color: #003478;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="20" fill="none" stroke="%23c60c30" stroke-width="1" opacity="0.1"/></svg>');
+        }
+        
+        .theme-europeanunion {
+            --primary-color: #003399;
+            --primary-dark: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent-color: #ffcc00;
+            --background-pattern: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="30" r="2" fill="%23ffcc00" opacity="0.1"/><circle cx="65" cy="35" r="2" fill="%23ffcc00" opacity="0.1"/><circle cx="70" cy="50" r="2" fill="%23ffcc00" opacity="0.1"/><circle cx="65" cy="65" r="2" fill="%23ffcc00" opacity="0.1"/><circle cx="50" cy="70" r="2" fill="%23ffcc00" opacity="0.1"/><circle cx="35" cy="65" r="2" fill="%23ffcc00" opacity="0.1"/><circle cx="30" cy="50" r="2" fill="%23ffcc00" opacity="0.1"/><circle cx="35" cy="35" r="2" fill="%23ffcc00" opacity="0.1"/></svg>');
+        }
+        
+        /* Apply theme colors to page elements */
+        .ubuntu-pattern {
+            background-image: var(--background-pattern);
+            background-color: var(--primary-color);
+        }
+        
+        .country-themed-bg {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        }
+        
+        .country-themed-bg-light {
+            background-color: var(--primary-light);
+        }
+        
+        .country-themed-text {
+            color: var(--primary-color);
+        }
+        
+        .country-themed-border {
+            border-color: var(--primary-color);
+        }
+        
+        .country-themed-accent {
+            color: var(--accent-color);
+        }
+        
+        .country-themed-accent-bg {
+            background-color: var(--accent-color);
+        }
+        
+        .country-themed-button {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            border: 2px solid var(--accent-color);
+            color: white;
+        }
+        
+        .country-themed-button:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .country-themed-card {
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .country-themed-badge {
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-light));
+            color: white;
+        }
+        
         #map {
             height: 500px;
             width: 100%;
@@ -96,16 +317,30 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-gray-50 font-sans antialiased">
-    <!-- Navigation (same as before) -->
-    <nav class="bg-ubuntu-dark text-white shadow-lg sticky top-0 z-50">
-        <!-- Your existing nav code -->
+<body class="min-h-screen flex flex-col bg-gray-50 font-sans antialiased" id="pageBody">
+    <!-- Navigation -->
+    <nav class="ubuntu-pattern text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-auto" src="https://via.placeholder.com/150x50?text=Ubuntu+Explorer" alt="Ubuntu Explorer Logo">
+                        <span class="ml-2 text-white font-bold">Ubuntu Explorer</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="index.html" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-arrow-left mr-1"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Main Content -->
     <main class="flex-grow">
         <!-- Country Header -->
-        <section class="bg-gradient-to-r from-ubuntu-blue to-ubuntu-dark text-white py-12">
+        <section class="country-themed-bg text-white py-12" id="countryHeader">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="flex-shrink-0 mb-6 md:mb-0 md:mr-8">
@@ -115,7 +350,7 @@
                         <h1 id="countryName" class="text-4xl font-bold mb-2"></h1>
                         <p id="countryCapital" class="text-xl mb-4"></p>
                         <div class="flex items-center">
-                            <span id="countryRating" class="flex items-center text-ubuntu-gold mr-6">
+                            <span id="countryRating" class="flex items-center country-themed-accent mr-6">
                                 <i class="fas fa-star mr-1"></i>
                                 <span class="rating-value"></span>
                             </span>
@@ -136,14 +371,14 @@
                     <!-- Left Column -->
                     <div class="lg:col-span-2">
                         <!-- Interactive Map -->
-                        <div class="bg-white rounded-xl shadow-md p-4 mb-8">
-                            <h2 class="text-2xl font-bold mb-4 text-gray-800">Explore the Best Places</h2>
+                        <div class="bg-white rounded-xl shadow-md p-4 mb-8 country-themed-card">
+                            <h2 class="text-2xl font-bold mb-4 country-themed-text">Explore the Best Places</h2>
                             <div id="map"></div>
                         </div>
                         
                         <!-- Popular Destinations -->
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h2 class="text-2xl font-bold mb-4 text-gray-800">Popular Destinations</h2>
+                        <div class="bg-white rounded-xl shadow-md p-6 country-themed-card">
+                            <h2 class="text-2xl font-bold mb-4 country-themed-text">Popular Destinations</h2>
                             <div id="popularDestinations" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Will be populated by JavaScript -->
                             </div>
@@ -153,28 +388,28 @@
                     <!-- Right Column -->
                     <div>
                         <!-- Country Info -->
-                        <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-                            <h2 class="text-2xl font-bold mb-4 text-gray-800">About <span id="countryNameShort"></span></h2>
+                        <div class="bg-white rounded-xl shadow-md p-6 mb-6 country-themed-card">
+                            <h2 class="text-2xl font-bold mb-4 country-themed-text">About <span id="countryNameShort"></span></h2>
                             <p id="countryDescription" class="text-gray-600 mb-4"></p>
                             <div class="space-y-3">
                                 <div class="flex items-center">
-                                    <i class="fas fa-globe-americas text-ubuntu-blue mr-3 w-5"></i>
+                                    <i class="fas fa-globe-americas country-themed-text mr-3 w-5"></i>
                                     <span id="countryRegion" class="text-gray-700"></span>
                                 </div>
                                 <div class="flex items-center">
-                                    <i class="fas fa-language text-ubuntu-blue mr-3 w-5"></i>
+                                    <i class="fas fa-language country-themed-text mr-3 w-5"></i>
                                     <span id="countryLanguage" class="text-gray-700"></span>
                                 </div>
                                 <div class="flex items-center">
-                                    <i class="fas fa-money-bill-wave text-ubuntu-blue mr-3 w-5"></i>
+                                    <i class="fas fa-money-bill-wave country-themed-text mr-3 w-5"></i>
                                     <span id="countryCurrency" class="text-gray-700"></span>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Travel Tips -->
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h2 class="text-2xl font-bold mb-4 text-gray-800">Travel Tips</h2>
+                        <div class="bg-white rounded-xl shadow-md p-6 country-themed-card">
+                            <h2 class="text-2xl font-bold mb-4 country-themed-text">Travel Tips</h2>
                             <div id="travelTips" class="space-y-4">
                                 <!-- Will be populated by JavaScript -->
                             </div>
@@ -705,6 +940,59 @@
         const countryName = urlParams.get('country');
         const countryData = countriesData[countryName];
 
+        // Country theme mapping
+        const countryThemes = {
+            "China": "theme-china",
+            "Germany": "theme-germany", 
+            "South Africa": "theme-southafrica",
+            "Brazil": "theme-brazil",
+            "Argentina": "theme-argentina",
+            "Australia": "theme-australia",
+            "Canada": "theme-canada",
+            "France": "theme-france",
+            "India": "theme-india",
+            "Italy": "theme-italy",
+            "Japan": "theme-japan",
+            "Russia": "theme-russia",
+            "Saudi Arabia": "theme-saudiarabia",
+            "Turkey": "theme-turkey",
+            "United Kingdom": "theme-unitedkingdom",
+            "United States": "theme-unitedstates",
+            "Indonesia": "theme-indonesia",
+            "Mexico": "theme-mexico",
+            "South Korea": "theme-southkorea",
+            "European Union": "theme-europeanunion"
+        };
+
+        // Apply country theme
+        function applyCountryTheme(countryName) {
+            const themeClass = countryThemes[countryName];
+            if (themeClass) {
+                document.getElementById('pageBody').className = 
+                    document.getElementById('pageBody').className.replace(/theme-\w+/g, '') + ' ' + themeClass;
+                
+                // Add a subtle themed background to the page
+                document.getElementById('pageBody').style.background = 
+                    `linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%)`;
+                document.getElementById('pageBody').style.backgroundAttachment = 'fixed';
+                document.getElementById('pageBody').style.backgroundSize = 'cover';
+                
+                // Add an overlay to keep content readable
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(255, 255, 255, 0.95);
+                    z-index: -1;
+                    pointer-events: none;
+                `;
+                document.body.appendChild(overlay);
+            }
+        }
+
         // Initialize the page with country data
         function initCountryPage() {
             if (!countryData) {
@@ -712,6 +1000,9 @@
                 document.getElementById('countryName').textContent = "Country Not Found";
                 return;
             }
+
+            // Apply country-specific theme
+            applyCountryTheme(countryName);
 
             // Set basic country info
             document.getElementById('countryName').textContent = countryName;
@@ -728,11 +1019,11 @@
             // Initialize map
             initMap();
 
-            // Populate popular destinations
+            // Populate popular destinations with themed styling
             const popularDestinationsContainer = document.getElementById('popularDestinations');
             countryData.pointsOfInterest.slice(0, 4).forEach(poi => {
                 const destinationCard = document.createElement('div');
-                destinationCard.className = 'bg-gray-50 rounded-lg p-4 flex items-start';
+                destinationCard.className = 'bg-gray-50 rounded-lg p-4 flex items-start hover:shadow-md transition-shadow duration-300 country-themed-border border-l-4';
                 destinationCard.innerHTML = `
                     <div class="flex-shrink-0 mr-4">
                         <div class="w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
@@ -740,20 +1031,23 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-gray-800">${poi.name}</h3>
+                        <h3 class="font-semibold country-themed-text">${poi.name}</h3>
                         <p class="text-sm text-gray-600 mt-1">${poi.description}</p>
+                        <span class="inline-block mt-2 px-2 py-1 text-xs rounded-full country-themed-badge">
+                            ${poi.type.charAt(0).toUpperCase() + poi.type.slice(1)}
+                        </span>
                     </div>
                 `;
                 popularDestinationsContainer.appendChild(destinationCard);
             });
 
-            // Populate travel tips
+            // Populate travel tips with themed styling
             const travelTipsContainer = document.getElementById('travelTips');
             countryData.travelTips.forEach(tip => {
                 const tipElement = document.createElement('div');
-                tipElement.className = 'flex items-start';
+                tipElement.className = 'flex items-start p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200';
                 tipElement.innerHTML = `
-                    <div class="flex-shrink-0 mt-1 mr-3 text-ubuntu-gold">
+                    <div class="flex-shrink-0 mt-1 mr-3 country-themed-accent">
                         <i class="fas fa-lightbulb"></i>
                     </div>
                     <p class="text-gray-700">${tip}</p>

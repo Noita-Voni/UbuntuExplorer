@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Ubuntu Explorer</title>
+    <meta name="description" content="Join Ubuntu Explorer to get personalized travel recommendations across G20 countries.">
+    
+    <!-- Preload resources -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ubuntu-blue': '#1e40af',
+                        'ubuntu-dark': '#1e3a8a',
+                        'ubuntu-light': '#3b82f6',
+                        'ubuntu-gold': '#f59e0b',
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #1d4ed8 100%);
+        }
+        
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .preference-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .preference-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .preference-card.selected {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .step-indicator.completed {
+            background: #10b981;
+            color: white;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ubuntu-pattern {
+            background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
+            background-color: #1e40af;
+        }
+        
+        .budget-slider {
+            appearance: none;
+            background: #e5e7eb;
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .budget-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+        }
+        
+        .budget-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full mix-blend-multiply filter blur-xl"></div>
+        <div class="absolute top-40 right-20 w-24 h-24 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl"></div>
+        <div class="absolute bottom-20 left-20 w-28 h-28 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl"></div>
+        <div class="absolute bottom-40 right-10 w-36 h-36 bg-green-300 rounded-full mix-blend-multiply filter blur-xl"></div>
+    </div>
+
+    <div class="auth-container max-w-4xl w-full rounded-3xl shadow-2xl p-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-4">
+                <img class="h-12 w-auto mr-3" src="https://via.placeholder.com/150x50?text=Ubuntu+Explorer" alt="Ubuntu Explorer Logo">
+                <h1 class="text-3xl font-bold text-ubuntu-dark">Ubuntu Explorer</h1>
+            </div>
+            <p class="text-gray-600">Join our community and get personalized travel experiences across G20 countries</p>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="flex justify-center mb-8">
+            <div class="flex items-center space-x-4">
+                <div class="step-indicator active flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-600 font-semibold" data-step="1">1</div>
+                <div class="w-12 h-0.5 bg-gray-200"></div>
+                <div class="step-indicator flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-600 font-semibold" data-step="2">2</div>
+                <div class="w-12 h-0.5 bg-gray-200"></div>
+                <div class="step-indicator flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-600 font-semibold" data-step="3">3</div>
+                <div class="w-12 h-0.5 bg-gray-200"></div>
+                <div class="step-indicator flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-600 font-semibold" data-step="4">4</div>
+            </div>
+        </div>
+
+        <!-- Multi-step Form -->
+        <form id="authForm">
+            <!-- Step 1: Basic Information -->
+            <div class="form-step active" data-step="1">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Create Your Account</h2>
+                    <p class="text-gray-600">Let's start with some basic information</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                        <input type="text" id="firstName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ubuntu-blue focus:border-ubuntu-blue transition-colors">
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                        <input type="text" id="lastName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ubuntu-blue focus:border-ubuntu-blue transition-colors">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <input type="email" id="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ubuntu-blue focus:border-ubuntu-blue transition-colors">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" id="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ubuntu-blue focus:border-ubuntu-blue transition-colors">
+                    </div>
+                    <div>
+                        <label for="age" class="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                        <select id="age" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ubuntu-blue focus:border-ubuntu-blue transition-colors">
+                            <option value="">Select your age range</option>
+                            <option value="18-24">18-24</option>
+                            <option value="25-34">25-34</option>
+                            <option value="35-44">35-44</option>
+                            <option value="45-54">45-54</option>
+                            <option value="55-64">55-64</option>
+                            <option value="65+">65+</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="homeCountry" class="block text-sm font-medium text-gray-700 mb-2">Home Country</label>
+                        <select id="homeCountry" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ubuntu-blue focus:border-ubuntu-blue transition-colors">
+                            <option value="">Select your country</option>
+                            <option value="Argentina">🇦🇷 Argentina</option>
+                            <option value="Australia">🇦🇺 Australia</option>
+                            <option value="Brazil">🇧🇷 Brazil</option>
+                            <option value="Canada">🇨🇦 Canada</option>
+                            <option value="China">🇨🇳 China</option>
+                            <option value="France">🇫🇷 France</option>
+                            <option value="Germany">🇩🇪 Germany</option>
+                            <option value="India">🇮🇳 India</option>
+                            <option value="Indonesia">🇮🇩 Indonesia</option>
+                            <option value="Italy">🇮🇹 Italy</option>
+                            <option value="Japan">🇯🇵 Japan</option>
+                            <option value="Mexico">🇲🇽 Mexico</option>
+                            <option value="Russia">🇷🇺 Russia</option>
+                            <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+                            <option value="South Africa">🇿🇦 South Africa</option>
+                            <option value="South Korea">🇰🇷 South Korea</option>
+                            <option value="Turkey">🇹🇷 Turkey</option>
+                            <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                            <option value="United States">🇺🇸 United States</option>
+                            <option value="Other">🌍 Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Travel Preferences -->
+            <div class="form-step" data-step="2">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Travel Preferences</h2>
+                    <p class="text-gray-600">Help us understand what kind of traveler you are</p>
+                </div>
+                
+                <!-- Travel Style -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">What's your travel style?</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-preference="adventure">
+                            <div class="text-center">
+                                <i class="fas fa-hiking text-3xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Adventure</h4>
+                                <p class="text-sm text-gray-600">Hiking, extreme sports</p>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-preference="culture">
+                            <div class="text-center">
+                                <i class="fas fa-theater-masks text-3xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Cultural</h4>
+                                <p class="text-sm text-gray-600">Museums, history, art</p>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-preference="relaxation">
+                            <div class="text-center">
+                                <i class="fas fa-umbrella-beach text-3xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Relaxation</h4>
+                                <p class="text-sm text-gray-600">Beaches, spas, resorts</p>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-preference="food">
+                            <div class="text-center">
+                                <i class="fas fa-utensils text-3xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Culinary</h4>
+                                <p class="text-sm text-gray-600">Food tours, cooking</p>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-preference="nature">
+                            <div class="text-center">
+                                <i class="fas fa-tree text-3xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Nature</h4>
+                                <p class="text-sm text-gray-600">Wildlife, parks, eco-tours</p>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-preference="luxury">
+                            <div class="text-center">
+                                <i class="fas fa-crown text-3xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Luxury</h4>
+                                <p class="text-sm text-gray-600">High-end experiences</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group Type -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Who do you usually travel with?</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-group="solo">
+                            <div class="text-center">
+                                <i class="fas fa-user text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Solo</h4>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-group="couple">
+                            <div class="text-center">
+                                <i class="fas fa-heart text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Couple</h4>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-group="family">
+                            <div class="text-center">
+                                <i class="fas fa-users text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Family</h4>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-group="friends">
+                            <div class="text-center">
+                                <i class="fas fa-user-friends text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Friends</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Budget & Duration -->
+            <div class="form-step" data-step="3">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Budget & Duration</h2>
+                    <p class="text-gray-600">Let us know your typical travel budget and preferences</p>
+                </div>
+                
+                <!-- Budget Range -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Daily Travel Budget (USD)</h3>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <div class="flex justify-between text-sm text-gray-600 mb-2">
+                            <span>$50</span>
+                            <span id="budgetValue" class="font-semibold text-ubuntu-blue">$150</span>
+                            <span>$500+</span>
+                        </div>
+                        <input type="range" id="budgetRange" class="budget-slider w-full" min="50" max="500" value="150" step="10">
+                        <div class="flex justify-between text-xs text-gray-500 mt-2">
+                            <span>Budget</span>
+                            <span>Mid-range</span>
+                            <span>Luxury</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trip Duration -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Preferred trip duration</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-duration="weekend">
+                            <div class="text-center">
+                                <i class="fas fa-calendar-week text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Weekend</h4>
+                                <p class="text-sm text-gray-600">2-3 days</p>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-duration="week">
+                            <div class="text-center">
+                                <i class="fas fa-calendar-alt text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">One Week</h4>
+                                <p class="text-sm text-gray-600">5-7 days</p>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-duration="extended">
+                            <div class="text-center">
+                                <i class="fas fa-calendar text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Extended</h4>
+                                <p class="text-sm text-gray-600">1-2 weeks</p>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-duration="long">
+                            <div class="text-center">
+                                <i class="fas fa-globe text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Long Trip</h4>
+                                <p class="text-sm text-gray-600">3+ weeks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accommodation -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Preferred accommodation</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-accommodation="hostel">
+                            <div class="text-center">
+                                <i class="fas fa-bed text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Hostel/Budget</h4>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-accommodation="hotel">
+                            <div class="text-center">
+                                <i class="fas fa-building text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Hotel</h4>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-accommodation="airbnb">
+                            <div class="text-center">
+                                <i class="fas fa-home text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Airbnb/Local</h4>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-accommodation="resort">
+                            <div class="text-center">
+                                <i class="fas fa-swimming-pool text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Resort</h4>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-accommodation="boutique">
+                            <div class="text-center">
+                                <i class="fas fa-gem text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Boutique</h4>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-accommodation="luxury">
+                            <div class="text-center">
+                                <i class="fas fa-star text-2xl text-ubuntu-blue mb-2"></i>
+                                <h4 class="font-semibold">Luxury</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Interests & Goals -->
+            <div class="form-step" data-step="4">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Your Travel Goals</h2>
+                    <p class="text-gray-600">What do you hope to achieve through travel?</p>
+                </div>
+                
+                <!-- Travel Goals -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">What motivates your travel? (Select multiple)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-goal="education">
+                            <div class="flex items-center">
+                                <i class="fas fa-graduation-cap text-2xl text-ubuntu-blue mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Education & Learning</h4>
+                                    <p class="text-sm text-gray-600">Learn about new cultures and history</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-goal="relaxation">
+                            <div class="flex items-center">
+                                <i class="fas fa-spa text-2xl text-ubuntu-blue mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Rest & Relaxation</h4>
+                                    <p class="text-sm text-gray-600">Unwind and recharge</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-goal="adventure">
+                            <div class="flex items-center">
+                                <i class="fas fa-mountain text-2xl text-ubuntu-blue mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Adventure & Thrills</h4>
+                                    <p class="text-sm text-gray-600">Seek exciting experiences</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-goal="social">
+                            <div class="flex items-center">
+                                <i class="fas fa-users text-2xl text-ubuntu-blue mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Social Connection</h4>
+                                    <p class="text-sm text-gray-600">Meet new people and cultures</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-goal="photography">
+                            <div class="flex items-center">
+                                <i class="fas fa-camera text-2xl text-ubuntu-blue mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Photography</h4>
+                                    <p class="text-sm text-gray-600">Capture beautiful moments</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preference-card bg-white p-4 rounded-xl border-2 border-gray-200" data-goal="business">
+                            <div class="flex items-center">
+                                <i class="fas fa-briefcase text-2xl text-ubuntu-blue mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Business & Networking</h4>
+                                    <p class="text-sm text-gray-600">Professional development</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Countries of Interest -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Which G20 countries interest you most?</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Argentina">
+                            <div class="text-2xl mb-1">🇦🇷</div>
+                            <div class="text-sm font-medium">Argentina</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Australia">
+                            <div class="text-2xl mb-1">🇦🇺</div>
+                            <div class="text-sm font-medium">Australia</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Brazil">
+                            <div class="text-2xl mb-1">🇧🇷</div>
+                            <div class="text-sm font-medium">Brazil</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Canada">
+                            <div class="text-2xl mb-1">🇨🇦</div>
+                            <div class="text-sm font-medium">Canada</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="China">
+                            <div class="text-2xl mb-1">🇨🇳</div>
+                            <div class="text-sm font-medium">China</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="France">
+                            <div class="text-2xl mb-1">🇫🇷</div>
+                            <div class="text-sm font-medium">France</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Germany">
+                            <div class="text-2xl mb-1">🇩🇪</div>
+                            <div class="text-sm font-medium">Germany</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="India">
+                            <div class="text-2xl mb-1">🇮🇳</div>
+                            <div class="text-sm font-medium">India</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Indonesia">
+                            <div class="text-2xl mb-1">🇮🇩</div>
+                            <div class="text-sm font-medium">Indonesia</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Italy">
+                            <div class="text-2xl mb-1">🇮🇹</div>
+                            <div class="text-sm font-medium">Italy</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Japan">
+                            <div class="text-2xl mb-1">🇯🇵</div>
+                            <div class="text-sm font-medium">Japan</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Mexico">
+                            <div class="text-2xl mb-1">🇲🇽</div>
+                            <div class="text-sm font-medium">Mexico</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Russia">
+                            <div class="text-2xl mb-1">🇷🇺</div>
+                            <div class="text-sm font-medium">Russia</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Saudi Arabia">
+                            <div class="text-2xl mb-1">🇸🇦</div>
+                            <div class="text-sm font-medium">Saudi Arabia</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="South Africa">
+                            <div class="text-2xl mb-1">🇿🇦</div>
+                            <div class="text-sm font-medium">South Africa</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="South Korea">
+                            <div class="text-2xl mb-1">🇰🇷</div>
+                            <div class="text-sm font-medium">South Korea</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="Turkey">
+                            <div class="text-2xl mb-1">🇹🇷</div>
+                            <div class="text-sm font-medium">Turkey</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="United Kingdom">
+                            <div class="text-2xl mb-1">🇬🇧</div>
+                            <div class="text-sm font-medium">UK</div>
+                        </div>
+                        <div class="preference-card bg-white p-3 rounded-lg border-2 border-gray-200 text-center" data-country="United States">
+                            <div class="text-2xl mb-1">🇺🇸</div>
+                            <div class="text-sm font-medium">USA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="mb-8">
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="newsletter" class="h-4 w-4 text-ubuntu-blue focus:ring-ubuntu-blue border-gray-300 rounded">
+                            <label for="newsletter" class="ml-3 text-gray-700">
+                                <span class="font-medium">Subscribe to our newsletter</span>
+                                <span class="block text-sm text-gray-600">Get personalized travel recommendations and exclusive offers</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between mt-8">
+                <button type="button" id="prevBtn" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors hidden">
+                    <i class="fas fa-arrow-left mr-2"></i>Previous
+                </button>
+                <button type="button" id="nextBtn" class="px-6 py-3 bg-ubuntu-blue text-white rounded-lg hover:bg-ubuntu-dark transition-colors ml-auto">
+                    Next<i class="fas fa-arrow-right ml-2"></i>
+                </button>
+                <button type="submit" id="submitBtn" class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors ml-auto hidden">
+                    <i class="fas fa-check mr-2"></i>Create Account
+                </button>
+            </div>
+        </form>
+
+        <!-- Sign In Option -->
+        <div class="text-center mt-6 pt-6 border-t border-gray-200">
+            <p class="text-gray-600">Already have an account? 
+                <a href="#" id="signInLink" class="text-ubuntu-blue hover:text-ubuntu-dark font-medium">Sign in here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Welcome to Ubuntu Explorer!</h3>
+                <p class="text-gray-600 mb-6">Your account has been created successfully. We're preparing personalized recommendations based on your preferences.</p>
+                <button id="continueBtn" class="w-full bg-ubuntu-blue text-white py-3 rounded-lg hover:bg-ubuntu-dark transition-colors">
+                    Continue to Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        const userPreferences = {
+            basic: {},
+            travel: {},
+            budget: {},
+            goals: {}
+        };
+
+        // Step navigation
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const submitBtn = document.getElementById('submitBtn');
+
+        nextBtn.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                collectStepData(currentStep);
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        // Form submission
+        document.getElementById('authForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (validateStep(currentStep)) {
+                collectStepData(currentStep);
+                console.log('User Preferences:', userPreferences);
+                
+                // Store preferences in localStorage for demo
+                localStorage.setItem('ubuntuExplorerUser', JSON.stringify(userPreferences));
+                
+                // Show success modal
+                document.getElementById('successModal').classList.remove('hidden');
+            }
+        });
+
+        // Continue button in success modal
+        document.getElementById('continueBtn').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+
+        // Preference card selection
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.preference-card')) {
+                const card = e.target.closest('.preference-card');
+                const isMultiSelect = card.closest('[data-step="4"]') || 
+                                    card.hasAttribute('data-goal') || 
+                                    card.hasAttribute('data-country');
+                
+                if (isMultiSelect) {
+                    // Multi-select for goals and countries
+                    card.classList.toggle('selected');
+                } else {
+                    // Single select for other preferences
+                    const siblings = card.parentElement.querySelectorAll('.preference-card');
+                    siblings.forEach(sibling => sibling.classList.remove('selected'));
+                    card.classList.add('selected');
+                }
+            }
+        });
+
+        // Budget slider
+        const budgetRange = document.getElementById('budgetRange');
+        const budgetValue = document.getElementById('budgetValue');
+
+        budgetRange.addEventListener('input', (e) => {
+            budgetValue.textContent = `$${e.target.value}`;
+        });
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(stepDiv => {
+                stepDiv.classList.remove('active');
+            });
+            
+            // Show current step
+            document.querySelector(`[data-step="${step}"]`).classList.add('active');
+            
+            // Update step indicators
+            document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+                const stepNum = index + 1;
+                indicator.classList.remove('active', 'completed');
+                
+                if (stepNum < step) {
+                    indicator.classList.add('completed');
+                } else if (stepNum === step) {
+                    indicator.classList.add('active');
+                }
+            });
+            
+            // Update navigation buttons
+            prevBtn.classList.toggle('hidden', step === 1);
+            nextBtn.classList.toggle('hidden', step === totalSteps);
+            submitBtn.classList.toggle('hidden', step !== totalSteps);
+        }
+
+        function validateStep(step) {
+            const stepDiv = document.querySelector(`[data-step="${step}"]`);
+            const requiredInputs = stepDiv.querySelectorAll('input[required], select[required]');
+            
+            let isValid = true;
+            requiredInputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+            
+            // For preference steps, ensure at least one selection
+            if (step > 1) {
+                const selectedCards = stepDiv.querySelectorAll('.preference-card.selected');
+                if (selectedCards.length === 0) {
+                    // Add visual feedback for missing selections
+                    const firstPreferenceSection = stepDiv.querySelector('.grid');
+                    if (firstPreferenceSection) {
+                        firstPreferenceSection.classList.add('border-2', 'border-red-500', 'border-dashed', 'rounded-xl', 'p-2');
+                        setTimeout(() => {
+                            firstPreferenceSection.classList.remove('border-2', 'border-red-500', 'border-dashed', 'rounded-xl', 'p-2');
+                        }, 2000);
+                    }
+                    isValid = false;
+                }
+            }
+            
+            return isValid;
+        }
+
+        function collectStepData(step) {
+            const stepDiv = document.querySelector(`[data-step="${step}"]`);
+            
+            switch(step) {
+                case 1:
+                    userPreferences.basic = {
+                        firstName: document.getElementById('firstName').value,
+                        lastName: document.getElementById('lastName').value,
+                        email: document.getElementById('email').value,
+                        age: document.getElementById('age').value,
+                        homeCountry: document.getElementById('homeCountry').value
+                    };
+                    break;
+                    
+                case 2:
+                    const travelStyle = stepDiv.querySelector('[data-preference].selected')?.getAttribute('data-preference');
+                    const groupType = stepDiv.querySelector('[data-group].selected')?.getAttribute('data-group');
+                    userPreferences.travel = { travelStyle, groupType };
+                    break;
+                    
+                case 3:
+                    const budget = document.getElementById('budgetRange').value;
+                    const duration = stepDiv.querySelector('[data-duration].selected')?.getAttribute('data-duration');
+                    const accommodation = stepDiv.querySelector('[data-accommodation].selected')?.getAttribute('data-accommodation');
+                    userPreferences.budget = { budget, duration, accommodation };
+                    break;
+                    
+                case 4:
+                    const goals = Array.from(stepDiv.querySelectorAll('[data-goal].selected')).map(el => el.getAttribute('data-goal'));
+                    const countries = Array.from(stepDiv.querySelectorAll('[data-country].selected')).map(el => el.getAttribute('data-country'));
+                    const newsletter = document.getElementById('newsletter').checked;
+                    userPreferences.goals = { goals, countries, newsletter };
+                    break;
+            }
+        }
+
+        // Sign in link
+        document.getElementById('signInLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            // For demo purposes, just show alert
+            alert('Sign in functionality would be implemented here!');
+        });
+
+        // Initialize
+        showStep(1);
+    </script>
+</body>
+</html>

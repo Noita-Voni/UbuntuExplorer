@@ -12,7 +12,7 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
     
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+    <link rel="icon" type="image/png" href="images/ubuntuexploreroutline.png">
     
     <!-- Tailwind with custom config -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -111,6 +111,40 @@
             transform: scaleX(1);
             transform-origin: left;
         }
+
+        /* Dynamic Navbar Styles */
+        .navbar-transparent {
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .navbar-scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #navbar {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Video navigation indicators */
+        .video-dot {
+            transition: all 0.3s ease;
+        }
+
+        .video-dot:hover {
+            background-color: rgba(255, 255, 255, 0.8) !important;
+            transform: scale(1.2);
+        }
+
+        .video-dot.active {
+            background-color: #f59e0b !important;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
         
         /* Lazy loading for images */
         img.lazy {
@@ -175,14 +209,12 @@
 </head>
 <body class="min-h-screen flex flex-col bg-gray-50 font-sans antialiased">
     <!-- Navigation -->
-    <nav class="bg-ubuntu-dark text-white shadow-lg sticky top-0 z-50 backdrop-blur-md bg-opacity-90">
+    <nav id="navbar" class="navbar-transparent text-white fixed top-0 w-full z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <div class="h-8 w-8 rounded-full bg-ubuntu-gold flex items-center justify-center mr-2">
-                            <i class="fas fa-globe-africa text-white"></i>
-                        </div>
+                        <img class="h-10 w-auto mr-3" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
                         <span class="text-white font-bold text-xl">Ubuntu<span class="text-ubuntu-gold">Explorer</span></span>
                     </div>
                     <div class="hidden md:ml-10 md:flex md:space-x-8">
@@ -197,7 +229,7 @@
                     <button id="signupBtn" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-md text-sm font-medium transition duration-300 shadow-md">Sign Up</button>
                 </div>
                 <div class="-mr-2 flex items-center md:hidden">
-                    <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-white hover:bg-gray-800 focus:outline-none">
+                    <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-white hover:bg-white hover:bg-opacity-20 focus:outline-none">
                         <span class="sr-only">Open main menu</span>
                         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -236,22 +268,30 @@
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-gradient text-white pt-24 pb-20 md:pt-32 md:pb-28">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-12 lg:mb-0 animate-fadeInUp">
-                    <div class="max-w-lg">
-                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                            Discover <span class="text-ubuntu-gold">Authentic</span> G20 Experiences
-                        </h1>
-                        <p class="text-xl md:text-2xl mb-8 opacity-90">
-                            AI-powered tourism platform connecting travelers with local communities across all G20 nations.
-                        </p>
-                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-  <button id="startBtn" class="cta-button bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg">
-    Start Exploring <i class="fas fa-arrow-right ml-2"></i>
-  </button>
-</div>
+    <section id="home" class="relative h-screen overflow-hidden">
+        <!-- Video Background Container -->
+        <div id="videoContainer" class="absolute inset-0 w-full h-full">
+            <video id="heroVideo" autoplay muted class="w-full h-full object-cover">
+                <source id="videoSource" src="videos/video1.mp4" type="video/mp4">
+            </video>
+        </div>
+        
+        <!-- Header Photo Overlay -->
+        <div class="absolute inset-0 flex items-center justify-center">
+            <img src="images/background2.png" alt="Ubuntu Explorer Header" class="max-w-full max-h-full object-contain">
+        </div>
+        
+        <!-- Video Navigation Indicators -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+            <div class="flex space-x-3 mb-4">
+                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300 active" onclick="loadVideo(0)"></div>
+                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(1)"></div>
+                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(2)"></div>
+                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(3)"></div>
+                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(4)"></div>
+            </div>
+        </div>
+    </section>
 
 
 <!-- LOGIN MODAL -->
@@ -302,85 +342,19 @@
   </div>
 </div>
 
-
-
-
-                        <div class="mt-8 flex items-center space-x-4">
-                            <div class="flex -space-x-2">
-                                <img class="h-10 w-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
-                                <img class="h-10 w-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
-                                <img class="h-10 w-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/68.jpg" alt="User">
-                            </div>
-                            <div class="text-sm opacity-80">
-                                <p>Trusted by <span class="font-bold">10,000+</span> travelers</p>
-                                <div class="flex items-center mt-1">
-                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                    <span class="ml-1">4.9/5</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:w-1/2 flex justify-center animate-fadeInUp delay-200">
-                    <div class="relative w-full max-w-xl">
-                        <!-- Floating country selector card -->
-                        <div class="relative bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-2xl overflow-hidden border border-white border-opacity-20 shadow-2xl p-6 transform rotate-1 animate-float">
-                            <h3 class="text-xl font-semibold mb-4 text-center">Select a G20 Country</h3>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div class="country-option bg-white bg-opacity-20 rounded-lg p-4 text-center cursor-pointer hover:bg-opacity-30 transition flex flex-col items-center">
-                                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-2">
-                                        <span class="text-2xl">🇿🇦</span>
-                                    </div>
-                                    <div>South Africa</div>
-                                </div>
-                                <div class="country-option bg-white bg-opacity-20 rounded-lg p-4 text-center cursor-pointer hover:bg-opacity-30 transition flex flex-col items-center">
-                                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-2">
-                                        <span class="text-2xl">🇧🇷</span>
-                                    </div>
-                                    <div>Brazil</div>
-                                </div>
-                                <div class="country-option bg-white bg-opacity-20 rounded-lg p-4 text-center cursor-pointer hover:bg-opacity-30 transition flex flex-col items-center">
-                                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-2">
-                                        <span class="text-2xl">🇮🇳</span>
-                                    </div>
-                                    <div>India</div>
-                                </div>
-                                <div class="country-option bg-white bg-opacity-20 rounded-lg p-4 text-center cursor-pointer hover:bg-opacity-30 transition flex flex-col items-center">
-                                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-2">
-                                        <span class="text-2xl">🇨🇳</span>
-                                    </div>
-                                    <div>China</div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        
-                        <!-- Floating decorative elements -->
-                        <div class="absolute -top-10 -left-10 w-32 h-32 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: 0.3s;"></div>
-                        <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-ubuntu-gold rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: 0.7s;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Logo Cloud -->
     <section class="bg-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-500 mb-8">Trusted by partners worldwide</p>
+            <p class="text-center text-gray-500 mb-8">Our partners worldwide</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center max-w-3xl mx-auto">
                 <div class="flex justify-center">
-                    <img src="assets/dept-tourism-sa-logo.png" alt="Department of Tourism - Republic of South Africa" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="Department of Tourism - Republic of South Africa">
+                    <img src="images/deptoftoursim.png" alt="Department of Tourism - Republic of South Africa" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="Department of Tourism - Republic of South Africa">
                 </div>
                 <div class="flex justify-center">
-                    <img src="assets/g20-south-africa-2025-logo.png" alt="G20 South Africa 2025" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="G20 South Africa 2025">
+                    <img src="images/g20outline.png" alt="G20 South Africa 2025" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="G20 South Africa 2025">
                 </div>
                 <div class="flex justify-center">
-                    <img src="assets/ubuntu-explorer-outline.png" alt="Ubuntu Explorer" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="Ubuntu Explorer Platform">
+                    <img src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="Ubuntu Explorer Platform">
                 </div>
             </div>
         </div>
@@ -459,19 +433,29 @@
                         <button class="bg-white hover:bg-gray-100 text-ubuntu-blue font-bold py-3 px-6 rounded-lg transition duration-300">
                             Request Demo
                         </button>
-                        <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                        <button id="playIntroVideo" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
                             <i class="fas fa-play mr-2"></i> Watch Video
                         </button>
                     </div>
                 </div>
                 <div class="lg:w-1/2 animate-fadeInUp delay-200">
                     <div class="relative aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-2xl">
-                        <div class="absolute inset-0 bg-gray-800 flex items-center justify-center">
-                            <button class="play-button bg-ubuntu-gold hover:bg-yellow-600 text-white rounded-full w-20 h-20 flex items-center justify-center shadow-lg transform transition hover:scale-110">
+                        <video 
+                            id="introVideo"
+                            class="w-full h-full object-cover" 
+                            controls 
+                            poster="images/background2.png"
+                            preload="metadata">
+                            <source src="videos/IntroVideo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                        <!-- Custom play overlay (optional) -->
+                        <div id="videoOverlay" class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center cursor-pointer">
+                            <button id="customPlayButton" class="play-button bg-ubuntu-gold hover:bg-yellow-600 text-white rounded-full w-20 h-20 flex items-center justify-center shadow-lg transform transition hover:scale-110">
                                 <i class="fas fa-play text-2xl"></i>
                             </button>
                         </div>
-                        <img class="lazy w-full h-full object-cover" data-src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Ubuntu Explorer Demo">
                     </div>
                 </div>
             </div>
@@ -783,9 +767,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
                 <div>
                     <div class="flex items-center mb-4">
-                        <div class="h-8 w-8 rounded-full bg-ubuntu-gold flex items-center justify-center mr-2">
-                            <i class="fas fa-globe-africa text-white"></i>
-                        </div>
+                        <img class="h-10 w-auto mr-3" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
                         <span class="text-white font-bold text-xl">Ubuntu<span class="text-ubuntu-gold">Explorer</span></span>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">
@@ -1444,6 +1426,207 @@
                     });
                 });
             });
+
+            // Dynamic navbar on scroll
+            const navbar = document.getElementById('navbar');
+            let lastScrollTop = 0;
+
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > 50) {
+                    // Add scrolled state
+                    navbar.classList.remove('navbar-transparent');
+                    navbar.classList.add('navbar-scrolled');
+                } else {
+                    // Add transparent state
+                    navbar.classList.remove('navbar-scrolled');
+                    navbar.classList.add('navbar-transparent');
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+
+            // Initialize video rotation
+            initVideoRotation();
+            
+            // Initialize intro video controls
+            initIntroVideoControls();
+        });
+
+        // Intro Video Controls
+        function initIntroVideoControls() {
+            const introVideo = document.getElementById('introVideo');
+            const playButton = document.getElementById('playIntroVideo');
+            const customPlayButton = document.getElementById('customPlayButton');
+            const videoOverlay = document.getElementById('videoOverlay');
+
+            // Watch Video button click
+            playButton.addEventListener('click', function() {
+                // Scroll to video section smoothly
+                introVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Play video after scroll
+                setTimeout(() => {
+                    introVideo.play();
+                    videoOverlay.style.display = 'none';
+                }, 800);
+            });
+
+            // Custom play button overlay click
+            customPlayButton.addEventListener('click', function() {
+                introVideo.play();
+                videoOverlay.style.display = 'none';
+            });
+
+            // Video overlay click
+            videoOverlay.addEventListener('click', function() {
+                introVideo.play();
+                videoOverlay.style.display = 'none';
+            });
+
+            // Show overlay when video ends or is paused
+            introVideo.addEventListener('pause', function() {
+                if (!introVideo.ended) {
+                    videoOverlay.style.display = 'flex';
+                }
+            });
+
+            introVideo.addEventListener('ended', function() {
+                videoOverlay.style.display = 'flex';
+            });
+
+            // Hide overlay when video starts playing
+            introVideo.addEventListener('play', function() {
+                videoOverlay.style.display = 'none';
+            });
+        }
+
+        // Video rotation functionality
+        let currentVideoIndex = 0;
+        let isScrolling = false;
+        const videos = [
+            'videos/video1.mp4',
+            'videos/video2.mp4', 
+            'videos/video3.mp4',
+            'videos/video4.mp4',
+            'videos/video5.mp4'
+        ];
+
+        function initVideoRotation() {
+            console.log('Initializing scroll-based video navigation...');
+            
+            // Start with first video
+            loadVideo(0);
+            
+            // Add scroll event listener for video navigation
+            const heroSection = document.getElementById('home');
+            
+            // Mouse wheel event for video changing
+            heroSection.addEventListener('wheel', function(e) {
+                if (isScrolling) return; // Prevent rapid scrolling
+                
+                e.preventDefault(); // Prevent page scroll while on hero
+                
+                isScrolling = true;
+                
+                if (e.deltaY > 0) {
+                    // Scroll down - next video
+                    nextVideo();
+                } else {
+                    // Scroll up - previous video
+                    previousVideo();
+                }
+                
+                // Reset scroll flag after a delay
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 800);
+            });
+            
+            // Touch events for mobile
+            let touchStartY = 0;
+            
+            heroSection.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+            });
+            
+            heroSection.addEventListener('touchend', function(e) {
+                if (isScrolling) return;
+                
+                const touchEndY = e.changedTouches[0].clientY;
+                const diff = touchStartY - touchEndY;
+                
+                if (Math.abs(diff) > 50) { // Minimum swipe distance
+                    isScrolling = true;
+                    
+                    if (diff > 0) {
+                        // Swipe up - next video
+                        nextVideo();
+                    } else {
+                        // Swipe down - previous video
+                        previousVideo();
+                    }
+                    
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 800);
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (window.pageYOffset < window.innerHeight) { // Only when hero is visible
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        nextVideo();
+                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        previousVideo();
+                    }
+                }
+            });
+        }
+
+        function loadVideo(index) {
+            const video = document.getElementById('heroVideo');
+            const source = document.getElementById('videoSource');
+            
+            console.log('Loading video:', videos[index]);
+            
+            source.src = videos[index];
+            video.load();
+            video.play().catch(function(error) {
+                console.log('Video play error:', error);
+            });
+            
+            // Update video indicator
+            updateVideoIndicator();
+        }
+
+        function nextVideo() {
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            console.log('Next video - index:', currentVideoIndex);
+            loadVideo(currentVideoIndex);
+        }
+        
+        function previousVideo() {
+            currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+            console.log('Previous video - index:', currentVideoIndex);
+            loadVideo(currentVideoIndex);
+        }
+        
+        function updateVideoIndicator() {
+            // Update dots if they exist
+            const dots = document.querySelectorAll('.video-dot');
+            dots.forEach((dot, index) => {
+                if (index === currentVideoIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
             
             // Lazy load images
             if ("IntersectionObserver" in window) {

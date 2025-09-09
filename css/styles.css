@@ -1,0 +1,76 @@
+/* Main Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --animate-delay: 0.5s;
+    --ubuntu-blue: #1e40af;
+    --ubuntu-dark: #1e3a8a;
+    --ubuntu-light: #3b82f6;
+    --ubuntu-gold: #f59e0b;
+}
+
+/* Tailwind custom config */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Optimized gradient background */
+.hero-gradient {
+    background: linear-gradient(135deg, rgba(30,58,138,1) 0%, rgba(30,64,175,1) 50%, rgba(29,78,216,1) 100%);
+    background-attachment: fixed;
+}
+
+/* Dynamic Navbar Styles */
+.navbar-transparent {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.navbar-scrolled {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+#navbar {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Page sections for SPA navigation */
+.page-section {
+    min-height: 100vh;
+}
+
+.page-section.hidden {
+    display: none;
+}
+
+/* Lazy loading for images */
+img.lazy {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+img.lazy.loaded {
+    opacity: 1;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--ubuntu-blue);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--ubuntu-dark);
+}

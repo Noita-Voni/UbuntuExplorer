@@ -4,43 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All G20 Countries | Ubuntu Explorer</title>
+    <meta name="description" content="Explore all 19 G20 countries with Ubuntu Explorer. Discover authentic experiences, local cultures, and hidden gems across the world's leading nations.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/ubuntuexploreroutline.png">
     
+    <!-- External CSS Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
-        }
-        
-        .ubuntu-pattern {
-            background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
-            background-color: #1e40af;
-        }
-        
-        .country-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col bg-gray-50 font-sans antialiased">
     <!-- Navigation -->
-    <nav class="ubuntu-pattern text-white shadow-lg sticky top-0 z-50">
+    <nav class="bg-ubuntu-blue text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <img class="h-8 w-auto" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
-                        <span class="ml-2 text-white font-bold">Ubuntu Explorer</span>
+                        <img class="h-10 w-auto mr-3" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
+                        <span class="text-white font-bold text-xl">Ubuntu<span class="text-ubuntu-gold">Explorer</span></span>
+                    </div>
+                    <div class="hidden md:ml-10 md:flex md:space-x-8">
+                        <a href="index.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#countries" class="nav-link text-white px-3 py-2 text-sm font-medium">Countries</a>
+                        <a href="index.html#features" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Features</a>
+                        <a href="index.html#about" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">About</a>
                     </div>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center space-x-4">
+                    <button id="loginBtn" class="text-white hover:text-ubuntu-gold px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login</button>
+                    <button id="signupBtn" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-md text-sm font-medium transition duration-300 shadow-md">Sign Up</button>
                     <a href="index.html" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium">
                         <i class="fas fa-arrow-left mr-1"></i> Back to Home
                     </a>
@@ -50,353 +48,196 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow">
-        <section class="py-16">
+    <main class="flex-1">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-ubuntu-blue to-ubuntu-dark text-white py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fadeInUp">Explore G20 Countries</h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-4xl mx-auto animate-fadeInUp delay-200">
+                    Discover authentic experiences across 19 world-leading nations, each offering unique cultures, breathtaking landscapes, and unforgettable adventures.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fadeInUp delay-300">
+                    <button class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-compass mr-2"></i> Start Exploring
+                    </button>
+                    <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
+                        <i class="fas fa-download mr-2"></i> Download Guide
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countries Section -->
+        <section id="countries" class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h1 class="text-4xl font-bold text-gray-900 mb-4">All G20 Countries</h1>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">Discover authentic experiences across all G20 nations</p>
+                <!-- Search and Filter Section -->
+                <div class="mb-12">
+                    <div class="flex flex-col lg:flex-row gap-6 max-w-6xl mx-auto">
+                        <!-- Search Bar -->
+                        <div class="flex-1 search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input 
+                                type="text" 
+                                id="country-search"
+                                placeholder="Search countries, cities, or experiences..."
+                                class="form-input search-input w-full"
+                            >
+                        </div>
+                        
+                        <!-- Filters -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <select id="region-filter" class="form-input min-w-[160px]">
+                                <option value="">All Regions</option>
+                                <option value="africa">Africa</option>
+                                <option value="asia">Asia</option>
+                                <option value="europe">Europe</option>
+                                <option value="america">Americas</option>
+                                <option value="oceania">Oceania</option>
+                            </select>
+                            
+                            <select id="experience-filter" class="form-input min-w-[160px]">
+                                <option value="">All Experiences</option>
+                                <option value="culture">Cultural</option>
+                                <option value="adventure">Adventure</option>
+                                <option value="nature">Nature</option>
+                                <option value="food">Food & Drink</option>
+                                <option value="history">Historical</option>
+                            </select>
+                            
+                            <button id="clear-filters" class="btn-secondary">
+                                <i class="fas fa-times mr-2"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Tags -->
+                <div class="mb-8 text-center">
+                    <div id="filter-tags" class="inline-flex flex-wrap gap-2">
+                        <!-- Active filters will appear here -->
+                    </div>
+                </div>
+
+                <!-- Results Summary -->
+                <div class="mb-8 text-center">
+                    <p id="results-summary" class="text-gray-600">
+                        Showing <span id="visible-count">19</span> of <span id="total-count">19</span> countries
+                    </p>
+                </div>
+
+                <!-- Countries Grid -->
+                <div id="countries-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Countries will be loaded by JavaScript -->
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    <!-- Argentina -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://plus.unsplash.com/premium_photo-1697729901052-fe8900e24993?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8QXJnZW50aW5hfGVufDB8fDB8fHww" alt="Argentina">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Argentina</h4>
-                                <div class="text-white text-sm">🇦🇷</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Discover the land of tango, steak, and stunning landscapes.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
+                <!-- No Results Message -->
+                <div id="no-results" class="hidden text-center py-16">
+                    <div class="max-w-md mx-auto">
+                        <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">No countries found</h3>
+                        <p class="text-gray-500 mb-6">Try adjusting your search criteria or clearing the filters.</p>
+                        <button id="clear-all-filters" class="btn-primary">Clear All Filters</button>
                     </div>
-                    
-                    <!-- Australia -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Australia">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Australia</h4>
-                                <div class="text-white text-sm">🇦🇺</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Explore the outback, Great Barrier Reef, and vibrant cities.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Brazil -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Brazil">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Brazil</h4>
-                                <div class="text-white text-sm">🇧🇷</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Experience the Amazon rainforest and Carnival celebrations.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Canada -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Canada">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Canada</h4>
-                                <div class="text-white text-sm">🇨🇦</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">From Niagara Falls to the Rocky Mountains.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- China -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="China">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">China</h4>
-                                <div class="text-white text-sm">🇨🇳</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Ancient history meets modern innovation.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- France -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="France">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">France</h4>
-                                <div class="text-white text-sm">🇫🇷</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">The country of romance, wine, and the Eiffel Tower.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Germany -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Germany">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Germany</h4>
-                                <div class="text-white text-sm">🇩🇪</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Castles, beer festivals, and cutting-edge technology.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- India -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="India">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">India</h4>
-                                <div class="text-white text-sm">🇮🇳</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">A land of diverse cultures, traditions, and landscapes.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Indonesia -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Indonesia">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Indonesia</h4>
-                                <div class="text-white text-sm">🇮🇩</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Tropical paradise with thousands of islands to explore.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Italy -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1498307833015-e7b400441eb8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Italy">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Italy</h4>
-                                <div class="text-white text-sm">🇮🇹</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Art, history, and world-renowned cuisine.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Japan -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Japan">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Japan</h4>
-                                <div class="text-white text-sm">🇯🇵</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Where ancient traditions meet futuristic cities.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Mexico -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWV4aWNvfGVufDB8fDB8fHww" alt="Mexico">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Mexico</h4>
-                                <div class="text-white text-sm">🇲🇽</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Vibrant culture, ancient ruins, and beautiful beaches.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Russia -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Russia">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Russia</h4>
-                                <div class="text-white text-sm">🇷🇺</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">The world's largest country with rich history and culture.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Saudi Arabia -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://media.istockphoto.com/id/1420727921/photo/al-olaya-in-northern-riyadh-saudi-arabia.webp?a=1&b=1&s=612x612&w=0&k=20&c=nbV7mosA1YjOUJwdp7beTwIOUYIzLJzdxkscgsIWpc8=" alt="Saudi Arabia">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Saudi Arabia</h4>
-                                <div class="text-white text-sm">🇸🇦</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Ancient heritage sites and modern megacities.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- South Africa -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://media.istockphoto.com/id/1501138479/photo/cape-town.webp?a=1&b=1&s=612x612&w=0&k=20&c=8Io1cKNM8foRY_jebX71UCQpCIDYa9W4qi8vAGXGNMw=" alt="South Africa">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">South Africa</h4>
-                                <div class="text-white text-sm">🇿🇦</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Safaris, vineyards, and stunning coastlines.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- South Korea -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://plus.unsplash.com/premium_photo-1661963468634-71b9482a3efe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c291dGglMjBrb3JlYXxlbnwwfHwwfHx8MA%3D%3D" alt="South Korea">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">South Korea</h4>
-                                <div class="text-white text-sm">🇰🇷</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">K-pop, kimchi, and cutting-edge technology.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Turkey -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Turkey">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">Turkey</h4>
-                                <div class="text-white text-sm">🇹🇷</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Where East meets West with rich history and cuisine.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- United Kingdom -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="United Kingdom">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">United Kingdom</h4>
-                                <div class="text-white text-sm">🇬🇧</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Royal traditions, historic landmarks, and diverse cities.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- United States -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1485738422979-f5c462d49f74?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="United States">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">United States</h4>
-                                <div class="text-white text-sm">🇺🇸</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">From New York to California, explore diverse landscapes.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
-                    <!-- European Union -->
-                    <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300">
-                        <div class="relative h-48">
-                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="European Union">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h4 class="text-white font-semibold text-lg">European Union</h4>
-                                <div class="text-white text-sm">🇪🇺</div>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm mb-3">Diverse cultures united in one political and economic union.</p>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm">Explore</button>
-                        </div>
-                    </div>
-                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Ready to Start Your G20 Adventure?</h2>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Join thousands of travelers who've discovered authentic experiences through Ubuntu Explorer.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button class="bg-ubuntu-blue hover:bg-blue-800 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-plane mr-2"></i> Plan Your Trip
+                    </button>
+                    <button class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-users mr-2"></i> Join Community
+                    </button>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="ubuntu-pattern text-white pt-12 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-gray-300 text-sm">&copy; 2023 Ubuntu Explorer. Created for the G20 Tourism Hackathon.</p>
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img class="h-10 w-auto mr-3" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
+                        <span class="text-white font-bold text-xl">Ubuntu<span class="text-ubuntu-gold">Explorer</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        AI-powered tourism platform connecting travelers with authentic experiences across G20 countries.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Countries</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Experiences</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Local Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Travel Stories</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white text-sm">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Press</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Safety Tips</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Community Guidelines</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">G20 Tourism Data</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-center md:text-left mb-4 md:mb-0">
+                        <p class="text-gray-400 text-sm">
+                            &copy; 2025 Ubuntu Explorer. Created for the G20 Tourism Hackathon. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm">Cookies</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script>
-        // Add click handlers to all explore buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            const countryCards = document.querySelectorAll('.country-card');
-            
-            countryCards.forEach(card => {
-                const countryName = card.querySelector('h4').textContent.trim();
-                const exploreButton = card.querySelector('button');
-                
-                exploreButton.addEventListener('click', function() {
-                    // Navigate to the themed country detail page
-                    window.location.href = `data.html?country=${encodeURIComponent(countryName)}`;
-                });
-                
-                // Add hover effect to show country preview
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-8px)';
-                    this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(-5px)';
-                    this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
-                });
-            });
-        });
-    </script>
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 left-6 bg-ubuntu-blue text-white p-3 rounded-full shadow-lg hover:bg-blue-800 transition-all duration-300 opacity-0 invisible">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/data/countries-data.js"></script>
+    <script src="js/components/countries-component.js"></script>
+    <script src="js/countries-main.js"></script>
 </body>
 </html>

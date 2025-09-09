@@ -14,198 +14,15 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/ubuntuexploreroutline.png">
     
-    <!-- Tailwind with custom config -->
+    <!-- External CSS Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'ubuntu-blue': '#1e40af',
-                        'ubuntu-dark': '#1e3a8a',
-                        'ubuntu-light': '#3b82f6',
-                        'ubuntu-gold': '#f59e0b',
-                    },
-                    fontFamily: {
-                        'sans': ['Poppins', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     
     <!-- Custom Styles -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        :root {
-            --animate-delay: 0.5s;
-        }
-        
-        /* Performance optimized animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translate3d(0, 20px, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
-        }
-        
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .animate-fadeInUp {
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-        
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        
-        /* Optimized gradient background */
-        .hero-gradient {
-            background: linear-gradient(135deg, rgba(30,58,138,1) 0%, rgba(30,64,175,1) 50%, rgba(29,78,216,1) 100%);
-            background-attachment: fixed;
-        }
-        
-        /* Performance-aware hover effects */
-        .country-card {
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            will-change: transform;
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), 
-                        box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        
-        .country-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        /* Optimized nav link hover */
-        .nav-link {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: currentColor;
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        /* Dynamic Navbar Styles */
-        .navbar-transparent {
-            background: transparent;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-        }
-
-        .navbar-scrolled {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        #navbar {
-            transition: all 0.3s ease-in-out;
-        }
-
-        /* Video navigation indicators */
-        .video-dot {
-            transition: all 0.3s ease;
-        }
-
-        .video-dot:hover {
-            background-color: rgba(255, 255, 255, 0.8) !important;
-            transform: scale(1.2);
-        }
-
-        .video-dot.active {
-            background-color: #f59e0b !important;
-            transform: scale(1.3);
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
-        }
-        
-        /* Lazy loading for images */
-        img.lazy {
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        
-        img.lazy.loaded {
-            opacity: 1;
-        }
-
-        /* AI Assistant Styles */
-        .ai-assistant {
-            transition: all 0.3s ease;
-        }
-        
-        .ai-assistant:hover {
-            transform: scale(1.1);
-        }
-        
-        .ai-chat {
-            transition: all 0.3s ease;
-            transform-origin: bottom right;
-        }
-        
-        .safety-alert {
-            animation: slideIn 0.5s ease-out;
-        }
-        
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #9CA3AF;
-            border-radius: 50%;
-            display: inline-block;
-            margin: 0 2px;
-            animation: typingAnimation 1.4s infinite ease-in-out;
-        }
-        
-        .typing-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-        
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translate(-50%, -20px); opacity: 0; }
-            to { transform: translate(-50%, 0); opacity: 1; }
-        }
-        
-        @keyframes typingAnimation {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
 <body class="min-h-screen flex flex-col bg-gray-50 font-sans antialiased">
     <!-- Navigation -->
@@ -267,499 +84,225 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative h-screen overflow-hidden">
-        <!-- Video Background Container -->
-        <div id="videoContainer" class="absolute inset-0 w-full h-full">
-            <video id="heroVideo" autoplay muted class="w-full h-full object-cover">
-                <source id="videoSource" src="videos/video1.mp4" type="video/mp4">
-            </video>
-        </div>
-        
-        <!-- Header Photo Overlay -->
-        <div class="absolute inset-0 flex items-center justify-center">
-            <img src="images/background2.png" alt="Ubuntu Explorer Header" class="max-w-full max-h-full object-contain">
-        </div>
-        
-        <!-- Video Navigation Indicators -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-            <div class="flex space-x-3 mb-4">
-                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300 active" onclick="loadVideo(0)"></div>
-                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(1)"></div>
-                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(2)"></div>
-                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(3)"></div>
-                <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(4)"></div>
-            </div>
-        </div>
-    </section>
-
-
-<!-- LOGIN MODAL -->
-<div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-60 items-center justify-center">
-  <div class="bg-white p-6 rounded-xl w-96 shadow-lg relative">
-    <button onclick="closeModal('loginModal')" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
-    <h2 class="text-xl font-bold text-ubuntu-gold mb-4">Welcome Back</h2>
-    <form id="loginForm">
-      <input type="email" placeholder="Email" required class="w-full border p-2 mb-3 rounded focus:ring focus:ring-ubuntu-gold">
-      <input type="password" placeholder="Password" required class="w-full border p-2 mb-3 rounded focus:ring focus:ring-ubuntu-gold">
-      <button type="submit" class="bg-ubuntu-gold hover:bg-yellow-600 w-full py-2 rounded font-bold">Continue</button>
-    </form>
-  </div>
-</div>
-
-<!-- INTERESTS MODAL -->
-<div id="interestModal" class="hidden fixed inset-0 bg-black bg-opacity-60 items-center justify-center">
-  <div class="bg-white p-6 rounded-xl w-96 shadow-lg relative">
-    <button onclick="closeModal('interestModal')" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
-    <h2 class="text-xl font-bold text-ubuntu-gold mb-4">Choose Your Interests</h2>
-    <form id="interestForm">
-      <div class="space-y-2">
-        <label class="block"><input type="checkbox" value="Food"> Food & Drinks</label>
-        <label class="block"><input type="checkbox" value="Nature"> Nature & Wildlife</label>
-        <label class="block"><input type="checkbox" value="Culture"> Culture & Heritage</label>
-        <label class="block"><input type="checkbox" value="Adventure"> Adventure</label>
-      </div>
-      <button type="submit" class="bg-ubuntu-gold hover:bg-yellow-600 w-full py-2 rounded font-bold mt-4">Next</button>
-    </form>
-  </div>
-</div>
-
-<!-- COUNTRY MODAL -->
-<div id="countryModal" class="hidden fixed inset-0 bg-black bg-opacity-60 items-center justify-center">
-  <div class="bg-white p-6 rounded-xl w-96 shadow-lg relative">
-    <button onclick="closeModal('countryModal')" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
-    <h2 class="text-xl font-bold text-ubuntu-gold mb-4">Which Country?</h2>
-    <form id="countryForm">
-      <select id="countrySelect" class="w-full border p-2 mb-3 rounded focus:ring focus:ring-ubuntu-gold">
-        <option value="">-- Select a Country --</option>
-        <option value="South Africa">🇿🇦 South Africa</option>
-        <option value="Brazil">🇧🇷 Brazil</option>
-        <option value="India">🇮🇳 India</option>
-        <option value="China">🇨🇳 China</option>
-      </select>
-      <button type="submit" class="bg-ubuntu-gold hover:bg-yellow-600 w-full py-2 rounded font-bold">Finish</button>
-    </form>
-  </div>
-</div>
-
-    <!-- Logo Cloud -->
-    <section class="bg-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-500 mb-8">Our partners worldwide</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center max-w-3xl mx-auto">
-                <div class="flex justify-center">
-                    <img src="images/deptoftoursim.png" alt="Department of Tourism - Republic of South Africa" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="Department of Tourism - Republic of South Africa">
-                </div>
-                <div class="flex justify-center">
-                    <img src="images/g20outline.png" alt="G20 South Africa 2025" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="G20 South Africa 2025">
-                </div>
-                <div class="flex justify-center">
-                    <img src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="Ubuntu Explorer Platform">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-blue-100 rounded-full mb-4">Why Choose Ubuntu Explorer</span>
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">AI-Powered Tourism Revolution</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our platform combines cutting-edge technology with authentic local experiences</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 animate-fadeInUp">
-                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 text-ubuntu-blue text-2xl">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Smart Personalization</h3>
-                    <p class="text-gray-600">Our AI learns your preferences to recommend truly unique experiences tailored just for you across any G20 destination.</p>
+    <!-- Main Content Container -->
+    <main id="main-content">
+        <!-- Home Section (Default) -->
+        <section id="home-section" class="page-section">
+            <!-- Hero Section -->
+            <section id="home" class="relative h-screen overflow-hidden">
+                <!-- Video Background Container -->
+                <div id="videoContainer" class="absolute inset-0 w-full h-full">
+                    <video id="heroVideo" autoplay muted class="w-full h-full object-cover">
+                        <source id="videoSource" src="videos/video1.mp4" type="video/mp4">
+                    </video>
                 </div>
                 
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 animate-fadeInUp delay-100">
-                    <div class="w-16 h-16 bg-yellow-100 rounded-xl flex items-center justify-center mb-6 text-ubuntu-gold text-2xl">
-                        <i class="fas fa-gamepad"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Cultural Gamification</h3>
-                    <p class="text-gray-600">Earn rewards and badges as you explore local cultures, foods, and traditions through our interactive challenges.</p>
+                <!-- Header Photo Overlay -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <img src="images/background2.png" alt="Ubuntu Explorer Header" class="max-w-full max-h-full object-contain">
                 </div>
                 
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 animate-fadeInUp delay-200">
-                    <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6 text-green-600 text-2xl">
-                        <i class="fas fa-hands-helping"></i>
+                <!-- Video Navigation Indicators -->
+                <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+                    <div class="flex space-x-3 mb-4">
+                        <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300 active" onclick="loadVideo(0)"></div>
+                        <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(1)"></div>
+                        <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(2)"></div>
+                        <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(3)"></div>
+                        <div class="video-dot w-3 h-3 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300" onclick="loadVideo(4)"></div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Community Impact</h3>
-                    <p class="text-gray-600">85% of your spending goes directly to local providers, creating real economic benefits in the communities you visit.</p>
                 </div>
-                
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 animate-fadeInUp">
-                    <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mb-6 text-purple-600 text-2xl">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Travel Safety</h3>
-                    <p class="text-gray-600">Real-time safety alerts, emergency contacts, and verified local guides ensure you explore with confidence.</p>
-                </div>
-                
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 animate-fadeInUp delay-100">
-                    <div class="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center mb-6 text-red-600 text-2xl">
-                        <i class="fas fa-language"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Language Localization</h3>
-                    <p class="text-gray-600">Automatic translation and pronunciation guides help you connect meaningfully with locals in their language.</p>
-                </div>
-                
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 animate-fadeInUp delay-200">
-                    <div class="w-16 h-16 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 text-indigo-600 text-2xl">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Sustainable Travel</h3>
-                    <p class="text-gray-600">We highlight eco-friendly options and offset carbon from your trips through verified sustainability programs.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Demo Video Section -->
-    <section class="py-16 bg-ubuntu-blue text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-12 animate-fadeInUp">
-                    <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-white rounded-full mb-4">See It In Action</span>
-                    <h2 class="text-3xl font-bold mb-6">Experience Ubuntu Explorer</h2>
-                    <p class="text-xl opacity-90 mb-8">Watch how our platform transforms travel planning across G20 nations, connecting you with authentic experiences while supporting local communities.</p>
-                    <div class="flex space-x-4">
-                        <button class="bg-white hover:bg-gray-100 text-ubuntu-blue font-bold py-3 px-6 rounded-lg transition duration-300">
-                            Request Demo
-                        </button>
-                        <button id="playIntroVideo" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
-                            <i class="fas fa-play mr-2"></i> Watch Video
-                        </button>
-                    </div>
-                </div>
-                <div class="lg:w-1/2 animate-fadeInUp delay-200">
-                    <div class="relative aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-2xl">
-                        <video 
-                            id="introVideo"
-                            class="w-full h-full object-cover" 
-                            controls 
-                            poster="images/background2.png"
-                            preload="metadata">
-                            <source src="videos/IntroVideo.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        
-                        <!-- Custom play overlay (optional) -->
-                        <div id="videoOverlay" class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center cursor-pointer">
-                            <button id="customPlayButton" class="play-button bg-ubuntu-gold hover:bg-yellow-600 text-white rounded-full w-20 h-20 flex items-center justify-center shadow-lg transform transition hover:scale-110">
-                                <i class="fas fa-play text-2xl"></i>
-                            </button>
+            <!-- Logo Cloud -->
+            <section class="bg-white py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <p class="text-center text-gray-500 mb-8">Our partners worldwide</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center max-w-3xl mx-auto">
+                        <div class="flex justify-center">
+                            <img src="images/deptoftoursim.png" alt="Department of Tourism - Republic of South Africa" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="Department of Tourism - Republic of South Africa">
+                        </div>
+                        <div class="flex justify-center">
+                            <img src="images/g20outline.png" alt="G20 South Africa 2025" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="G20 South Africa 2025">
+                        </div>
+                        <div class="flex justify-center">
+                            <img src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer" class="h-20 opacity-70 hover:opacity-100 transition duration-300" title="Ubuntu Explorer Platform">
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Countries Section -->
-    <section id="countries" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-blue-100 rounded-full mb-4">Explore</span>
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">G20 Countries</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Discover authentic experiences across these nations</p>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- South Africa -->
-                <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 animate-fadeInUp">
-                    <div class="relative h-64">
-                        <img class="lazy w-full h-full object-cover" src="https://media.istockphoto.com/id/1501138479/photo/cape-town.webp?a=1&b=1&s=612x612&w=0&k=20&c=8Io1cKNM8foRY_jebX71UCQpCIDYa9W4qi8vAGXGNMw=" data-src="https://media.istockphoto.com/id/1501138479/photo/cape-town.webp?a=1&b=1&s=612x612&w=0&k=20&c=8Io1cKNM8foRY_jebX71UCQpCIDYa9W4qi8vAGXGNMw=" alt="South Africa">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <div class="flex justify-between items-end">
-                                <div>
-                                    <h4 class="text-white font-bold text-2xl">South Africa</h4>
-                                    <p class="text-gray-200 mt-1">Rainbow Nation</p>
+            <!-- Features Section -->
+            <section id="features" class="py-16 bg-gray-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-blue-100 rounded-full mb-4">Why Choose Ubuntu Explorer</span>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">AI-Powered Tourism Revolution</h2>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our platform combines cutting-edge technology with authentic local experiences</p>
+                    </div>
+                    
+                    <div id="features-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Features will be loaded by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo Video Section -->
+            <section class="py-16 bg-ubuntu-blue text-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col lg:flex-row items-center">
+                        <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-12 animate-fadeInUp">
+                            <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-white rounded-full mb-4">See It In Action</span>
+                            <h2 class="text-3xl font-bold mb-6">Experience Ubuntu Explorer</h2>
+                            <p class="text-xl opacity-90 mb-8">Watch how our platform transforms travel planning across G20 nations, connecting you with authentic experiences while supporting local communities.</p>
+                            <div class="flex space-x-4">
+                                <button class="bg-white hover:bg-gray-100 text-ubuntu-blue font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    Request Demo
+                                </button>
+                                <button id="playIntroVideo" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    <i class="fas fa-play mr-2"></i> Watch Video
+                                </button>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2 animate-fadeInUp delay-200">
+                            <div class="relative aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-2xl">
+                                <video 
+                                    id="introVideo"
+                                    class="w-full h-full object-cover" 
+                                    controls 
+                                    poster="images/background2.png"
+                                    preload="metadata">
+                                    <source src="videos/IntroVideo.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                
+                                <!-- Custom play overlay (optional) -->
+                                <div id="videoOverlay" class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center cursor-pointer">
+                                    <button id="customPlayButton" class="play-button bg-ubuntu-gold hover:bg-yellow-600 text-white rounded-full w-20 h-20 flex items-center justify-center shadow-lg transform transition hover:scale-110">
+                                        <i class="fas fa-play text-2xl"></i>
+                                    </button>
                                 </div>
-                                <span class="text-4xl">🇿🇦</span>
                             </div>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="bg-ubuntu-gold text-gray-900 text-xs font-semibold px-2 py-1 rounded">Featured</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <div class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
-                                <span class="text-sm text-gray-600">Cape Town, Johannesburg</span>
-                            </div>
-                            <div class="text-sm text-gray-600">
-                                <i class="fas fa-users mr-1"></i> 120+ Experiences
-                            </div>
-                        </div>
-                        <p class="text-gray-600 mb-4">From safari adventures to township cultural tours, discover the soul of South Africa.</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <span class="text-sm font-medium">4.8</span>
-                                <span class="text-sm text-gray-500 ml-1">(1.2k reviews)</span>
-                            </div>
-                            <button class="text-ubuntu-blue hover:text-ubuntu-dark text-sm font-semibold">
-                                Explore <i class="fas fa-chevron-right ml-1"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Brazil -->
-                <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 animate-fadeInUp delay-100">
-                    <div class="relative h-64">
-                        <img class="lazy w-full h-full object-cover" src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" data-src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Brazil">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <div class="flex justify-between items-end">
-                                <div>
-                                    <h4 class="text-white font-bold text-2xl">Brazil</h4>
-                                    <p class="text-gray-200 mt-1">Vibrant Culture</p>
+            </section>
+
+            <!-- Countries Preview Section -->
+            <section id="countries" class="py-16 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-blue-100 rounded-full mb-4">Explore</span>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">G20 Countries</h2>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Discover authentic experiences across these nations</p>
+                    </div>
+                    
+                    <div id="countries-preview-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Countries preview will be loaded by JavaScript -->
+                    </div>
+                    
+                    <div class="text-center mt-12">
+                        <a href="countries.html" class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ubuntu-blue">
+                            View All 19 G20 Countries
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="py-16 bg-gray-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-blue-100 rounded-full mb-4">Testimonials</span>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Travelers Love Ubuntu Explorer</h2>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Hear from people who discovered authentic experiences through our platform</p>
+                    </div>
+                    
+                    <div id="testimonials-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Testimonials will be loaded by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="py-16 bg-ubuntu-blue text-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div id="stats-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                        <!-- Stats will be loaded by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="py-16 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col lg:flex-row items-center">
+                        <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-12 animate-fadeInUp">
+                            <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-blue-100 rounded-full mb-4">Our Story</span>
+                            <h2 class="text-3xl font-bold text-gray-900 mb-6">The Spirit of Ubuntu</h2>
+                            <p class="text-lg text-gray-600 mb-6">
+                                Ubuntu Explorer was born from a simple idea: tourism should benefit both travelers and local communities equally. 
+                                Our name comes from the African philosophy of Ubuntu - "I am because we are" - emphasizing our shared humanity.
+                            </p>
+                            <p class="text-lg text-gray-600 mb-8">
+                                Created for the G20 Tourism Hackathon, we're building bridges between cultures through technology. 
+                                Our AI-powered platform helps travelers discover authentic experiences while ensuring local businesses thrive.
+                            </p>
+                            <div class="flex space-x-4">
+                                <button class="bg-ubuntu-blue hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    Learn More
+                                </button>
+                                <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    Meet the Team
+                                </button>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2 animate-fadeInUp delay-200">
+                            <div class="relative">
+                                <img class="lazy rounded-xl shadow-xl w-full" data-src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Ubuntu Team">
+                                <div class="absolute -bottom-6 -right-6 bg-ubuntu-gold p-4 rounded-xl shadow-lg">
+                                    <div class="text-4xl font-bold text-white">G20</div>
+                                    <div class="text-white">Tourism Hackathon 2025</div>
                                 </div>
-                                <span class="text-4xl">🇧🇷</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <div class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
-                                <span class="text-sm text-gray-600">Rio, Salvador, Amazon</span>
-                            </div>
-                            <div class="text-sm text-gray-600">
-                                <i class="fas fa-users mr-1"></i> 95+ Experiences
-                            </div>
-                        </div>
-                        <p class="text-gray-600 mb-4">Immerse yourself in the rhythms of samba, flavors of Bahia, and wonders of the rainforest.</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <span class="text-sm font-medium">4.7</span>
-                                <span class="text-sm text-gray-500 ml-1">(890 reviews)</span>
-                            </div>
-                            <button class="text-ubuntu-blue hover:text-ubuntu-dark text-sm font-semibold">
-                                Explore <i class="fas fa-chevron-right ml-1"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
-                
-                <!-- India -->
-                <div class="country-card bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 animate-fadeInUp delay-200">
-                    <div class="relative h-64">
-                        <img class="lazy w-full h-full object-cover" src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" data-src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="India">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <div class="flex justify-between items-end">
-                                <div>
-                                    <h4 class="text-white font-bold text-2xl">India</h4>
-                                    <p class="text-gray-200 mt-1">Incredible Diversity</p>
-                                </div>
-                                <span class="text-4xl">🇮🇳</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <div class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
-                                <span class="text-sm text-gray-600">Delhi, Mumbai, Kerala</span>
-                            </div>
-                            <div class="text-sm text-gray-600">
-                                <i class="fas fa-users mr-1"></i> 150+ Experiences
-                            </div>
-                        </div>
-                        <p class="text-gray-600 mb-4">From Himalayan treks to Kerala backwaters, discover India's rich tapestry of cultures.</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <span class="text-sm font-medium">4.9</span>
-                                <span class="text-sm text-gray-500 ml-1">(1.5k reviews)</span>
-                            </div>
-                            <button class="text-ubuntu-blue hover:text-ubuntu-dark text-sm font-semibold">
-                                Explore <i class="fas fa-chevron-right ml-1"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="countries.html" class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ubuntu-blue">
-                    View All 19 G20 Countries
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Testimonials -->
-    <section class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-blue-100 rounded-full mb-4">Testimonials</span>
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Travelers Love Ubuntu Explorer</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Hear from people who discovered authentic experiences through our platform</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-md animate-fadeInUp">
-                    <div class="flex items-center mb-4">
-                        <div class="flex-shrink-0">
-                            <img class="h-12 w-12 rounded-full" src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah">
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">Sarah K.</h4>
-                            <div class="flex items-center">
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"The township tour in Cape Town recommended by Ubuntu Explorer was the highlight of my trip. I never would have found this authentic experience on my own."</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <i class="fas fa-map-marker-alt mr-2"></i>
-                        <span>Visited South Africa, March 2025</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-8 rounded-xl shadow-md animate-fadeInUp delay-100">
-                    <div class="flex items-center mb-4">
-                        <div class="flex-shrink-0">
-                            <img class="h-12 w-12 rounded-full" src="https://randomuser.me/api/portraits/men/54.jpg" alt="James">
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">James T.</h4>
-                            <div class="flex items-center">
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"The AI recommendations in Rio were spot-on! Found incredible local restaurants and a samba class that wasn't in any guidebook."</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <i class="fas fa-map-marker-alt mr-2"></i>
-                        <span>Visited Brazil, January 2025</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-8 rounded-xl shadow-md animate-fadeInUp delay-200">
-                    <div class="flex items-center mb-4">
-                        <div class="flex-shrink-0">
-                            <img class="h-12 w-12 rounded-full" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya">
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">Priya M.</h4>
-                            <div class="flex items-center">
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                                <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"As a solo female traveler, the safety features gave me confidence to explore Delhi's hidden gems. The local guide was wonderful!"</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <i class="fas fa-map-marker-alt mr-2"></i>
-                        <span>Visited India, November 2024</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-16 bg-ubuntu-blue text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-                <div class="animate-fadeInUp">
-                    <div class="text-4xl font-bold mb-2">19</div>
-                    <div class="text-xl">G20 Countries</div>
-                </div>
-                <div class="animate-fadeInUp delay-100">
-                    <div class="text-4xl font-bold mb-2">1.2K+</div>
-                    <div class="text-xl">Local Partners</div>
-                </div>
-                <div class="animate-fadeInUp delay-200">
-                    <div class="text-4xl font-bold mb-2">85%</div>
-                    <div class="text-xl">Revenue to Locals</div>
-                </div>
-                <div class="animate-fadeInUp delay-300">
-                    <div class="text-4xl font-bold mb-2">4.9★</div>
-                    <div class="text-xl">Average Rating</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-12 animate-fadeInUp">
-                    <span class="inline-block px-3 py-1 text-sm font-semibold text-ubuntu-blue bg-blue-100 rounded-full mb-4">Our Story</span>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6">The Spirit of Ubuntu</h2>
-                    <p class="text-lg text-gray-600 mb-6">
-                        Ubuntu Explorer was born from a simple idea: tourism should benefit both travelers and local communities equally. 
-                        Our name comes from the African philosophy of Ubuntu - "I am because we are" - emphasizing our shared humanity.
-                    </p>
-                    <p class="text-lg text-gray-600 mb-8">
-                        Created for the G20 Tourism Hackathon, we're building bridges between cultures through technology. 
-                        Our AI-powered platform helps travelers discover authentic experiences while ensuring local businesses thrive.
-                    </p>
-                    <div class="flex space-x-4">
-                        <button class="bg-ubuntu-blue hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
-                            Learn More
+            <!-- CTA Section -->
+            <section class="py-16 bg-gradient-to-r from-ubuntu-blue to-ubuntu-dark text-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h2 class="text-3xl font-bold mb-6">Ready to Explore G20 Like Never Before?</h2>
+                    <p class="text-xl mb-8 max-w-3xl mx-auto">Join thousands of travelers discovering authentic experiences while making a positive impact.</p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button id="ctaSignup" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                            Start Your Journey
                         </button>
-                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg transition duration-300">
-                            Meet the Team
+                        <button class="bg-white hover:bg-gray-100 text-ubuntu-blue font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                            <i class="fas fa-mobile-alt mr-2"></i> Download App
                         </button>
                     </div>
                 </div>
-                <div class="lg:w-1/2 animate-fadeInUp delay-200">
-                    <div class="relative">
-                        <img class="lazy rounded-xl shadow-xl w-full" data-src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Ubuntu Team">
-                        <div class="absolute -bottom-6 -right-6 bg-ubuntu-gold p-4 rounded-xl shadow-lg">
-                            <div class="text-4xl font-bold text-white">G20</div>
-                            <div class="text-white">Tourism Hackathon 2025</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="py-16 bg-gradient-to-r from-ubuntu-blue to-ubuntu-dark text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-6">Ready to Explore G20 Like Never Before?</h2>
-            <p class="text-xl mb-8 max-w-3xl mx-auto">Join thousands of travelers discovering authentic experiences while making a positive impact.</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <button id="ctaSignup" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
-                    Start Your Journey
-                </button>
-                <button class="bg-white hover:bg-gray-100 text-ubuntu-blue font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
-                    <i class="fas fa-mobile-alt mr-2"></i> Download App
-                </button>
-            </div>
-        </div>
-    </section>
+        <!-- Countries Section (loaded from countries component) -->
+        <section id="countries-section" class="page-section hidden">
+            <div id="countries-content">Loading countries...</div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="page-section hidden">
+            <div id="dashboard-content">Loading dashboard...</div>
+        </section>
+
+        <!-- Data Section -->
+        <section id="data-section" class="page-section hidden">
+            <div id="data-content">Loading analytics...</div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white pt-16 pb-8">
@@ -829,6 +372,11 @@
         </div>
     </footer>
 
+    <!-- Modals Container -->
+    <div id="modals-container">
+        <!-- Modals will be loaded by JavaScript -->
+    </div>
+
     <!-- AI Travel Assistant -->
     <div class="ai-assistant fixed bottom-6 right-6 z-50">
         <button class="w-16 h-16 bg-ubuntu-gold rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
@@ -872,808 +420,14 @@
         </div>
     </div>
 
-    <!-- Auth Modal -->
-    <div id="authModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-2xl leading-6 font-bold text-gray-900" id="modalTitle">
-                                    Welcome to Ubuntu Explorer
-                                </h3>
-                                <button id="closeModal" class="text-gray-400 hover:text-gray-500 focus:outline-none">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="mt-2">
-                                <div id="loginForm">
-                                    <div class="mb-4">
-                                        <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                                        <input type="email" id="email" autocomplete="email" class="mt-1 focus:ring-ubuntu-blue focus:border-ubuntu-blue block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 px-4">
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                                        <input type="password" id="password" autocomplete="current-password" class="mt-1 focus:ring-ubuntu-blue focus:border-ubuntu-blue block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 px-4">
-                                    </div>
-                                    <div class="flex items-center justify-between mb-6">
-                                        <div class="flex items-center">
-                                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-ubuntu-blue focus:ring-ubuntu-blue border-gray-300 rounded">
-                                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
-                                        </div>
-                                        <div class="text-sm">
-                                            <a href="#" class="font-medium text-ubuntu-blue hover:text-ubuntu-dark">Forgot your password?</a>
-                                        </div>
-                                    </div>
-                                    <button class="w-full bg-ubuntu-blue hover:bg-blue-800 text-white py-3 px-4 rounded-md font-medium shadow-md">
-                                        Sign In
-                                    </button>
-                                    <div class="mt-4 text-center text-sm text-gray-600">
-                                        Don't have an account? <button id="showSignup" class="font-medium text-ubuntu-blue hover:text-ubuntu-dark">Sign up</button>
-                                    </div>
-                                    <div class="mt-6">
-                                        <div class="relative">
-                                            <div class="absolute inset-0 flex items-center">
-                                                <div class="w-full border-t border-gray-300"></div>
-                                            </div>
-                                            <div class="relative flex justify-center text-sm">
-                                                <span class="px-2 bg-white text-gray-500">Or continue with</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-6 grid grid-cols-2 gap-3">
-                                            <button class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                                <i class="fab fa-google text-red-500"></i>
-                                                <span class="ml-2">Google</span>
-                                            </button>
-                                            <button class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                                <i class="fab fa-facebook-f text-blue-600"></i>
-                                                <span class="ml-2">Facebook</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div id="signupForm" class="hidden">
-                                    <div class="mb-4">
-                                        <label for="name" class="block text-sm font-medium text-gray-700">Full name</label>
-                                        <input type="text" id="name" autocomplete="name" class="mt-1 focus:ring-ubuntu-blue focus:border-ubuntu-blue block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 px-4">
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="signupEmail" class="block text-sm font-medium text-gray-700">Email address</label>
-                                        <input type="email" id="signupEmail" autocomplete="email" class="mt-1 focus:ring-ubuntu-blue focus:border-ubuntu-blue block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 px-4">
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="signupPassword" class="block text-sm font-medium text-gray-700">Password</label>
-                                        <input type="password" id="signupPassword" autocomplete="new-password" class="mt-1 focus:ring-ubuntu-blue focus:border-ubuntu-blue block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 px-4">
-                                    </div>
-                                    <div class="mb-6">
-                                        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                                        <input type="password" id="confirmPassword" autocomplete="new-password" class="mt-1 focus:ring-ubuntu-blue focus:border-ubuntu-blue block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-3 px-4">
-                                    </div>
-                                    <button class="w-full bg-ubuntu-blue hover:bg-blue-800 text-white py-3 px-4 rounded-md font-medium shadow-md">
-                                        Create Account
-                                    </button>
-                                    <div class="mt-4 text-center text-sm text-gray-600">
-                                        Already have an account? <button id="showLogin" class="font-medium text-ubuntu-blue hover:text-ubuntu-dark">Sign in</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // AI Core Functionality
-        class UbuntuAI {
-            constructor() {
-                this.userProfile = this.loadUserProfile();
-                this.currentCountry = null;
-                this.detectedCountry = null;
-                this.init();
-            }
-            
-            init() {
-                this.setupChat();
-                this.detectUserCountry();
-                this.setupCulturalInsights();
-                this.setupEventListeners();
-                this.monitorSafety();
-                this.setupAuthModal();
-            }
-            
-             // Open first modal when Start Exploring button is clicked
-  document.getElementById("startBtn").onclick = () => {
-    document.getElementById("loginModal").style.display = "flex";
-  };
-
-  // Close modal utility
-  function closeModal(id) {
-    document.getElementById(id).style.display = "none";
-  }
-
-  // Login → Interests
-  document.getElementById("loginForm").onsubmit = (e) => {
-    e.preventDefault();
-    closeModal("loginModal");
-    document.getElementById("interestModal").style.display = "flex";
-  };
-
-  // Interests → Country
-  document.getElementById("interestForm").onsubmit = (e) => {
-    e.preventDefault();
-    closeModal("interestModal");
-    document.getElementById("countryModal").style.display = "flex";
-  };
-
-  // Country → Message
-  document.getElementById("countryForm").onsubmit = (e) => {
-    e.preventDefault();
-    let country = document.getElementById("countrySelect").value;
-    if(country){
-      closeModal("countryModal");
-      alert("Nice! Enjoy exploring " + country + " 🎉");
-    }
-  };
-
-  
-            setupEventListeners() {
-                // Country selector
-                document.getElementById('countrySelector').addEventListener('change', (e) => {
-                    this.currentCountry = e.target.value;
-                    this.updateUIForCountry(this.currentCountry);
-                });
-                
-                // Close country banner
-                document.getElementById('closeCountryBanner').addEventListener('click', () => {
-                    document.getElementById('countryDetectionBanner').classList.add('hidden');
-                });
-                
-                // Refresh cultural tips
-                document.getElementById('refreshCulturalTips').addEventListener('click', () => {
-                    this.loadCulturalTips(this.detectedCountry || this.currentCountry);
-                });
-                
-                // Country option clicks
-                document.querySelectorAll('.country-option').forEach(option => {
-                    option.addEventListener('click', () => {
-                        const country = option.querySelector('div:last-child').textContent.trim();
-                        this.currentCountry = country;
-                        this.updateUIForCountry(country);
-                    });
-                });
-            }
-            
-            async detectUserCountry() {
-                try {
-                    // First try IP-based geolocation
-                    const ipResponse = await fetch('https://ipapi.co/json/');
-                    const ipData = await ipResponse.json();
-                    
-                    // Then try browser geolocation if available
-                    if (navigator.geolocation) {
-                        const position = await new Promise((resolve, reject) => {
-                            navigator.geolocation.getCurrentPosition(resolve, reject);
-                        });
-                        
-                        const { latitude, longitude } = position.coords;
-                        const geoResponse = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
-                        const geoData = await geoResponse.json();
-                        
-                        // Use more precise geolocation if available
-                        this.detectedCountry = geoData.countryName || ipData.country_name;
-                    } else {
-                        this.detectedCountry = ipData.country_name;
-                    }
-                    
-                    // Check if detected country is in G20
-                    const g20Countries = [
-                        "Argentina", "Australia", "Brazil", "Canada", "China", 
-                        "France", "Germany", "India", "Indonesia", "Italy", 
-                        "Japan", "Mexico", "Russia", "Saudi Arabia", "South Africa", 
-                        "South Korea", "Turkey", "United Kingdom", "United States", "European Union"
-                    ];
-                    
-                    if (this.detectedCountry && g20Countries.includes(this.detectedCountry)) {
-                        this.showCountryDetectionBanner(this.detectedCountry);
-                        this.currentCountry = this.detectedCountry;
-                        this.updateUIForCountry(this.detectedCountry);
-                    } else {
-                        // Default to South Africa if not in G20 or detection fails
-                        this.currentCountry = "South Africa";
-                        this.updateUIForCountry(this.currentCountry);
-                    }
-                } catch (error) {
-                    console.error("Country detection failed:", error);
-                    this.currentCountry = "South Africa";
-                    this.updateUIForCountry(this.currentCountry);
-                }
-            }
-            
-            showCountryDetectionBanner(country) {
-                document.getElementById('detectedCountry').textContent = country;
-                document.getElementById('countryDetectionBanner').classList.remove('hidden');
-                
-                // Auto-hide after 10 seconds
-                setTimeout(() => {
-                    document.getElementById('countryDetectionBanner').classList.add('hidden');
-                }, 10000);
-            }
-            
-            updateUIForCountry(country) {
-                // Update cultural insights
-                this.loadCulturalTips(country);
-                
-                // Show cultural insights panel
-                document.getElementById('culturalInsights').classList.remove('hidden');
-                document.getElementById('currentLocation').textContent = country;
-                
-                // Update country selector
-                document.getElementById('countrySelector').value = country;
-                
-                // Update any country-specific content
-                console.log(`UI updated for ${country}`);
-            }
-            
-            setupChat() {
-                const chatBtn = document.querySelector('.ai-assistant button');
-                const chatWindow = document.querySelector('.ai-chat');
-                const closeBtn = document.querySelector('.close-chat');
-                const sendBtn = document.querySelector('.send-chat');
-                const chatInput = document.querySelector('.ai-chat input');
-                
-                chatBtn.addEventListener('click', () => chatWindow.classList.toggle('hidden'));
-                closeBtn.addEventListener('click', () => chatWindow.classList.add('hidden'));
-                
-                sendBtn.addEventListener('click', () => this.handleChatQuery());
-                chatInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') this.handleChatQuery();
-                });
-            }
-            
-            async handleChatQuery() {
-                const input = document.querySelector('.ai-chat input');
-                const query = input.value.trim();
-                const messagesDiv = document.querySelector('.chat-messages');
-                
-                if (query) {
-                    this.addMessage(query, 'user');
-                    input.value = '';
-                    
-                    // Show typing indicator
-                    const typingIndicator = document.createElement('div');
-                    typingIndicator.className = 'ai-message mb-3';
-                    typingIndicator.innerHTML = `
-                        <div class="text-xs text-gray-500 mb-1">Ubuntu AI</div>
-                        <div class="bg-gray-100 p-3 rounded-lg inline-flex items-center">
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                        </div>
-                    `;
-                    messagesDiv.appendChild(typingIndicator);
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                    
-                    const response = await this.getAIResponse(query);
-                    
-                    // Remove typing indicator
-                    messagesDiv.removeChild(typingIndicator);
-                    
-                    this.addMessage(response, 'ai');
-                }
-            }
-            
-            async getAIResponse(query) {
-                // Simulate API call delay
-                await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
-                
-                // Mock responses based on query and current country
-                const countryResponses = {
-                    "South Africa": {
-                        "best food": "In South Africa, you must try: 1) Bunny Chow in Durban 2) Braai (BBQ) 3) Cape Malay curry 4) Biltong (dried meat) 5) Malva pudding",
-                        "hidden gems": "Top hidden gems in SA: 1) The Cradle of Humankind 2) Wild Coast 3) The Drakensberg Mountains 4) Augrabies Falls 5) The Owl House",
-                        "safety tips": "Safety in South Africa: 1) Avoid displaying valuables 2) Use registered taxis 3) Stay in well-lit areas at night 4) Keep car doors locked 5) Check local advice before visiting townships",
-                        "culture": "Cultural highlights: 1) Visit a township for authentic experiences 2) Learn about Zulu traditions 3) Experience Cape Malay culture 4) Attend a traditional braai 5) Explore San rock art"
-                    },
-                    "Brazil": {
-                        "best food": "Must-try Brazilian foods: 1) Feijoada 2) Pão de queijo 3) Açaí 4) Moqueca 5) Brigadeiro",
-                        "hidden gems": "Brazil's hidden gems: 1) Chapada Diamantina 2) Jericoacoara 3) Bonito 4) Paraty 5) Alter do Chão",
-                        "safety tips": "Brazil safety tips: 1) Avoid favelas without guides 2) Don't walk alone at night 3) Use hotel safes 4) Be cautious with valuables on beaches 5) Use Uber or registered taxis",
-                        "culture": "Cultural experiences: 1) Samba in Rio 2) Capoeira performances 3) Amazon indigenous cultures 4) Bahian Afro-Brazilian traditions 5) Gaucho culture in the south"
-                    },
-                    "India": {
-                        "best food": "Indian food highlights: 1) Butter chicken 2) Masala dosa 3) Pani puri 4) Biryani 5) Gulab jamun",
-                        "hidden gems": "India's hidden treasures: 1) Hampi 2) Chettinad 3) Spiti Valley 4) Ziro Valley 5) Gokarna",
-                        "safety tips": "India travel safety: 1) Drink bottled water 2) Dress modestly 3) Avoid street food with water 4) Use registered guides 5) Be cautious with street vendors",
-                        "culture": "Cultural immersion: 1) Attend a Diwali festival 2) Experience a homestay in Kerala 3) Learn yoga at its source 4) Visit Rajasthan's palaces 5) Explore Varanasi's ghats"
-                    }
-                };
-                
-                // Default responses
-                const defaultResponses = {
-                    "hello": "Hello! How can I help you explore G20 countries today? You can ask about destinations, food, safety, or hidden gems.",
-                    "hi": "Hi there! I'm your Ubuntu Explorer AI assistant. Ask me anything about traveling in G20 countries.",
-                    "help": "I can help with: 1) Country recommendations 2) Cultural tips 3) Safety advice 4) Hidden gems 5) Local foods. Try asking about specific places!",
-                    "recommendations": `Based on your location in ${this.currentCountry}, I recommend checking out our curated experiences for authentic local activities.`,
-                    "default": `I can provide personalized recommendations for ${this.currentCountry}. Try asking about:
-                    <ul class="list-disc pl-5 mt-2">
-                        <li>Local foods to try</li>
-                        <li>Hidden gem destinations</li>
-                        <li>Cultural etiquette tips</li>
-                        <li>Safety advice</li>
-                        <li>Best times to visit</li>
-                    </ul>`
-                };
-                
-                // Check for country-specific responses first
-                if (countryResponses[this.currentCountry]) {
-                    for (const [keyword, response] of Object.entries(countryResponses[this.currentCountry])) {
-                        if (query.toLowerCase().includes(keyword)) {
-                            return response;
-                        }
-                    }
-                }
-                
-                // Check default responses
-                for (const [keyword, response] of Object.entries(defaultResponses)) {
-                    if (query.toLowerCase().includes(keyword)) {
-                        return response;
-                    }
-                }
-                
-                return defaultResponses.default;
-            }
-            
-            addMessage(text, sender) {
-                const messagesDiv = document.querySelector('.chat-messages');
-                const messageClass = sender === 'user' ? 'text-right' : 'text-left';
-                const bgClass = sender === 'user' ? 'bg-ubuntu-blue text-white' : 'bg-gray-100';
-                
-                messagesDiv.innerHTML += `
-                    <div class="mb-3 ${messageClass}">
-                        <div class="text-xs text-gray-500 mb-1">${sender === 'user' ? 'You' : 'Ubuntu AI'}</div>
-                        <div class="${bgClass} p-3 rounded-lg inline-block max-w-xs">${text}</div>
-                    </div>
-                `;
-                
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }
-            
-            setupCulturalInsights() {
-                // Show after slight delay
-                setTimeout(() => {
-                    document.getElementById('culturalInsights').classList.remove('hidden');
-                }, 3000);
-            }
-            
-            async loadCulturalTips(country) {
-                document.getElementById('aiCulturalTip').textContent = "Loading cultural insights...";
-                
-                // Mock data - in real app this would call an API
-                const culturalTips = {
-                    "South Africa": {
-                        greeting: "A handshake with eye contact is standard. Say 'Howzit?' as a casual hello.",
-                        etiquette: "Arrive 15-30 minutes late for social events. Compliment the host's food.",
-                        taboo: "Avoid comparisons with other African countries. Don't mimic local accents."
-                    },
-                    "Brazil": {
-                        greeting: "Cheek kissing is common. One kiss in some regions, two in others.",
-                        etiquette: "Being late is normal. Refusing coffee can be seen as rude.",
-                        taboo: "Avoid discussing poverty or favelas insensitively. Don't make OK signs with hands."
-                    },
-                    "India": {
-                        greeting: "Namaste with palms together is respectful. Avoid physical contact with opposite sex.",
-                        etiquette: "Remove shoes before entering homes. Eat with right hand only.",
-                        taboo: "Don't touch people's heads. Avoid public displays of affection."
-                    },
-                    "default": {
-                        greeting: "A firm handshake with eye contact is generally safe. Learn 'hello' in the local language.",
-                        etiquette: "Observe locals and follow their lead. When in doubt, ask politely.",
-                        taboo: "Avoid sensitive topics like politics or religion unless brought up by locals."
-                    }
-                };
-                
-                // Simulate API delay
-                await new Promise(resolve => setTimeout(resolve, 800));
-                
-                const tips = culturalTips[country] || culturalTips.default;
-                const randomTip = [
-                    `Greetings: ${tips.greeting}`,
-                    `Etiquette: ${tips.etiquette}`,
-                    `Taboos: ${tips.taboo}`
-                ][Math.floor(Math.random() * 3)];
-                
-                document.getElementById('aiCulturalTip').textContent = randomTip;
-            }
-            
-            monitorSafety() {
-                // Simulate periodic safety checks
-                setInterval(() => {
-                    if (this.currentCountry) {
-                        const alerts = {
-                            "South Africa": [
-                                "Increased pickpocketing reported in Cape Town city center",
-                                "Protests expected in Johannesburg CBD tomorrow"
-                            ],
-                            "Brazil": [
-                                "Heavy rains causing flooding in Rio favelas",
-                                "Increased theft reported on Copacabana beach after dark"
-                            ],
-                            "India": [
-                                "Air pollution levels high in Delhi - consider mask",
-                                "Monsoon rains causing transport delays in Mumbai"
-                            ]
-                        };
-                        
-                        if (alerts[this.currentCountry] && Math.random() > 0.7) {
-                            this.showSafetyAlert(
-                                alerts[this.currentCountry][Math.floor(Math.random() * alerts[this.currentCountry].length)]
-                            );
-                        }
-                    }
-                }, 30000);
-            }
-            
-            showSafetyAlert(alert) {
-                const alertId = `alert-${Date.now()}`;
-                const alertHTML = `
-                    <div id="${alertId}" class="safety-alert fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-lg z-50 max-w-md">
-                        <div class="flex justify-between">
-                            <div>
-                                <p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Safety Notice: ${this.currentCountry}</p>
-                                <p class="text-sm mt-1">${alert}</p>
-                            </div>
-                            <button class="close-alert ml-4 text-red-700 hover:text-red-900">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.insertAdjacentHTML('afterbegin', alertHTML);
-                
-                document.querySelector(`#${alertId} .close-alert`).addEventListener('click', function() {
-                    document.getElementById(alertId).remove();
-                });
-                
-                // Auto-remove after 15 seconds
-                setTimeout(() => {
-                    const alertElement = document.getElementById(alertId);
-                    if (alertElement) alertElement.remove();
-                }, 15000);
-            }
-            
-            setupAuthModal() {
-                const authModal = document.getElementById('authModal');
-                const loginBtn = document.getElementById('loginBtn');
-                const signupBtn = document.getElementById('signupBtn');
-                const ctaSignup = document.getElementById('ctaSignup');
-                const closeModal = document.getElementById('closeModal');
-                const showSignup = document.getElementById('showSignup');
-                const showLogin = document.getElementById('showLogin');
-                const loginForm = document.getElementById('loginForm');
-                const signupForm = document.getElementById('signupForm');
-                
-                function openModal(showSignupForm = false) {
-                    authModal.classList.remove('hidden');
-                    document.body.style.overflow = 'hidden';
-                    if (showSignupForm) {
-                        loginForm.classList.add('hidden');
-                        signupForm.classList.remove('hidden');
-                    } else {
-                        loginForm.classList.remove('hidden');
-                        signupForm.classList.add('hidden');
-                    }
-                }
-                
-                function closeAuthModal() {
-                    authModal.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                }
-                
-                loginBtn.addEventListener('click', () => openModal(false));
-                signupBtn.addEventListener('click', () => openModal(true));
-                ctaSignup.addEventListener('click', () => openModal(true));
-                closeModal.addEventListener('click', closeAuthModal);
-                showSignup.addEventListener('click', () => {
-                    loginForm.classList.add('hidden');
-                    signupForm.classList.remove('hidden');
-                });
-                showLogin.addEventListener('click', () => {
-                    signupForm.classList.add('hidden');
-                    loginForm.classList.remove('hidden');
-                });
-                
-                // Close modal when clicking outside
-                window.addEventListener('click', (e) => {
-                    if (e.target === authModal) {
-                        closeAuthModal();
-                    }
-                });
-            }
-            
-            loadUserProfile() {
-                // Load from localStorage or create new
-                return JSON.parse(localStorage.getItem('ubuntuAIProfile')) || {
-                    interests: [],
-                    pastTrips: [],
-                    preferences: {}
-                };
-            }
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            window.ubuntuAI = new UbuntuAI();
-            
-            // Mobile menu toggle
-            document.querySelector('.mobile-menu-button').addEventListener('click', function() {
-                const menu = document.getElementById('mobile-menu');
-                menu.classList.toggle('hidden');
-            });
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-
-            // Dynamic navbar on scroll
-            const navbar = document.getElementById('navbar');
-            let lastScrollTop = 0;
-
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (scrollTop > 50) {
-                    // Add scrolled state
-                    navbar.classList.remove('navbar-transparent');
-                    navbar.classList.add('navbar-scrolled');
-                } else {
-                    // Add transparent state
-                    navbar.classList.remove('navbar-scrolled');
-                    navbar.classList.add('navbar-transparent');
-                }
-                
-                lastScrollTop = scrollTop;
-            });
-
-            // Initialize video rotation
-            initVideoRotation();
-            
-            // Initialize intro video controls
-            initIntroVideoControls();
-        });
-
-        // Intro Video Controls
-        function initIntroVideoControls() {
-            const introVideo = document.getElementById('introVideo');
-            const playButton = document.getElementById('playIntroVideo');
-            const customPlayButton = document.getElementById('customPlayButton');
-            const videoOverlay = document.getElementById('videoOverlay');
-
-            // Watch Video button click
-            playButton.addEventListener('click', function() {
-                // Scroll to video section smoothly
-                introVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Play video after scroll
-                setTimeout(() => {
-                    introVideo.play();
-                    videoOverlay.style.display = 'none';
-                }, 800);
-            });
-
-            // Custom play button overlay click
-            customPlayButton.addEventListener('click', function() {
-                introVideo.play();
-                videoOverlay.style.display = 'none';
-            });
-
-            // Video overlay click
-            videoOverlay.addEventListener('click', function() {
-                introVideo.play();
-                videoOverlay.style.display = 'none';
-            });
-
-            // Show overlay when video ends or is paused
-            introVideo.addEventListener('pause', function() {
-                if (!introVideo.ended) {
-                    videoOverlay.style.display = 'flex';
-                }
-            });
-
-            introVideo.addEventListener('ended', function() {
-                videoOverlay.style.display = 'flex';
-            });
-
-            // Hide overlay when video starts playing
-            introVideo.addEventListener('play', function() {
-                videoOverlay.style.display = 'none';
-            });
-        }
-
-        // Video rotation functionality
-        let currentVideoIndex = 0;
-        let isScrolling = false;
-        const videos = [
-            'videos/video1.mp4',
-            'videos/video2.mp4', 
-            'videos/video3.mp4',
-            'videos/video4.mp4',
-            'videos/video5.mp4'
-        ];
-
-        function initVideoRotation() {
-            console.log('Initializing scroll-based video navigation...');
-            
-            // Start with first video
-            loadVideo(0);
-            
-            // Add scroll event listener for video navigation
-            const heroSection = document.getElementById('home');
-            
-            // Mouse wheel event for video changing
-            heroSection.addEventListener('wheel', function(e) {
-                if (isScrolling) return; // Prevent rapid scrolling
-                
-                e.preventDefault(); // Prevent page scroll while on hero
-                
-                isScrolling = true;
-                
-                if (e.deltaY > 0) {
-                    // Scroll down - next video
-                    nextVideo();
-                } else {
-                    // Scroll up - previous video
-                    previousVideo();
-                }
-                
-                // Reset scroll flag after a delay
-                setTimeout(() => {
-                    isScrolling = false;
-                }, 800);
-            });
-            
-            // Touch events for mobile
-            let touchStartY = 0;
-            
-            heroSection.addEventListener('touchstart', function(e) {
-                touchStartY = e.touches[0].clientY;
-            });
-            
-            heroSection.addEventListener('touchend', function(e) {
-                if (isScrolling) return;
-                
-                const touchEndY = e.changedTouches[0].clientY;
-                const diff = touchStartY - touchEndY;
-                
-                if (Math.abs(diff) > 50) { // Minimum swipe distance
-                    isScrolling = true;
-                    
-                    if (diff > 0) {
-                        // Swipe up - next video
-                        nextVideo();
-                    } else {
-                        // Swipe down - previous video
-                        previousVideo();
-                    }
-                    
-                    setTimeout(() => {
-                        isScrolling = false;
-                    }, 800);
-                }
-            });
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                if (window.pageYOffset < window.innerHeight) { // Only when hero is visible
-                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                        e.preventDefault();
-                        nextVideo();
-                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                        e.preventDefault();
-                        previousVideo();
-                    }
-                }
-            });
-        }
-
-        function loadVideo(index) {
-            const video = document.getElementById('heroVideo');
-            const source = document.getElementById('videoSource');
-            
-            console.log('Loading video:', videos[index]);
-            
-            source.src = videos[index];
-            video.load();
-            video.play().catch(function(error) {
-                console.log('Video play error:', error);
-            });
-            
-            // Update video indicator
-            updateVideoIndicator();
-        }
-
-        function nextVideo() {
-            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-            console.log('Next video - index:', currentVideoIndex);
-            loadVideo(currentVideoIndex);
-        }
-        
-        function previousVideo() {
-            currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
-            console.log('Previous video - index:', currentVideoIndex);
-            loadVideo(currentVideoIndex);
-        }
-        
-        function updateVideoIndicator() {
-            // Update dots if they exist
-            const dots = document.querySelectorAll('.video-dot');
-            dots.forEach((dot, index) => {
-                if (index === currentVideoIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-            
-            // Lazy load images
-            if ("IntersectionObserver" in window) {
-                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            let lazyImage = entry.target;
-                            lazyImage.src = lazyImage.dataset.src;
-                            lazyImage.classList.add("loaded");
-                            lazyImageObserver.unobserve(lazyImage);
-                        }
-                    });
-                });
-                
-                document.querySelectorAll("img.lazy").forEach(function(lazyImage) {
-                    lazyImageObserver.observe(lazyImage);
-                });
-            }
-            
-            // Animate elements when they come into view
-            const animateOnScroll = () => {
-                const elements = document.querySelectorAll('.animate-fadeInUp');
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = 1;
-                            entry.target.style.transform = 'translate3d(0, 0, 0)';
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                
-                elements.forEach(element => {
-                    element.style.opacity = 0;
-                    element.style.transform = 'translate3d(0, 20px, 0)';
-                    element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                    observer.observe(element);
-                });
-            };
-            
-            animateOnScroll();
-            
-            // Play button for demo video
-            document.querySelector('.play-button').addEventListener('click', function() {
-                alert("This would play the demo video in the full application.");
-            });
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/data/features-data.js"></script>
+    <script src="js/data/countries-data.js"></script>
+    <script src="js/data/testimonials-data.js"></script>
+    <script src="js/components/features-component.js"></script>
+    <script src="js/components/countries-component.js"></script>
+    <script src="js/components/testimonials-component.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

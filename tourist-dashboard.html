@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Dashboard | Ubuntu Explorer</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/ubuntuexploreroutline.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ubuntu-blue': '#1e40af',
+                        'ubuntu-dark': '#1e3a8a',
+                        'ubuntu-light': '#3b82f6',
+                        'ubuntu-gold': '#f59e0b',
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .recommendation-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .recommendation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ubuntu-pattern {
+            background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
+            background-color: #1e40af;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="ubuntu-pattern text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-auto" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
+                        <span class="ml-2 text-white font-bold">Ubuntu Explorer</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="countries.html" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-globe mr-1"></i> Explore Countries
+                    </a>
+                    <div class="relative">
+                        <button class="flex items-center text-white hover:text-gray-200">
+                            <div class="w-8 h-8 rounded-full bg-ubuntu-gold flex items-center justify-center">
+                                <i class="fas fa-user text-gray-900"></i>
+                            </div>
+                            <span class="ml-2" id="userName">Welcome!</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome to Your Travel Dashboard</h1>
+            <p class="text-lg text-gray-600">Discover personalized experiences based on your preferences</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-ubuntu-blue rounded-full">
+                        <i class="fas fa-map-marked-alt text-white"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Countries Explored</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="countriesExplored">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-ubuntu-gold rounded-full">
+                        <i class="fas fa-heart text-white"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Saved Experiences</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="savedExperiences">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-500 rounded-full">
+                        <i class="fas fa-check-circle text-white"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Completed Trips</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="completedTrips">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-purple-500 rounded-full">
+                        <i class="fas fa-star text-white"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Reviews Given</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="reviewsGiven">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Personalized Recommendations -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                    <i class="fas fa-magic mr-2 text-ubuntu-blue"></i>
+                    Personalized Recommendations
+                </h2>
+                <div id="recommendationsContainer" class="space-y-4">
+                    <!-- Recommendations will be loaded here -->
+                </div>
+                <button class="mt-4 w-full text-ubuntu-blue hover:text-ubuntu-dark font-medium">
+                    View All Recommendations
+                </button>
+            </div>
+
+            <!-- Your Interests -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                    <i class="fas fa-heart mr-2 text-ubuntu-gold"></i>
+                    Your Interests
+                </h2>
+                <div id="interestsContainer" class="flex flex-wrap gap-2 mb-4">
+                    <!-- Interest tags will be loaded here -->
+                </div>
+                <button class="text-ubuntu-blue hover:text-ubuntu-dark font-medium">
+                    Update Preferences
+                </button>
+            </div>
+        </div>
+
+        <!-- Preferred Countries -->
+        <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                <i class="fas fa-globe mr-2 text-green-600"></i>
+                Your Preferred G20 Countries
+            </h2>
+            <div id="preferredCountriesContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <!-- Preferred countries will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                <i class="fas fa-bolt mr-2 text-yellow-600"></i>
+                Quick Actions
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-ubuntu-blue transition-colors">
+                    <i class="fas fa-search text-2xl text-ubuntu-blue mb-2"></i>
+                    <span class="text-sm font-medium">Find Experiences</span>
+                </button>
+                <button class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-ubuntu-blue transition-colors">
+                    <i class="fas fa-calendar-plus text-2xl text-ubuntu-blue mb-2"></i>
+                    <span class="text-sm font-medium">Plan Trip</span>
+                </button>
+                <button class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-ubuntu-blue transition-colors">
+                    <i class="fas fa-users text-2xl text-ubuntu-blue mb-2"></i>
+                    <span class="text-sm font-medium">Connect Locals</span>
+                </button>
+                <button class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-ubuntu-blue transition-colors">
+                    <i class="fas fa-comment text-2xl text-ubuntu-blue mb-2"></i>
+                    <span class="text-sm font-medium">AI Assistant</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load user data and populate dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('ubuntuUserData'));
+            
+            if (userData) {
+                document.getElementById('userName').textContent = `Welcome, ${userData.name}!`;
+                
+                // Load interests
+                if (userData.preferences && userData.preferences.interests) {
+                    const interestsContainer = document.getElementById('interestsContainer');
+                    userData.preferences.interests.forEach(interest => {
+                        const tag = document.createElement('span');
+                        tag.className = 'px-3 py-1 bg-ubuntu-blue text-white rounded-full text-sm';
+                        tag.textContent = interest.charAt(0).toUpperCase() + interest.slice(1);
+                        interestsContainer.appendChild(tag);
+                    });
+                }
+                
+                // Load preferred countries
+                if (userData.preferences && userData.preferences.preferredCountries) {
+                    const countriesContainer = document.getElementById('preferredCountriesContainer');
+                    userData.preferences.preferredCountries.forEach(countryCode => {
+                        const countryNames = {
+                            'south-africa': 'South Africa',
+                            'argentina': 'Argentina',
+                            'australia': 'Australia',
+                            'brazil': 'Brazil',
+                            'canada': 'Canada',
+                            'china': 'China',
+                            'france': 'France',
+                            'germany': 'Germany',
+                            'india': 'India',
+                            'indonesia': 'Indonesia',
+                            'italy': 'Italy',
+                            'japan': 'Japan',
+                            'mexico': 'Mexico',
+                            'russia': 'Russia',
+                            'saudi-arabia': 'Saudi Arabia',
+                            'south-korea': 'South Korea',
+                            'turkey': 'Turkey',
+                            'uk': 'United Kingdom',
+                            'usa': 'United States'
+                        };
+                        
+                        const countryDiv = document.createElement('div');
+                        countryDiv.className = 'text-center p-2 border rounded-lg hover:bg-gray-50 cursor-pointer';
+                        countryDiv.innerHTML = `
+                            <div class="text-2xl mb-1">🌍</div>
+                            <div class="text-xs font-medium">${countryNames[countryCode] || countryCode}</div>
+                        `;
+                        countriesContainer.appendChild(countryDiv);
+                    });
+                }
+                
+                // Generate personalized recommendations
+                generateRecommendations(userData);
+            } else {
+                // Redirect to signup if no user data
+                window.location.href = 'index.html';
+            }
+        });
+        
+        function generateRecommendations(userData) {
+            const recommendationsContainer = document.getElementById('recommendationsContainer');
+            
+            // Mock recommendations based on user interests
+            const recommendations = [
+                {
+                    title: "Cultural Heritage Tour in India",
+                    description: "Explore ancient temples and local traditions",
+                    image: "🏛️",
+                    category: "Cultural"
+                },
+                {
+                    title: "Safari Adventure in South Africa",
+                    description: "Wildlife viewing and conservation experience",
+                    image: "🦁",
+                    category: "Nature"
+                },
+                {
+                    title: "Local Cooking Class in Italy",
+                    description: "Learn authentic recipes from local chefs",
+                    image: "🍝",
+                    category: "Food"
+                }
+            ];
+            
+            recommendations.forEach(rec => {
+                const recDiv = document.createElement('div');
+                recDiv.className = 'recommendation-card p-4 border rounded-lg cursor-pointer';
+                recDiv.innerHTML = `
+                    <div class="flex items-start space-x-3">
+                        <div class="text-2xl">${rec.image}</div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-900">${rec.title}</h3>
+                            <p class="text-sm text-gray-600 mt-1">${rec.description}</p>
+                            <span class="inline-block mt-2 px-2 py-1 bg-ubuntu-gold text-xs rounded">${rec.category}</span>
+                        </div>
+                    </div>
+                `;
+                recommendationsContainer.appendChild(recDiv);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Dashboard | Ubuntu Explorer</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/ubuntuexploreroutline.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ubuntu-blue': '#1e40af',
+                        'ubuntu-dark': '#1e3a8a',
+                        'ubuntu-light': '#3b82f6',
+                        'ubuntu-gold': '#f59e0b',
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .business-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .business-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ubuntu-pattern {
+            background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
+            background-color: #1e40af;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="ubuntu-pattern text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-auto" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
+                        <span class="ml-2 text-white font-bold">Ubuntu Explorer</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="countries.html" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-globe mr-1"></i> Explore Platform
+                    </a>
+                    <div class="relative">
+                        <button class="flex items-center text-white hover:text-gray-200">
+                            <div class="w-8 h-8 rounded-full bg-ubuntu-gold flex items-center justify-center">
+                                <i class="fas fa-briefcase text-gray-900"></i>
+                            </div>
+                            <span class="ml-2" id="businessName">Welcome!</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Business Dashboard</h1>
+            <p class="text-lg text-gray-600">Manage your listings and connect with travelers</p>
+        </div>
+
+        <!-- Business Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="metric-card rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-ubuntu-blue rounded-full">
+                        <i class="fas fa-eye text-white"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Profile Views</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="profileViews">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-card rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-ubuntu-gold rounded-full">
+                        <i class="fas fa-calendar-check text-white"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Bookings</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="totalBookings">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-card rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-500 rounded-full">
+                        <i class="fas fa-star text-white"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Average Rating</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="averageRating">5.0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-card rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-purple-500 rounded-full">
+                        <i class="fas fa-dollar-sign text-white"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Monthly Revenue</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="monthlyRevenue">$0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Business Profile -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-gray-900">
+                        <i class="fas fa-building mr-2 text-ubuntu-blue"></i>
+                        Business Profile
+                    </h2>
+                    <button class="text-ubuntu-blue hover:text-ubuntu-dark font-medium">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+                </div>
+                <div id="businessProfileContainer">
+                    <!-- Business info will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                    <i class="fas fa-clock mr-2 text-ubuntu-gold"></i>
+                    Recent Activity
+                </h2>
+                <div id="activityContainer" class="space-y-4">
+                    <!-- Recent activity will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Listings Management -->
+        <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-900">
+                    <i class="fas fa-list mr-2 text-green-600"></i>
+                    Your Listings
+                </h2>
+                <button class="bg-ubuntu-blue hover:bg-ubuntu-dark text-white px-4 py-2 rounded-lg font-medium">
+                    <i class="fas fa-plus mr-2"></i>Add New Listing
+                </button>
+            </div>
+            <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Listings will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                <i class="fas fa-bolt mr-2 text-yellow-600"></i>
+                Quick Actions
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="business-card flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-ubuntu-blue transition-colors">
+                    <i class="fas fa-plus-circle text-2xl text-ubuntu-blue mb-2"></i>
+                    <span class="text-sm font-medium">Create Listing</span>
+                </button>
+                <button class="business-card flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-ubuntu-blue transition-colors">
+                    <i class="fas fa-chart-line text-2xl text-ubuntu-blue mb-2"></i>
+                    <span class="text-sm font-medium">View Analytics</span>
+                </button>
+                <button class="business-card flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-ubuntu-blue transition-colors">
+                    <i class="fas fa-comments text-2xl text-ubuntu-blue mb-2"></i>
+                    <span class="text-sm font-medium">Customer Messages</span>
+                </button>
+                <button class="business-card flex flex-col items-center p-4 border-2 border-gray-200 rounded-lg hover:border-ubuntu-blue transition-colors">
+                    <i class="fas fa-certificate text-2xl text-ubuntu-blue mb-2"></i>
+                    <span class="text-sm font-medium">Get Verified</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Verification Status -->
+        <div class="mt-8 bg-white rounded-lg shadow-md p-6" id="verificationStatus">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                <i class="fas fa-shield-alt mr-2 text-blue-600"></i>
+                Verification Status
+            </h2>
+            <div id="verificationContainer">
+                <!-- Verification status will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load business data and populate dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('ubuntuUserData'));
+            
+            if (userData && userData.userType === 'business') {
+                document.getElementById('businessName').textContent = `Welcome, ${userData.name}!`;
+                
+                // Load business profile
+                loadBusinessProfile(userData);
+                
+                // Load verification status
+                loadVerificationStatus(userData);
+                
+                // Generate sample listings
+                generateSampleListings(userData);
+                
+                // Load recent activity
+                loadRecentActivity();
+                
+            } else {
+                // Redirect to signup if no business user data
+                window.location.href = 'index.html';
+            }
+        });
+        
+        function loadBusinessProfile(userData) {
+            const profileContainer = document.getElementById('businessProfileContainer');
+            const businessInfo = userData.businessInfo;
+            
+            const businessTypes = {
+                'accommodation': 'Accommodation',
+                'tour-operator': 'Tour Operator',
+                'restaurant': 'Restaurant/Food Service',
+                'activity-provider': 'Activity Provider',
+                'transport': 'Transportation Service',
+                'cultural-site': 'Cultural Site/Museum',
+                'guide': 'Local Guide',
+                'other': 'Other'
+            };
+            
+            const countries = {
+                'south-africa': 'South Africa',
+                'argentina': 'Argentina',
+                'australia': 'Australia',
+                'brazil': 'Brazil',
+                'canada': 'Canada',
+                'china': 'China',
+                'france': 'France',
+                'germany': 'Germany',
+                'india': 'India',
+                'indonesia': 'Indonesia',
+                'italy': 'Italy',
+                'japan': 'Japan',
+                'mexico': 'Mexico',
+                'russia': 'Russia',
+                'saudi-arabia': 'Saudi Arabia',
+                'south-korea': 'South Korea',
+                'turkey': 'Turkey',
+                'uk': 'United Kingdom',
+                'usa': 'United States'
+            };
+            
+            profileContainer.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Business Type</p>
+                        <p class="text-lg text-gray-900">${businessTypes[businessInfo.businessType] || businessInfo.businessType}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Location</p>
+                        <p class="text-lg text-gray-900">${countries[businessInfo.location] || businessInfo.location}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Description</p>
+                        <p class="text-gray-900">${businessInfo.description || 'No description provided'}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function loadVerificationStatus(userData) {
+            const verificationContainer = document.getElementById('verificationContainer');
+            const wantsVerification = userData.businessInfo.wantsVerification;
+            
+            if (wantsVerification) {
+                verificationContainer.innerHTML = `
+                    <div class="flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <i class="fas fa-clock text-yellow-600 mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold text-yellow-800">Verification Pending</h3>
+                            <p class="text-yellow-700">Your verification application is being reviewed. We'll contact you within 3-5 business days.</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                verificationContainer.innerHTML = `
+                    <div class="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle text-blue-600 mr-3"></i>
+                            <div>
+                                <h3 class="font-semibold text-blue-800">Get Verified</h3>
+                                <p class="text-blue-700">Increase trust and visibility with verified business status.</p>
+                            </div>
+                        </div>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">
+                            Apply Now
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        function generateSampleListings(userData) {
+            const listingsContainer = document.getElementById('listingsContainer');
+            
+            // Sample listings based on business type
+            const sampleListings = [
+                {
+                    title: "Cultural Heritage Experience",
+                    description: "Authentic local experience showcasing traditional culture",
+                    price: "$45/person",
+                    status: "Active",
+                    image: "🏛️"
+                },
+                {
+                    title: "Local Food Tour",
+                    description: "Taste authentic local cuisine with expert guide",
+                    price: "$35/person",
+                    status: "Active",
+                    image: "🍽️"
+                }
+            ];
+            
+            sampleListings.forEach(listing => {
+                const listingDiv = document.createElement('div');
+                listingDiv.className = 'business-card border rounded-lg p-4';
+                listingDiv.innerHTML = `
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">${listing.image}</div>
+                        <h3 class="font-semibold text-gray-900">${listing.title}</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">${listing.description}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold text-ubuntu-blue">${listing.price}</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">${listing.status}</span>
+                    </div>
+                `;
+                listingsContainer.appendChild(listingDiv);
+            });
+        }
+        
+        function loadRecentActivity() {
+            const activityContainer = document.getElementById('activityContainer');
+            
+            const activities = [
+                { icon: "fas fa-user-plus", text: "New customer inquiry received", time: "2 hours ago", color: "text-blue-600" },
+                { icon: "fas fa-star", text: "New 5-star review posted", time: "1 day ago", color: "text-yellow-600" },
+                { icon: "fas fa-calendar-check", text: "Booking confirmed for tomorrow", time: "2 days ago", color: "text-green-600" }
+            ];
+            
+            activities.forEach(activity => {
+                const activityDiv = document.createElement('div');
+                activityDiv.className = 'flex items-start space-x-3 p-3 bg-gray-50 rounded-lg';
+                activityDiv.innerHTML = `
+                    <i class="${activity.icon} ${activity.color} mt-1"></i>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">${activity.text}</p>
+                        <p class="text-xs text-gray-500">${activity.time}</p>
+                    </div>
+                `;
+                activityContainer.appendChild(activityDiv);
+            });
+        }
+    </script>
+</body>
+</html>

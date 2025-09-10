@@ -339,12 +339,15 @@
                         <a href="#home" class="nav-link text-white px-3 py-2 text-sm font-medium">Home</a>
                         <a href="#features" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Features</a>
                         <a href="#countries" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Countries</a>
+                        <a href="ai-chat.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">
+                            <i class="fas fa-robot mr-1"></i>AI Chat
+                        </a>
                         <a href="#about" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">About</a>
                     </div>
                 </div>
                 <div class="hidden md:ml-4 md:flex md:items-center md:space-x-4">
                     <button id="loginBtn" class="text-white hover:text-ubuntu-gold px-4 py-2 rounded-md text-sm font-medium transition duration-300">Login</button>
-                    <button id="signupBtn" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-md text-sm font-medium transition duration-300 shadow-md">Sign Up</button>
+                    <a href="signup.html" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-md text-sm font-medium transition duration-300 shadow-md">Sign Up</a>
                 </div>
                 <div class="-mr-2 flex items-center md:hidden">
                     <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-white hover:bg-white hover:bg-opacity-20 focus:outline-none">
@@ -868,9 +871,9 @@
             <h2 class="text-3xl font-bold mb-6">Ready to Explore G20 Like Never Before?</h2>
             <p class="text-xl mb-8 max-w-3xl mx-auto">Join thousands of travelers discovering authentic experiences while making a positive impact.</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <button id="ctaSignup" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                <a href="signup.html" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
                     Start Your Journey
-                </button>
+                </a>
                 <button class="bg-white hover:bg-gray-100 text-ubuntu-blue font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105">
                     <i class="fas fa-mobile-alt mr-2"></i> Download App
                 </button>
@@ -968,6 +971,103 @@
                     <button class="send-chat bg-ubuntu-blue text-white px-4 rounded-r-lg"><i class="fas fa-paper-plane"></i></button>
                 </div>
                 <div class="mt-2 text-xs text-gray-500">Try: "Best hidden gems in South Africa for food lovers"</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Panic Button -->
+    <div class="panic-button fixed bottom-6 left-6 z-50">
+        <button id="panicBtn" class="w-16 h-16 bg-red-600 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform animate-pulse">
+            <i class="fas fa-exclamation-triangle text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="emergency-modal" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-red-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-red-600 text-white p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-3xl mr-3"></i>
+                        <h3 class="text-lg font-bold">EMERGENCY ASSISTANCE</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-6">
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold mb-3 text-red-800">Choose Your Emergency Contact:</h4>
+                        
+                        <!-- Local Emergency Numbers -->
+                        <div class="space-y-3 mb-6">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h5 class="font-semibold text-red-800 mb-2">Local Emergency Services</h5>
+                                <div class="space-y-2">
+                                    <button onclick="callEmergency('911')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        📞 CALL 911 (USA/Canada)
+                                    </button>
+                                    <button onclick="callEmergency('999')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        📞 CALL 999 (UK)
+                                    </button>
+                                    <button onclick="callEmergency('112')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        📞 CALL 112 (Europe/International)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ubuntu Explorer Emergency Support -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <h5 class="font-semibold text-blue-800 mb-2">Ubuntu Explorer 24/7 Support</h5>
+                            <button onclick="callEmergency('ubuntu-support')" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-semibold transition duration-200">
+                                📞 CALL +27-11-123-4567
+                            </button>
+                            <p class="text-sm text-blue-600 mt-2">Multi-language support available</p>
+                        </div>
+
+                        <!-- Embassy Contacts -->
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                            <h5 class="font-semibold text-green-800 mb-2">Embassy/Consulate Support</h5>
+                            <div class="space-y-2">
+                                <button onclick="callEmergency('us-embassy')" class="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg transition duration-200">
+                                    🇺🇸 US Embassy: +1-555-EMBASSY
+                                </button>
+                                <button onclick="callEmergency('uk-embassy')" class="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg transition duration-200">
+                                    🇬🇧 UK Embassy: +44-555-EMBASSY
+                                </button>
+                                <button onclick="callEmergency('embassy-general')" class="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg transition duration-200">
+                                    🌍 Find My Embassy
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-yellow-800 mb-2">Quick Actions</h5>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="shareLocation()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-2 rounded-lg text-sm transition duration-200">
+                                    📍 Share Location
+                                </button>
+                                <button onclick="sendSOS()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-2 rounded-lg text-sm transition duration-200">
+                                    📱 Send SOS SMS
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            <p><strong>Your current location will be shared with emergency services</strong></p>
+                            <p class="mt-1">Stay calm. Help is on the way.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-3 flex justify-between">
+                    <button onclick="closeEmergencyModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="callEmergency('auto-detect')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition duration-200">
+                        🚨 AUTO-DETECT LOCAL EMERGENCY
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -2339,6 +2439,135 @@
             document.querySelector('.play-button').addEventListener('click', function() {
                 alert("This would play the demo video in the full application.");
             });
+
+            // Panic Button Functionality
+            document.getElementById('panicBtn').addEventListener('click', function() {
+                showEmergencyModal();
+            });
+        });
+
+        // Emergency Modal Functions
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('hidden');
+            // Add a small delay to show loading of user location
+            setTimeout(() => {
+                detectUserLocation();
+            }, 500);
+        }
+
+        function closeEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('hidden');
+        }
+
+        function detectUserLocation() {
+            // Simulate location detection for demo
+            const demoLocations = [
+                { country: 'United States', city: 'New York', emergency: '911' },
+                { country: 'United Kingdom', city: 'London', emergency: '999' },
+                { country: 'South Africa', city: 'Cape Town', emergency: '10177' },
+                { country: 'Japan', city: 'Tokyo', emergency: '110/119' },
+                { country: 'Germany', city: 'Berlin', emergency: '112' },
+                { country: 'Australia', city: 'Sydney', emergency: '000' }
+            ];
+            
+            const randomLocation = demoLocations[Math.floor(Math.random() * demoLocations.length)];
+            
+            // Update the auto-detect button with location-specific info
+            const autoDetectBtn = document.querySelector('button[onclick="callEmergency(\'auto-detect\')"]');
+            autoDetectBtn.innerHTML = `🚨 CALL ${randomLocation.emergency} (${randomLocation.city})`;
+            autoDetectBtn.setAttribute('onclick', `callEmergency('${randomLocation.emergency}')`);
+        }
+
+        function callEmergency(type) {
+            // Demo function - in real app this would initiate actual emergency calls
+            let message = '';
+            let phoneNumber = '';
+            
+            switch(type) {
+                case '911':
+                    phoneNumber = '911';
+                    message = 'Calling 911 Emergency Services (USA/Canada)';
+                    break;
+                case '999':
+                    phoneNumber = '999';
+                    message = 'Calling 999 Emergency Services (UK)';
+                    break;
+                case '112':
+                    phoneNumber = '112';
+                    message = 'Calling 112 Emergency Services (Europe)';
+                    break;
+                case 'ubuntu-support':
+                    phoneNumber = '+27-11-123-4567';
+                    message = 'Calling Ubuntu Explorer 24/7 Emergency Support';
+                    break;
+                case 'us-embassy':
+                    phoneNumber = '+1-555-EMBASSY';
+                    message = 'Calling US Embassy Emergency Line';
+                    break;
+                case 'uk-embassy':
+                    phoneNumber = '+44-555-EMBASSY';
+                    message = 'Calling UK Embassy Emergency Line';
+                    break;
+                case 'embassy-general':
+                    message = 'Opening Embassy Locator Service';
+                    break;
+                case 'auto-detect':
+                    message = 'Calling Local Emergency Services';
+                    break;
+                default:
+                    phoneNumber = type;
+                    message = `Calling ${type}`;
+            }
+
+            // Show demo alert
+            alert(`🚨 EMERGENCY CALL INITIATED 🚨\n\n${message}\n\nPhone: ${phoneNumber}\n\n📍 Your location has been shared with emergency services.\n\n⏰ Call connecting... (This is a demo - in real emergency, call actual emergency services)`);
+            
+            // In a real app, this would:
+            // 1. Get user's actual location
+            // 2. Initiate phone call using tel: protocol
+            // 3. Send location data to emergency services
+            // 4. Log the emergency request
+            
+            closeEmergencyModal();
+        }
+
+        function shareLocation() {
+            // Demo function for location sharing
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    alert(`📍 LOCATION SHARED\n\nLatitude: ${lat}\nLongitude: ${lng}\n\nYour location has been shared with:\n• Emergency contacts\n• Ubuntu Explorer Support\n• Local authorities\n\n(This is a demo)`);
+                }, function() {
+                    alert('📍 DEMO LOCATION SHARED\n\nDemo coordinates: 40.7128° N, 74.0060° W\n(New York City)\n\nIn real emergency, actual GPS coordinates would be shared.');
+                });
+            } else {
+                alert('📍 DEMO LOCATION SHARED\n\nDemo coordinates: 40.7128° N, 74.0060° W\n(New York City)\n\nIn real emergency, actual GPS coordinates would be shared.');
+            }
+        }
+
+        function sendSOS() {
+            // Demo function for SOS SMS
+            const sosMessage = `🆘 EMERGENCY SOS from Ubuntu Explorer\n\nI need immediate assistance.\n\nLocation: [GPS coordinates would be here]\nTime: ${new Date().toLocaleString()}\nUser ID: DEMO123\n\nThis message was sent automatically via Ubuntu Explorer panic button.`;
+            
+            alert(`📱 SOS MESSAGE SENT\n\n${sosMessage}\n\nSent to:\n• Emergency contacts\n• Ubuntu Explorer Support\n• Local authorities\n\n(This is a demo)`);
+            
+            // In real app, this would send actual SMS messages
+        }
+
+        // Close emergency modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('emergencyModal');
+            if (event.target === modal) {
+                closeEmergencyModal();
+            }
+        });
+
+        // ESC key to close emergency modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeEmergencyModal();
+            }
         });
     </script>
 </body>

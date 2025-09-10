@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argentina Learning Adventure - Ubuntu Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ubuntu-blue': '#1e40af',
+                        'ubuntu-dark': '#1e3a8a',
+                        'ubuntu-light': '#3b82f6',
+                        'ubuntu-gold': '#f59e0b',
+                        'argentina-blue': '#4fc3f7',
+                        'argentina-white': '#ffffff',
+                        'argentina-sun': '#ffeb3b',
+                        'tango-red': '#d32f2f',
+                        'pampas-green': '#4caf50',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        
+        .argentina-gradient {
+            background: linear-gradient(135deg, #4fc3f7 0%, #ffffff 50%, #4fc3f7 100%);
+        }
+        
+        .sun-animation {
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .tango-dance {
+            animation: tango 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes tango {
+            0% { transform: rotate(-2deg); }
+            100% { transform: rotate(2deg); }
+        }
+        
+        .card-flip {
+            perspective: 1000px;
+            transition: transform 0.6s;
+        }
+        
+        .card-flip:hover {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .achievement-badge {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .quiz-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .correct-answer {
+            background: linear-gradient(45deg, #4caf50, #66bb6a) !important;
+            color: white !important;
+        }
+        
+        .incorrect-answer {
+            background: linear-gradient(45deg, #f44336, #ef5350) !important;
+            color: white !important;
+        }
+        
+        .learning-module {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .learning-module.completed {
+            border-color: #4caf50;
+            background: linear-gradient(45deg, rgba(76, 175, 80, 0.1), rgba(102, 187, 106, 0.1));
+        }
+        
+        .level-indicator {
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b-2 border-argentina-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img class="h-8 w-8 mr-3" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
+                        <span class="text-ubuntu-blue font-bold text-xl">Ubuntu<span class="text-ubuntu-gold">Explorer</span></span>
+                    </a>
+                    <div class="ml-6 flex items-center">
+                        <span class="inline-block w-6 h-4 mr-2 bg-argentina-blue relative">
+                            <span class="absolute inset-0 bg-argentina-white" style="height: 33%; top: 33%;"></span>
+                            <div class="absolute left-1 top-1 w-4 h-2 bg-argentina-sun sun-animation text-xs flex items-center justify-center">☀</div>
+                        </span>
+                        <span class="text-gray-700 font-medium">Argentina Learning Adventure</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Progress Display -->
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-trophy text-argentina-sun"></i>
+                        <span id="playerScore" class="font-bold text-argentina-blue">0 XP</span>
+                        <div class="level-indicator px-3 py-1 rounded-full text-white text-sm font-bold">
+                            Level <span id="playerLevel">1</span>
+                        </div>
+                    </div>
+                    <a href="countries.html" class="text-gray-600 hover:text-argentina-blue">Back to Countries</a>
+                    <a href="signup.html" class="bg-argentina-blue hover:bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Game Dashboard -->
+    <div class="argentina-gradient text-gray-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h1 class="text-5xl font-bold mb-4 flex items-center justify-center">
+                    <span class="tango-dance mr-4">🇦🇷</span>
+                    Argentina Learning Adventure
+                    <span class="tango-dance ml-4">💃</span>
+                </h1>
+                <p class="text-xl mb-6">Explore Argentina through interactive games, quizzes, and cultural challenges!</p>
+                
+                <!-- Progress Bar -->
+                <div class="max-w-2xl mx-auto bg-white rounded-full p-1 shadow-lg">
+                    <div class="bg-gray-200 rounded-full h-4 relative overflow-hidden">
+                        <div id="overallProgress" class="progress-bar bg-gradient-to-r from-argentina-blue to-argentina-sun h-full rounded-full" style="width: 0%"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-xs font-bold text-gray-700">
+                            <span id="progressText">0% Complete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievement Badges -->
+            <div id="achievementDisplay" class="flex justify-center space-x-4 mb-8">
+                <!-- Achievements will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Learning Modules Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Module 1: Geography Challenge -->
+            <div class="learning-module bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="startModule('geography')">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-pampas-green rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-globe-americas text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Geography Master</h3>
+                    <p class="text-gray-600 mt-2">Learn about Argentina's diverse landscapes, provinces, and natural wonders</p>
+                </div>
+                <div class="bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="geographyProgress" class="progress-bar bg-pampas-green h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>🏆 50 XP</span>
+                    <span id="geographyStatus">Not Started</span>
+                </div>
+            </div>
+
+            <!-- Module 2: Culture & Traditions -->
+            <div class="learning-module bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="startModule('culture')">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-tango-red rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-music text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Tango & Culture</h3>
+                    <p class="text-gray-600 mt-2">Discover Argentina's rich cultural heritage, tango, and traditions</p>
+                </div>
+                <div class="bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="cultureProgress" class="progress-bar bg-tango-red h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>🏆 75 XP</span>
+                    <span id="cultureStatus">Not Started</span>
+                </div>
+            </div>
+
+            <!-- Module 3: Food & Cuisine -->
+            <div class="learning-module bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="startModule('cuisine')">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-utensils text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Culinary Adventure</h3>
+                    <p class="text-gray-600 mt-2">Explore Argentine cuisine, from asado to empanadas and wine</p>
+                </div>
+                <div class="bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="cuisineProgress" class="progress-bar bg-orange-500 h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>🏆 60 XP</span>
+                    <span id="cuisineStatus">Not Started</span>
+                </div>
+            </div>
+
+            <!-- Module 4: History Timeline -->
+            <div class="learning-module bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="startModule('history')">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-scroll text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">History Quest</h3>
+                    <p class="text-gray-600 mt-2">Journey through Argentina's fascinating history and key events</p>
+                </div>
+                <div class="bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="historyProgress" class="progress-bar bg-purple-500 h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>🏆 80 XP</span>
+                    <span id="historyStatus">Not Started</span>
+                </div>
+            </div>
+
+            <!-- Module 5: Language Fun -->
+            <div class="learning-module bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="startModule('language')">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-comments text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Spanish Fiesta</h3>
+                    <p class="text-gray-600 mt-2">Learn key Spanish phrases and Argentine expressions</p>
+                </div>
+                <div class="bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="languageProgress" class="progress-bar bg-pink-500 h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>🏆 40 XP</span>
+                    <span id="languageStatus">Not Started</span>
+                </div>
+            </div>
+
+            <!-- Module 6: Sports & Soccer -->
+            <div class="learning-module bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="startModule('sports')">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-futbol text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Soccer Legends</h3>
+                    <p class="text-gray-600 mt-2">Discover Argentina's soccer culture and legendary players</p>
+                </div>
+                <div class="bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="sportsProgress" class="progress-bar bg-blue-600 h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>🏆 55 XP</span>
+                    <span id="sportsStatus">Not Started</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="game-modal" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                <div id="gameContent" class="bg-white p-6">
+                    <!-- Game content will be dynamically loaded here -->
+                </div>
+                <div class="bg-gray-50 px-6 py-3 flex justify-between">
+                    <button onclick="closeGameModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition duration-200">
+                        Close
+                    </button>
+                    <button id="nextButton" onclick="nextQuestion()" class="hidden bg-argentina-blue hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold transition duration-200">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Section -->
+    <div class="bg-gray-100 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-8">🏆 Top Argentina Explorers</h2>
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div id="leaderboard" class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-argentina-sun bg-opacity-20 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">🥇</span>
+                            <div>
+                                <div class="font-bold">Maria Rodriguez</div>
+                                <div class="text-sm text-gray-600">Cultural Expert</div>
+                            </div>
+                        </div>
+                        <div class="text-xl font-bold text-argentina-blue">2,450 XP</div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-100 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">🥈</span>
+                            <div>
+                                <div class="font-bold">Carlos Mendez</div>
+                                <div class="text-sm text-gray-600">Geography Master</div>
+                            </div>
+                        </div>
+                        <div class="text-xl font-bold text-argentina-blue">2,180 XP</div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-orange-100 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">🥉</span>
+                            <div>
+                                <div class="font-bold">Ana Silva</div>
+                                <div class="text-sm text-gray-600">Tango Enthusiast</div>
+                            </div>
+                        </div>
+                        <div class="text-xl font-bold text-argentina-blue">1,950 XP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game State Management
+        let gameState = {
+            score: 0,
+            level: 1,
+            modules: {
+                geography: { completed: false, progress: 0, questions: 0 },
+                culture: { completed: false, progress: 0, questions: 0 },
+                cuisine: { completed: false, progress: 0, questions: 0 },
+                history: { completed: false, progress: 0, questions: 0 },
+                language: { completed: false, progress: 0, questions: 0 },
+                sports: { completed: false, progress: 0, questions: 0 }
+            },
+            achievements: [],
+            currentModule: null,
+            currentQuestion: 0
+        };
+
+        // Learning Content Database
+        const learningContent = {
+            geography: {
+                title: "Geography Master Challenge",
+                description: "Test your knowledge of Argentina's diverse landscapes!",
+                questions: [
+                    {
+                        question: "What is the capital city of Argentina?",
+                        options: ["Buenos Aires", "Córdoba", "Rosario", "La Plata"],
+                        correct: 0,
+                        explanation: "Buenos Aires is the capital and largest city of Argentina, known as the 'Paris of South America'."
+                    },
+                    {
+                        question: "Which mountain range runs along Argentina's western border?",
+                        options: ["Rocky Mountains", "Andes Mountains", "Appalachian Mountains", "Atlas Mountains"],
+                        correct: 1,
+                        explanation: "The Andes Mountains form the natural border between Argentina and Chile, featuring some of the world's highest peaks."
+                    },
+                    {
+                        question: "What is the name of Argentina's famous grassland region?",
+                        options: ["Sahara", "Pampas", "Tundra", "Savanna"],
+                        correct: 1,
+                        explanation: "The Pampas are fertile grasslands perfect for cattle ranching and agriculture, covering much of central Argentina."
+                    },
+                    {
+                        question: "Which famous waterfall is located on Argentina's border with Brazil?",
+                        options: ["Niagara Falls", "Victoria Falls", "Iguazu Falls", "Angel Falls"],
+                        correct: 2,
+                        explanation: "Iguazu Falls consists of 275 individual waterfalls and is considered one of the most spectacular waterfalls in the world."
+                    }
+                ]
+            },
+            culture: {
+                title: "Tango & Culture Adventure",
+                description: "Explore Argentina's rich cultural heritage!",
+                questions: [
+                    {
+                        question: "Which dance originated in Argentina?",
+                        options: ["Salsa", "Flamenco", "Tango", "Samba"],
+                        correct: 2,
+                        explanation: "Tango originated in Buenos Aires in the late 19th century and is now Argentina's most famous cultural export."
+                    },
+                    {
+                        question: "What is the traditional Argentine barbecue called?",
+                        options: ["Parrilla", "Asado", "Churrascos", "Barbacoa"],
+                        correct: 1,
+                        explanation: "Asado is the traditional Argentine way of grilling meat, often featuring beef, sausages, and other meats cooked slowly over wood or charcoal."
+                    },
+                    {
+                        question: "Which neighborhood in Buenos Aires is famous for its colorful houses?",
+                        options: ["Palermo", "Recoleta", "La Boca", "San Telmo"],
+                        correct: 2,
+                        explanation: "La Boca is famous for its brightly painted houses, tango performances, and the iconic Caminito street."
+                    },
+                    {
+                        question: "What is the traditional Argentine folk music called?",
+                        options: ["Folklore", "Cumbia", "Reggaeton", "Vallenato"],
+                        correct: 0,
+                        explanation: "Argentine folklore includes traditional music styles like chacarera, zamba, and cueca, often featuring guitar and accordion."
+                    }
+                ]
+            },
+            cuisine: {
+                title: "Culinary Adventure",
+                description: "Discover the flavors of Argentina!",
+                questions: [
+                    {
+                        question: "What is Argentina's most famous type of pastry?",
+                        options: ["Croissant", "Empanada", "Churro", "Alfajor"],
+                        correct: 1,
+                        explanation: "Empanadas are baked or fried pastries filled with meat, cheese, or vegetables, and are a staple of Argentine cuisine."
+                    },
+                    {
+                        question: "Which region of Argentina is most famous for wine production?",
+                        options: ["Patagonia", "Mendoza", "Pampas", "Tierra del Fuego"],
+                        correct: 1,
+                        explanation: "Mendoza province produces about 70% of Argentina's wine, especially famous for its Malbec wines."
+                    },
+                    {
+                        question: "What is dulce de leche?",
+                        options: ["A type of cheese", "A sweet milk caramel", "A type of wine", "A spicy sauce"],
+                        correct: 1,
+                        explanation: "Dulce de leche is a sweet, creamy caramel-like confection made from milk and sugar, used in many Argentine desserts."
+                    },
+                    {
+                        question: "What cut of beef is most popular in Argentine asado?",
+                        options: ["Tenderloin", "Ribeye", "Bife de chorizo", "Sirloin"],
+                        correct: 2,
+                        explanation: "Bife de chorizo (similar to New York strip) is one of the most popular cuts for asado, known for its flavor and tenderness."
+                    }
+                ]
+            },
+            history: {
+                title: "History Quest",
+                description: "Journey through Argentina's fascinating past!",
+                questions: [
+                    {
+                        question: "In which year did Argentina gain independence?",
+                        options: ["1810", "1816", "1825", "1830"],
+                        correct: 1,
+                        explanation: "Argentina declared independence from Spain on July 9, 1816, a date still celebrated as Independence Day."
+                    },
+                    {
+                        question: "Who was Argentina's most famous First Lady?",
+                        options: ["Eva Perón", "Isabel Perón", "María Estela", "Cristina Kirchner"],
+                        correct: 0,
+                        explanation: "Eva Perón, known as Evita, was the beloved First Lady who championed workers' and women's rights in the 1940s."
+                    },
+                    {
+                        question: "Which European country colonized Argentina?",
+                        options: ["Portugal", "France", "Spain", "Italy"],
+                        correct: 2,
+                        explanation: "Spain colonized Argentina starting in the 16th century, which is why Spanish is the official language today."
+                    },
+                    {
+                        question: "What was the name of the military government period in Argentina (1976-1983)?",
+                        options: ["La Revolución", "El Proceso", "La Junta", "El Régimen"],
+                        correct: 1,
+                        explanation: "The period was officially called 'El Proceso de Reorganización Nacional' (The National Reorganization Process)."
+                    }
+                ]
+            },
+            language: {
+                title: "Spanish Fiesta",
+                description: "Learn essential Argentine Spanish!",
+                questions: [
+                    {
+                        question: "How do you say 'Hello' in Argentine Spanish?",
+                        options: ["Hola", "Buenas", "Che", "Saludos"],
+                        correct: 0,
+                        explanation: "'Hola' is the most common greeting, but Argentines also use 'Che' as a casual way to get someone's attention."
+                    },
+                    {
+                        question: "What does 'Che' mean in Argentine Spanish?",
+                        options: ["Hello", "Goodbye", "Hey/Dude", "Thank you"],
+                        correct: 2,
+                        explanation: "'Che' is a uniquely Argentine expression used to get attention or as a friendly way to address someone."
+                    },
+                    {
+                        question: "How do you say 'Thank you' in Spanish?",
+                        options: ["De nada", "Gracias", "Por favor", "Disculpe"],
+                        correct: 1,
+                        explanation: "'Gracias' means thank you, and the response is typically 'De nada' (you're welcome)."
+                    },
+                    {
+                        question: "What is the Argentine word for 'bus'?",
+                        options: ["Autobús", "Colectivo", "Camión", "Micro"],
+                        correct: 1,
+                        explanation: "In Argentina, buses are called 'colectivos' - this is different from other Spanish-speaking countries."
+                    }
+                ]
+            },
+            sports: {
+                title: "Soccer Legends Challenge",
+                description: "Test your knowledge of Argentine soccer!",
+                questions: [
+                    {
+                        question: "Who is considered Argentina's greatest soccer player of all time?",
+                        options: ["Lionel Messi", "Diego Maradona", "Gabriel Batistuta", "Juan Román Riquelme"],
+                        correct: 1,
+                        explanation: "While both Maradona and Messi are legends, Maradona is often considered the greatest, especially for leading Argentina to World Cup victory in 1986."
+                    },
+                    {
+                        question: "How many FIFA World Cups has Argentina won?",
+                        options: ["1", "2", "3", "4"],
+                        correct: 2,
+                        explanation: "Argentina has won the FIFA World Cup three times: in 1978, 1986, and 2022."
+                    },
+                    {
+                        question: "What is the name of Argentina's national soccer team?",
+                        options: ["Los Gauchos", "La Albiceleste", "Los Pumas", "Los Tangueros"],
+                        correct: 1,
+                        explanation: "'La Albiceleste' (The White and Sky Blue) refers to the colors of Argentina's flag and national team jersey."
+                    },
+                    {
+                        question: "Which Argentine club team is known as 'Los Millonarios'?",
+                        options: ["Boca Juniors", "River Plate", "Racing", "Independiente"],
+                        correct: 1,
+                        explanation: "River Plate is nicknamed 'Los Millonarios' (The Millionaires) due to their wealthy history and expensive signings."
+                    }
+                ]
+            }
+        };
+
+        // Achievement definitions
+        const achievements = [
+            { id: 'first_module', icon: '🌟', title: 'First Steps', description: 'Complete your first module' },
+            { id: 'perfect_score', icon: '💯', title: 'Perfect Score', description: 'Get all questions right in a module' },
+            { id: 'culture_expert', icon: '💃', title: 'Tango Master', description: 'Complete the Culture module' },
+            { id: 'geography_expert', icon: '🌎', title: 'Explorer', description: 'Complete the Geography module' },
+            { id: 'all_modules', icon: '🏆', title: 'Argentina Expert', description: 'Complete all learning modules' },
+            { id: 'speed_demon', icon: '⚡', title: 'Speed Learner', description: 'Complete a module in under 2 minutes' }
+        ];
+
+        // Initialize game
+        function initializeGame() {
+            loadGameState();
+            updateDisplay();
+            updateAchievements();
+        }
+
+        // Start a learning module
+        function startModule(moduleId) {
+            gameState.currentModule = moduleId;
+            gameState.currentQuestion = 0;
+            
+            const content = learningContent[moduleId];
+            showGameModal(content);
+        }
+
+        // Show game modal with content
+        function showGameModal(content) {
+            const modal = document.getElementById('gameModal');
+            const gameContent = document.getElementById('gameContent');
+            
+            gameContent.innerHTML = `
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold text-argentina-blue mb-2">${content.title}</h2>
+                    <p class="text-gray-600 mb-4">${content.description}</p>
+                    <div class="bg-gray-200 rounded-full h-3 mb-4">
+                        <div id="moduleProgress" class="progress-bar bg-argentina-blue h-full rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        Question <span id="currentQuestionNum">1</span> of ${content.questions.length}
+                    </div>
+                </div>
+                <div id="questionContent">
+                    <!-- Question content will be loaded here -->
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // Load current question
+        function loadQuestion() {
+            const module = learningContent[gameState.currentModule];
+            const question = module.questions[gameState.currentQuestion];
+            const questionContent = document.getElementById('questionContent');
+            
+            questionContent.innerHTML = `
+                <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-semibold mb-4">${question.question}</h3>
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <div class="quiz-option bg-white border-2 border-gray-200 rounded-lg p-4 hover:border-argentina-blue" onclick="selectAnswer(${index})">
+                                <div class="flex items-center">
+                                    <span class="w-8 h-8 bg-argentina-blue text-white rounded-full flex items-center justify-center mr-3 text-sm font-bold">
+                                        ${String.fromCharCode(65 + index)}
+                                    </span>
+                                    ${option}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div id="answerFeedback" class="hidden">
+                    <!-- Feedback will be shown here -->
+                </div>
+            `;
+            
+            // Update progress
+            document.getElementById('currentQuestionNum').textContent = gameState.currentQuestion + 1;
+            updateModuleProgress();
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            const module = learningContent[gameState.currentModule];
+            const question = module.questions[gameState.currentQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById('answerFeedback');
+            const nextButton = document.getElementById('nextButton');
+            
+            // Disable all options
+            options.forEach(option => option.style.pointerEvents = 'none');
+            
+            // Show correct/incorrect styling
+            options[selectedIndex].classList.add(selectedIndex === question.correct ? 'correct-answer' : 'incorrect-answer');
+            if (selectedIndex !== question.correct) {
+                options[question.correct].classList.add('correct-answer');
+            }
+            
+            // Show feedback
+            const isCorrect = selectedIndex === question.correct;
+            feedback.innerHTML = `
+                <div class="bg-${isCorrect ? 'green' : 'red'}-50 border border-${isCorrect ? 'green' : 'red'}-200 rounded-lg p-4">
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">${isCorrect ? '✅' : '❌'}</span>
+                        <span class="font-bold text-${isCorrect ? 'green' : 'red'}-800">
+                            ${isCorrect ? 'Correct!' : 'Incorrect!'}
+                        </span>
+                    </div>
+                    <p class="text-gray-700">${question.explanation}</p>
+                </div>
+            `;
+            feedback.classList.remove('hidden');
+            
+            // Update score
+            if (isCorrect) {
+                gameState.score += 10;
+                updateScore();
+            }
+            
+            // Show next button
+            nextButton.classList.remove('hidden');
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            const module = learningContent[gameState.currentModule];
+            gameState.currentQuestion++;
+            
+            if (gameState.currentQuestion >= module.questions.length) {
+                completeModule();
+            } else {
+                loadQuestion();
+                document.getElementById('nextButton').classList.add('hidden');
+            }
+        }
+
+        // Complete current module
+        function completeModule() {
+            const moduleId = gameState.currentModule;
+            gameState.modules[moduleId].completed = true;
+            gameState.modules[moduleId].progress = 100;
+            
+            // Award bonus XP for completion
+            const bonusXP = 50;
+            gameState.score += bonusXP;
+            
+            // Check for achievements
+            checkAchievements();
+            
+            // Update displays
+            updateScore();
+            updateModuleStatus(moduleId);
+            updateOverallProgress();
+            
+            // Show completion message
+            const gameContent = document.getElementById('gameContent');
+            gameContent.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-6xl mb-4">🎉</div>
+                    <h2 class="text-3xl font-bold text-argentina-blue mb-4">Module Completed!</h2>
+                    <p class="text-xl text-gray-600 mb-6">Congratulations! You've mastered this topic.</p>
+                    <div class="bg-argentina-blue bg-opacity-10 rounded-lg p-6 mb-6">
+                        <div class="text-2xl font-bold text-argentina-blue mb-2">+${bonusXP} Bonus XP!</div>
+                        <div class="text-gray-600">Total Score: ${gameState.score} XP</div>
+                    </div>
+                    <button onclick="closeGameModal()" class="bg-argentina-blue hover:bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold transition duration-200">
+                        Continue Learning
+                    </button>
+                </div>
+            `;
+            
+            saveGameState();
+        }
+
+        // Close game modal
+        function closeGameModal() {
+            document.getElementById('gameModal').classList.add('hidden');
+            document.getElementById('nextButton').classList.add('hidden');
+        }
+
+        // Update score display
+        function updateScore() {
+            document.getElementById('playerScore').textContent = `${gameState.score} XP`;
+            
+            // Calculate level (every 100 XP = 1 level)
+            const newLevel = Math.floor(gameState.score / 100) + 1;
+            if (newLevel > gameState.level) {
+                gameState.level = newLevel;
+                showLevelUp();
+            }
+            document.getElementById('playerLevel').textContent = gameState.level;
+        }
+
+        // Show level up animation
+        function showLevelUp() {
+            // Create temporary level up notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-6 bg-argentina-sun text-black px-6 py-3 rounded-lg shadow-lg z-50 font-bold';
+            notification.innerHTML = `🎊 Level Up! You're now Level ${gameState.level}!`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Update module progress
+        function updateModuleProgress() {
+            const module = learningContent[gameState.currentModule];
+            const progress = ((gameState.currentQuestion + 1) / module.questions.length) * 100;
+            document.getElementById('moduleProgress').style.width = `${progress}%`;
+        }
+
+        // Update module status
+        function updateModuleStatus(moduleId) {
+            const module = gameState.modules[moduleId];
+            const statusElement = document.getElementById(`${moduleId}Status`);
+            const progressElement = document.getElementById(`${moduleId}Progress`);
+            const moduleElement = document.querySelector(`[onclick="startModule('${moduleId}')"]`);
+            
+            if (module.completed) {
+                statusElement.textContent = 'Completed ✅';
+                progressElement.style.width = '100%';
+                moduleElement.classList.add('completed');
+            } else {
+                statusElement.textContent = `${module.progress}% Complete`;
+                progressElement.style.width = `${module.progress}%`;
+            }
+        }
+
+        // Update overall progress
+        function updateOverallProgress() {
+            const totalModules = Object.keys(gameState.modules).length;
+            const completedModules = Object.values(gameState.modules).filter(m => m.completed).length;
+            const progress = (completedModules / totalModules) * 100;
+            
+            document.getElementById('overallProgress').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(progress)}% Complete`;
+        }
+
+        // Check and award achievements
+        function checkAchievements() {
+            const newAchievements = [];
+            
+            // First module completion
+            if (!gameState.achievements.includes('first_module')) {
+                const completedAny = Object.values(gameState.modules).some(m => m.completed);
+                if (completedAny) {
+                    newAchievements.push('first_module');
+                }
+            }
+            
+            // All modules completed
+            if (!gameState.achievements.includes('all_modules')) {
+                const allCompleted = Object.values(gameState.modules).every(m => m.completed);
+                if (allCompleted) {
+                    newAchievements.push('all_modules');
+                }
+            }
+            
+            // Culture expert
+            if (!gameState.achievements.includes('culture_expert') && gameState.modules.culture.completed) {
+                newAchievements.push('culture_expert');
+            }
+            
+            // Geography expert
+            if (!gameState.achievements.includes('geography_expert') && gameState.modules.geography.completed) {
+                newAchievements.push('geography_expert');
+            }
+            
+            // Award new achievements
+            newAchievements.forEach(achievementId => {
+                gameState.achievements.push(achievementId);
+                showAchievementNotification(achievementId);
+            });
+            
+            updateAchievements();
+        }
+
+        // Show achievement notification
+        function showAchievementNotification(achievementId) {
+            const achievement = achievements.find(a => a.id === achievementId);
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 left-6 bg-argentina-sun text-black px-6 py-4 rounded-lg shadow-lg z-50 font-bold achievement-badge';
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <span class="text-2xl mr-3">${achievement.icon}</span>
+                    <div>
+                        <div class="font-bold">Achievement Unlocked!</div>
+                        <div class="text-sm">${achievement.title}</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        // Update achievements display
+        function updateAchievements() {
+            const achievementDisplay = document.getElementById('achievementDisplay');
+            achievementDisplay.innerHTML = gameState.achievements.map(achievementId => {
+                const achievement = achievements.find(a => a.id === achievementId);
+                return `
+                    <div class="achievement-badge bg-argentina-sun text-black px-4 py-2 rounded-full font-bold text-sm" title="${achievement.description}">
+                        ${achievement.icon} ${achievement.title}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Update all displays
+        function updateDisplay() {
+            updateScore();
+            Object.keys(gameState.modules).forEach(moduleId => {
+                updateModuleStatus(moduleId);
+            });
+            updateOverallProgress();
+        }
+
+        // Save game state to localStorage
+        function saveGameState() {
+            localStorage.setItem('argentineLearningGame', JSON.stringify(gameState));
+        }
+
+        // Load game state from localStorage
+        function loadGameState() {
+            const saved = localStorage.getItem('argentineLearningGame');
+            if (saved) {
+                gameState = { ...gameState, ...JSON.parse(saved) };
+            }
+        }
+
+        // Initialize game when page loads
+        document.addEventListener('DOMContentLoaded', initializeGame);
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeGameModal();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">South Africa Travel Guide - Ubuntu Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ubuntu-blue': '#1e40af',
+                        'ubuntu-dark': '#1e3a8a',
+                        'ubuntu-light': '#3b82f6',
+                        'ubuntu-gold': '#f59e0b',
+                        'sa-green': '#22c55e',
+                        'sa-blue': '#3b82f6',
+                        'sa-red': '#dc2626',
+                        'sa-gold': '#fbbf24',
+                        'sa-black': '#1f2937',
+                        'sa-white': '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #22c55e 0%, #3b82f6 25%, #dc2626 50%, #fbbf24 75%, #1f2937 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .language-switch {
+            transition: all 0.2s ease;
+        }
+        
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            border-radius: 2px;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .sa-flag {
+            background: linear-gradient(to bottom, 
+                #dc2626 0%, #dc2626 16%, 
+                #3b82f6 16%, #3b82f6 33%, 
+                #22c55e 33%, #22c55e 50%, 
+                #fbbf24 50%, #fbbf24 66%, 
+                #ffffff 66%, #ffffff 83%, 
+                #1f2937 83%, #1f2937 100%);
+            position: relative;
+        }
+        
+        .sa-flag::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 12px;
+            border-color: transparent transparent transparent #22c55e;
+        }
+        
+        .section-divider {
+            background: linear-gradient(90deg, transparent, #22c55e, #3b82f6, #dc2626, #fbbf24, #1f2937, transparent);
+            height: 3px;
+            margin: 2rem 0;
+        }
+        
+        .ubuntu-pattern {
+            background-image: radial-gradient(circle at 25% 25%, #22c55e 0%, transparent 50%),
+                              radial-gradient(circle at 75% 75%, #dc2626 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b-2 border-sa-green">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img class="h-8 w-8 mr-3" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
+                        <span class="text-ubuntu-blue font-bold text-xl">Ubuntu<span class="text-ubuntu-gold">Explorer</span></span>
+                    </a>
+                    <div class="ml-6 flex items-center">
+                        <span class="sa-flag flag-icon"></span>
+                        <span id="navTitle" class="text-gray-700 font-medium">South Africa Travel Guide</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <button id="languageBtn" class="language-switch flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-sa-green border border-gray-300 rounded-md hover:border-sa-green">
+                            <span class="sa-flag flag-icon"></span>
+                            <span id="currentLang">English</span>
+                            <i class="fas fa-chevron-down ml-2"></i>
+                        </button>
+                        <div id="languageMenu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg z-50 border">
+                            <button onclick="switchLanguage('en')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="inline-block w-6 h-4 mr-2 bg-blue-600 relative">
+                                    <span class="absolute inset-0 bg-red-600" style="clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%)"></span>
+                                    <span class="absolute inset-0 bg-white" style="clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%)"></span>
+                                    <span class="absolute inset-0 bg-red-600" style="clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%)"></span>
+                                </span>
+                                English
+                            </button>
+                            <button onclick="switchLanguage('af')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="sa-flag flag-icon"></span>
+                                Afrikaans
+                            </button>
+                            <button onclick="switchLanguage('zu')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="sa-flag flag-icon"></span>
+                                isiZulu
+                            </button>
+                            <button onclick="switchLanguage('xh')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="sa-flag flag-icon"></span>
+                                isiXhosa
+                            </button>
+                        </div>
+                    </div>
+                    <a href="index.html" class="text-gray-600 hover:text-sa-green">Back to Home</a>
+                    <a href="signup.html" class="bg-sa-green hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 id="heroTitle" class="text-5xl font-bold mb-4">Discover South Africa</h1>
+            <p id="heroSubtitle" class="text-xl mb-8 max-w-3xl mx-auto">Experience the Rainbow Nation's diverse cultures, stunning landscapes, wildlife, and the spirit of Ubuntu</p>
+            <div class="flex justify-center space-x-4">
+                <button id="planTripBtn" class="bg-white text-sa-green px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">Plan Your Trip</button>
+                <button id="emergencyBtn" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-sa-green transition duration-200">Emergency Info</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="bg-white py-12 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-sa-green">60M</div>
+                    <div id="stat1" class="text-gray-600">Population</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-sa-green">11</div>
+                    <div id="stat2" class="text-gray-600">Official Languages</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-sa-green">10</div>
+                    <div id="stat3" class="text-gray-600">UNESCO Sites</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-sa-green">ZAR</div>
+                    <div id="stat4" class="text-gray-600">Currency (Rand)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Must-Visit Destinations -->
+        <section class="mb-16">
+            <h2 id="destinationsTitle" class="text-3xl font-bold text-gray-900 mb-8 text-center">Must-Visit Destinations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-sa-green to-sa-blue flex items-center justify-center">
+                        <i class="fas fa-mountain text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest1Title" class="text-xl font-semibold mb-2">Table Mountain</h3>
+                        <p id="dest1Desc" class="text-gray-600 mb-4">Iconic flat-topped mountain overlooking Cape Town. Take the cable car or hike to the summit for breathtaking 360-degree views.</p>
+                        <div class="flex items-center text-sa-green">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest1Location">Cape Town, Western Cape</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-sa-gold to-sa-red flex items-center justify-center">
+                        <i class="fas fa-paw text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest2Title" class="text-xl font-semibold mb-2">Kruger National Park</h3>
+                        <p id="dest2Desc" class="text-gray-600 mb-4">One of Africa's largest game reserves, home to the Big Five. Experience incredible wildlife safaris and diverse ecosystems.</p>
+                        <div class="flex items-center text-sa-green">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest2Location">Mpumalanga & Limpopo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-sa-blue to-sa-green flex items-center justify-center">
+                        <i class="fas fa-wine-glass text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest3Title" class="text-xl font-semibold mb-2">Stellenbosch Winelands</h3>
+                        <p id="dest3Desc" class="text-gray-600 mb-4">World-renowned wine region with stunning vineyard landscapes, historic estates, and award-winning wines surrounded by mountains.</p>
+                        <div class="flex items-center text-sa-green">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest3Location">Western Cape</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-sa-red to-sa-gold flex items-center justify-center">
+                        <i class="fas fa-water text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest4Title" class="text-xl font-semibold mb-2">Garden Route</h3>
+                        <p id="dest4Desc" class="text-gray-600 mb-4">Scenic coastal drive through indigenous forests, lagoons, and beaches. Perfect for outdoor adventures and whale watching.</p>
+                        <div class="flex items-center text-sa-green">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest4Location">Western & Eastern Cape</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-sa-black to-sa-blue flex items-center justify-center">
+                        <i class="fas fa-landmark text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest5Title" class="text-xl font-semibold mb-2">Robben Island</h3>
+                        <p id="dest5Desc" class="text-gray-600 mb-4">Historic UNESCO World Heritage site where Nelson Mandela was imprisoned. A powerful symbol of the struggle for freedom.</p>
+                        <div class="flex items-center text-sa-green">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest5Location">Cape Town Bay</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-sa-green to-sa-gold flex items-center justify-center">
+                        <i class="fas fa-gem text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest6Title" class="text-xl font-semibold mb-2">Johannesburg</h3>
+                        <p id="dest6Desc" class="text-gray-600 mb-4">The economic heart of Africa with rich gold mining history. Explore Soweto, Apartheid Museum, and vibrant neighborhoods.</p>
+                        <div class="flex items-center text-sa-green">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest6Location">Gauteng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Cultural Experiences -->
+        <section class="mb-16">
+            <h2 id="cultureTitle" class="text-3xl font-bold text-gray-900 mb-8 text-center">Cultural Experiences</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-sa-green rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-utensils text-white text-xl"></i>
+                        </div>
+                        <h3 id="culture1Title" class="text-xl font-semibold">South African Cuisine</h3>
+                    </div>
+                    <ul id="culture1List" class="space-y-2 text-gray-600">
+                        <li>• <strong>Braai</strong> - Traditional barbecue, more than just food - it's culture</li>
+                        <li>• <strong>Bobotie</strong> - Curried mince with egg topping</li>
+                        <li>• <strong>Biltong</strong> - Dried, seasoned meat snack</li>
+                        <li>• <strong>Potjiekos</strong> - Slow-cooked stew in cast iron pot</li>
+                        <li>• <strong>Koeksisters</strong> - Sweet, syrupy twisted pastry</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-sa-blue rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-music text-white text-xl"></i>
+                        </div>
+                        <h3 id="culture2Title" class="text-xl font-semibold">Music & Arts</h3>
+                    </div>
+                    <ul id="culture2List" class="space-y-2 text-gray-600">
+                        <li>• <strong>Amapiano</strong> - Latest South African music sensation</li>
+                        <li>• <strong>Jazz</strong> - Rich tradition from Hugh Masekela to Abdullah Ibrahim</li>
+                        <li>• <strong>Traditional Dances</strong> - Zulu, Xhosa, and other cultural dances</li>
+                        <li>• <strong>Arts & Crafts</strong> - Beadwork, pottery, and wood carving</li>
+                        <li>• <strong>Kwaito</strong> - Uniquely South African house music genre</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-sa-red rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-heart text-white text-xl"></i>
+                        </div>
+                        <h3 id="culture3Title" class="text-xl font-semibold">Ubuntu Philosophy</h3>
+                    </div>
+                    <ul id="culture3List" class="space-y-2 text-gray-600">
+                        <li>• <strong>"I am because we are"</strong> - Core philosophy of interconnectedness</li>
+                        <li>• <strong>Community Support</strong> - Helping each other in times of need</li>
+                        <li>• <strong>Respect for Elders</strong> - Honoring wisdom and experience</li>
+                        <li>• <strong>Hospitality</strong> - Welcoming strangers as family</li>
+                        <li>• <strong>Collective Responsibility</strong> - Shared accountability for community wellbeing</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-sa-gold rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-handshake text-white text-xl"></i>
+                        </div>
+                        <h3 id="culture4Title" class="text-xl font-semibold">Cultural Etiquette</h3>
+                    </div>
+                    <ul id="culture4List" class="space-y-2 text-gray-600">
+                        <li>• <strong>Greetings</strong> - Handshakes are common, smile warmly</li>
+                        <li>• <strong>Respect</strong> - Show respect for all cultural groups</li>
+                        <li>• <strong>Tipping</strong> - 10-15% is standard in restaurants</li>
+                        <li>• <strong>Language</strong> - Learn basic greetings in local languages</li>
+                        <li>• <strong>Ubuntu Spirit</strong> - Embrace the philosophy of caring for others</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Practical Information -->
+        <section class="mb-16">
+            <h2 id="practicalTitle" class="text-3xl font-bold text-gray-900 mb-8 text-center">Practical Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 id="visa1Title" class="text-xl font-semibold mb-4 text-sa-green">Visa Requirements</h3>
+                    <ul id="visa1List" class="space-y-2 text-gray-600">
+                        <li>• Most tourists get 90-day visa on arrival</li>
+                        <li>• Valid passport with 2 blank pages</li>
+                        <li>• Return ticket required</li>
+                        <li>• Yellow fever certificate if coming from risk areas</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 id="visa2Title" class="text-xl font-semibold mb-4 text-sa-green">Currency & Payments</h3>
+                    <ul id="visa2List" class="space-y-2 text-gray-600">
+                        <li>• South African Rand (ZAR)</li>
+                        <li>• Credit cards widely accepted</li>
+                        <li>• ATMs available in cities and towns</li>
+                        <li>• Tipping is customary (10-15%)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 id="visa3Title" class="text-xl font-semibold mb-4 text-sa-green">Health & Safety</h3>
+                    <ul id="visa3List" class="space-y-2 text-gray-600">
+                        <li>• Malaria precautions in certain areas</li>
+                        <li>• Stay aware of surroundings in cities</li>
+                        <li>• Use registered tour operators</li>
+                        <li>• Emergency services: 10177</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Information -->
+        <section class="bg-red-50 rounded-lg p-8 mb-16">
+            <h2 id="emergencyTitle" class="text-2xl font-bold text-sa-red mb-6 flex items-center">
+                <i class="fas fa-exclamation-triangle mr-3"></i>
+                Emergency Information
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 id="emergency1Title" class="text-lg font-semibold mb-3">Emergency Numbers</h3>
+                    <ul id="emergency1List" class="space-y-2">
+                        <li><strong>Emergency Services:</strong> 10177</li>
+                        <li><strong>Police:</strong> 10111</li>
+                        <li><strong>Medical Emergency:</strong> 10177</li>
+                        <li><strong>Fire Department:</strong> 10177</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 id="emergency2Title" class="text-lg font-semibold mb-3">Important Phrases</h3>
+                    <ul id="emergency2List" class="space-y-2">
+                        <li><strong>Help (Afrikaans):</strong> Help</li>
+                        <li><strong>Help (Zulu):</strong> Ngisiza</li>
+                        <li><strong>Police:</strong> Polisie / Amaphoyisa</li>
+                        <li><strong>Hospital:</strong> Hospitaal / Isibhedlela</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Emergency Panic Button -->
+    <div class="panic-button fixed bottom-6 left-6 z-50">
+        <button id="panicBtn" class="w-16 h-16 bg-red-600 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform animate-pulse">
+            <i class="fas fa-exclamation-triangle text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="emergency-modal" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-red-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-red-600 text-white p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-3xl mr-3"></i>
+                        <h3 class="text-lg font-bold">EMERGENCY ASSISTANCE - SOUTH AFRICA</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-6">
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold mb-3 text-red-800">South Africa Emergency Contacts:</h4>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h5 class="font-semibold text-red-800 mb-2">South Africa Emergency Services</h5>
+                                <div class="space-y-2">
+                                    <button onclick="callEmergency('10177')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        🚨 CALL 10177 (Emergency)
+                                    </button>
+                                    <button onclick="callEmergency('10111')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        🚔 CALL 10111 (Police)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-yellow-800 mb-2">Key Phrases</h5>
+                            <div class="text-sm space-y-1">
+                                <p><strong>Help (English):</strong> Help</p>
+                                <p><strong>Help (Afrikaans):</strong> Help</p>
+                                <p><strong>Help (Zulu):</strong> Ngisiza</p>
+                                <p><strong>Emergency:</strong> Noodgeval / Isimo esiphuthumayo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-3 flex justify-between">
+                    <button onclick="closeEmergencyModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="callEmergency('10177')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition duration-200">
+                        🚨 CALL 10177
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language content
+        const content = {
+            en: {
+                pageTitle: "South Africa Travel Guide - Ubuntu Explorer",
+                navTitle: "South Africa Travel Guide",
+                currentLang: "English",
+                heroTitle: "Discover South Africa",
+                heroSubtitle: "Experience the Rainbow Nation's diverse cultures, stunning landscapes, wildlife, and the spirit of Ubuntu",
+                planTripBtn: "Plan Your Trip",
+                emergencyBtn: "Emergency Info",
+                stat1: "Population",
+                stat2: "Official Languages",
+                stat3: "UNESCO Sites",
+                stat4: "Currency (Rand)",
+                destinationsTitle: "Must-Visit Destinations",
+                dest1Title: "Table Mountain",
+                dest1Desc: "Iconic flat-topped mountain overlooking Cape Town. Take the cable car or hike to the summit for breathtaking 360-degree views.",
+                dest1Location: "Cape Town, Western Cape",
+                dest2Title: "Kruger National Park",
+                dest2Desc: "One of Africa's largest game reserves, home to the Big Five. Experience incredible wildlife safaris and diverse ecosystems.",
+                dest2Location: "Mpumalanga & Limpopo",
+                dest3Title: "Stellenbosch Winelands",
+                dest3Desc: "World-renowned wine region with stunning vineyard landscapes, historic estates, and award-winning wines surrounded by mountains.",
+                dest3Location: "Western Cape",
+                dest4Title: "Garden Route",
+                dest4Desc: "Scenic coastal drive through indigenous forests, lagoons, and beaches. Perfect for outdoor adventures and whale watching.",
+                dest4Location: "Western & Eastern Cape",
+                dest5Title: "Robben Island",
+                dest5Desc: "Historic UNESCO World Heritage site where Nelson Mandela was imprisoned. A powerful symbol of the struggle for freedom.",
+                dest5Location: "Cape Town Bay",
+                dest6Title: "Johannesburg",
+                dest6Desc: "The economic heart of Africa with rich gold mining history. Explore Soweto, Apartheid Museum, and vibrant neighborhoods.",
+                dest6Location: "Gauteng",
+                cultureTitle: "Cultural Experiences",
+                culture1Title: "South African Cuisine",
+                culture1List: `<li>• <strong>Braai</strong> - Traditional barbecue, more than just food - it's culture</li>
+                               <li>• <strong>Bobotie</strong> - Curried mince with egg topping</li>
+                               <li>• <strong>Biltong</strong> - Dried, seasoned meat snack</li>
+                               <li>• <strong>Potjiekos</strong> - Slow-cooked stew in cast iron pot</li>
+                               <li>• <strong>Koeksisters</strong> - Sweet, syrupy twisted pastry</li>`,
+                culture2Title: "Music & Arts",
+                culture2List: `<li>• <strong>Amapiano</strong> - Latest South African music sensation</li>
+                               <li>• <strong>Jazz</strong> - Rich tradition from Hugh Masekela to Abdullah Ibrahim</li>
+                               <li>• <strong>Traditional Dances</strong> - Zulu, Xhosa, and other cultural dances</li>
+                               <li>• <strong>Arts & Crafts</strong> - Beadwork, pottery, and wood carving</li>
+                               <li>• <strong>Kwaito</strong> - Uniquely South African house music genre</li>`,
+                culture3Title: "Ubuntu Philosophy",
+                culture3List: `<li>• <strong>"I am because we are"</strong> - Core philosophy of interconnectedness</li>
+                               <li>• <strong>Community Support</strong> - Helping each other in times of need</li>
+                               <li>• <strong>Respect for Elders</strong> - Honoring wisdom and experience</li>
+                               <li>• <strong>Hospitality</strong> - Welcoming strangers as family</li>
+                               <li>• <strong>Collective Responsibility</strong> - Shared accountability for community wellbeing</li>`,
+                culture4Title: "Cultural Etiquette",
+                culture4List: `<li>• <strong>Greetings</strong> - Handshakes are common, smile warmly</li>
+                               <li>• <strong>Respect</strong> - Show respect for all cultural groups</li>
+                               <li>• <strong>Tipping</strong> - 10-15% is standard in restaurants</li>
+                               <li>• <strong>Language</strong> - Learn basic greetings in local languages</li>
+                               <li>• <strong>Ubuntu Spirit</strong> - Embrace the philosophy of caring for others</li>`,
+                practicalTitle: "Practical Information",
+                visa1Title: "Visa Requirements",
+                visa1List: `<li>• Most tourists get 90-day visa on arrival</li>
+                            <li>• Valid passport with 2 blank pages</li>
+                            <li>• Return ticket required</li>
+                            <li>• Yellow fever certificate if coming from risk areas</li>`,
+                visa2Title: "Currency & Payments",
+                visa2List: `<li>• South African Rand (ZAR)</li>
+                            <li>• Credit cards widely accepted</li>
+                            <li>• ATMs available in cities and towns</li>
+                            <li>• Tipping is customary (10-15%)</li>`,
+                visa3Title: "Health & Safety",
+                visa3List: `<li>• Malaria precautions in certain areas</li>
+                            <li>• Stay aware of surroundings in cities</li>
+                            <li>• Use registered tour operators</li>
+                            <li>• Emergency services: 10177</li>`,
+                emergencyTitle: "Emergency Information",
+                emergency1Title: "Emergency Numbers",
+                emergency1List: `<li><strong>Emergency Services:</strong> 10177</li>
+                                 <li><strong>Police:</strong> 10111</li>
+                                 <li><strong>Medical Emergency:</strong> 10177</li>
+                                 <li><strong>Fire Department:</strong> 10177</li>`,
+                emergency2Title: "Important Phrases",
+                emergency2List: `<li><strong>Help (Afrikaans):</strong> Help</li>
+                                 <li><strong>Help (Zulu):</strong> Ngisiza</li>
+                                 <li><strong>Police:</strong> Polisie / Amaphoyisa</li>
+                                 <li><strong>Hospital:</strong> Hospitaal / Isibhedlela</li>`
+            },
+            af: {
+                pageTitle: "Suid-Afrika Reisgids - Ubuntu Explorer",
+                navTitle: "Suid-Afrika Reisgids",
+                currentLang: "Afrikaans",
+                heroTitle: "Ontdek Suid-Afrika",
+                heroSubtitle: "Ervaar die Reënboognasie se diverse kulture, pragtige landskappe, wildlewe, en die gees van Ubuntu",
+                planTripBtn: "Beplan Jou Reis",
+                emergencyBtn: "Noodgeval Inligting",
+                stat1: "Bevolking",
+                stat2: "Amptelike Tale",
+                stat3: "UNESCO Erfenisplekke",
+                stat4: "Geldeenheid (Rand)",
+                destinationsTitle: "Moet-Besoek Bestemmings",
+                dest1Title: "Tafelberg",
+                dest1Desc: "Ikoniese plat-top berg wat oor Kaapstad uitkyk. Neem die kabelkar of stap na die kruin vir asemrowende 360-graad uitsigte.",
+                dest1Location: "Kaapstad, Wes-Kaap",
+                dest2Title: "Kruger Nasionale Park",
+                dest2Desc: "Een van Afrika se grootste wildreserwate, tuiste van die Groot Vyf. Ervaar ongelooflike wildlewe safari's en diverse ekosisteme.",
+                dest2Location: "Mpumalanga & Limpopo",
+                dest3Title: "Stellenbosch Wynlande",
+                dest3Desc: "Wêreldbekende wynstreek met pragtige wingerdlandskap, historiese landgoede, en bekroonde wyne omring deur berge.",
+                dest3Location: "Wes-Kaap",
+                dest4Title: "Tuinroete",
+                dest4Desc: "Skilderagtige kusrit deur inheemse woude, lagunes, en strande. Perfek vir buitemuurse avonture en walviskyking.",
+                dest4Location: "Wes- & Oos-Kaap",
+                dest5Title: "Robbeneiland",
+                dest5Desc: "Historiese UNESCO Wêrelderfenisplek waar Nelson Mandela gevange gehou is. 'n Kragtige simbool van die stryd vir vryheid.",
+                dest5Location: "Kaapstad Baai",
+                dest6Title: "Johannesburg",
+                dest6Desc: "Die ekonomiese hart van Afrika met ryk goudmyn geskiedenis. Verken Soweto, Apartheidsmuseum, en lewendige buurte.",
+                dest6Location: "Gauteng"
+            },
+            zu: {
+                pageTitle: "Izelelo leZokuvakasha eNingizimu Afrika - Ubuntu Explorer", 
+                navTitle: "Izelelo leZokuvakasha eNingizimu Afrika",
+                currentLang: "isiZulu",
+                heroTitle: "Thola iNingizimu Afrika",
+                heroSubtitle: "Jabulela amasiko ahlukahlukene esizwe seNkanyezi, imvelo emihle, izilwane zasendle, nomoya ka-Ubuntu",
+                planTripBtn: "Hlela Uhambo Lwakho",
+                emergencyBtn: "Imininingwane Yesimo Esiphuthumayo",
+                stat1: "Isibalo Sabantu",
+                stat2: "Izilimi Ezisemthethweni",
+                stat3: "Izindawo ze-UNESCO",
+                stat4: "Imali (Rand)",
+                destinationsTitle: "Izindawo Okufanele Uzivakashele"
+            },
+            xh: {
+                pageTitle: "Isikhokelo SokuHamba eMzantsi Afrika - Ubuntu Explorer",
+                navTitle: "Isikhokelo SokuHamba eMzantsi Afrika", 
+                currentLang: "isiXhosa",
+                heroTitle: "Fumanisa uMzantsi Afrika",
+                heroSubtitle: "Jonga iinkcubeko ezahlukahlukeneyo zesizwe sikaTogara, imvelo entle, izilwane zasendle, nomoya ka-Ubuntu",
+                planTripBtn: "Cwangcisa Uhambo Lwakho",
+                emergencyBtn: "Inkcazelo Yeemeko Ezingxamisekileyo",
+                stat1: "Inani LabaBantu",
+                stat2: "Iilwimi EziSemthethweni", 
+                stat3: "IiNdawo ze-UNESCO",
+                stat4: "Imali (Rand)",
+                destinationsTitle: "IiNdawo Ekufuneka Uzityelele"
+            }
+        };
+
+        // Language switching functionality
+        function switchLanguage(lang) {
+            const langContent = content[lang];
+            
+            // Update page title
+            document.title = langContent.pageTitle;
+            
+            // Update all content
+            Object.keys(langContent).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (key.includes('List')) {
+                        element.innerHTML = langContent[key];
+                    } else {
+                        element.textContent = langContent[key];
+                    }
+                }
+            });
+            
+            // Update HTML lang attribute
+            const langMap = {
+                'en': 'en',
+                'af': 'af-ZA', 
+                'zu': 'zu-ZA',
+                'xh': 'xh-ZA'
+            };
+            document.getElementById('htmlRoot').lang = langMap[lang];
+            
+            // Hide language menu
+            document.getElementById('languageMenu').classList.add('hidden');
+        }
+
+        // Toggle language menu
+        document.getElementById('languageBtn').addEventListener('click', function() {
+            document.getElementById('languageMenu').classList.toggle('hidden');
+        });
+
+        // Close language menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const languageBtn = document.getElementById('languageBtn');
+            const languageMenu = document.getElementById('languageMenu');
+            
+            if (!languageBtn.contains(event.target) && !languageMenu.contains(event.target)) {
+                languageMenu.classList.add('hidden');
+            }
+        });
+
+        // Emergency modal functions
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('hidden');
+        }
+
+        function closeEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('hidden');
+        }
+
+        function callEmergency(number) {
+            alert(`🚨 EMERGENCY CALL INITIATED 🚨\n\nCalling: ${number}\n\n📍 Your location has been shared with emergency services.\n\n⏰ Call connecting... (This is a demo - in real emergency, call actual emergency services)`);
+            closeEmergencyModal();
+        }
+
+        // Event listeners
+        document.getElementById('panicBtn').addEventListener('click', showEmergencyModal);
+        document.getElementById('emergencyBtn').addEventListener('click', showEmergencyModal);
+        document.getElementById('planTripBtn').addEventListener('click', function() {
+            alert('This would connect to the Ubuntu Explorer trip planning system for South Africa!');
+        });
+
+        // Close modal events
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeEmergencyModal();
+        });
+
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('emergencyModal');
+            if (event.target === modal) closeEmergencyModal();
+        });
+    </script>
+</body>
+</html>

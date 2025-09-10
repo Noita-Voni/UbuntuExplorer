@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Assistant - Ubuntu Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ubuntu-blue': '#1e40af',
+                        'ubuntu-dark': '#1e3a8a',
+                        'ubuntu-light': '#3b82f6',
+                        'ubuntu-gold': '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        .chat-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .message {
+            animation: fadeInUp 0.3s ease-out;
+        }
+        
+        .typing-indicator {
+            display: inline-block;
+        }
+        
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #9ca3af;
+            margin: 0 2px;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .suggestion-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .suggestion-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(30, 64, 175, 0.3);
+        }
+        
+        .ai-avatar {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .feature-card:hover {
+            border-color: #1e40af;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img class="h-8 w-8 mr-3" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
+                        <span class="text-ubuntu-blue font-bold text-xl">Ubuntu<span class="text-ubuntu-gold">Explorer</span></span>
+                    </a>
+                    <div class="ml-6 flex items-center">
+                        <i class="fas fa-robot text-ubuntu-blue text-lg mr-2"></i>
+                        <span class="text-gray-700 font-medium">AI Travel Assistant</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-ubuntu-blue">Back to Home</a>
+                    <a href="signup.html" class="bg-ubuntu-gold hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-md text-sm font-medium transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="flex justify-center mb-4">
+                <div class="ai-avatar w-20 h-20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-robot text-white text-3xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">AI Travel Assistant</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Get personalized travel recommendations, cultural insights, and instant answers about G20 destinations</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Chat Interface -->
+            <div class="lg:col-span-2">
+                <div class="chat-container p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="ai-avatar w-12 h-12 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Ubuntu AI Assistant</h3>
+                            <p class="text-sm text-gray-600">Powered by G20 Cultural Intelligence</p>
+                        </div>
+                        <div class="ml-auto">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                <i class="fas fa-circle text-green-400 mr-1 text-xs"></i>
+                                Online
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Chat Messages -->
+                    <div id="chatMessages" class="h-96 overflow-y-auto mb-6 space-y-4 border rounded-lg p-4 bg-gray-50">
+                        <!-- Welcome Message -->
+                        <div class="message flex items-start">
+                            <div class="ai-avatar w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-robot text-white text-sm"></i>
+                            </div>
+                            <div class="bg-white rounded-lg px-4 py-3 shadow-sm max-w-md">
+                                <p class="text-gray-800">👋 Hello! I'm your AI travel assistant for G20 destinations. I can help you with:</p>
+                                <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                    <li>• Travel recommendations</li>
+                                    <li>• Cultural insights and etiquette</li>
+                                    <li>• Local experiences and activities</li>
+                                    <li>• Practical travel information</li>
+                                </ul>
+                                <p class="mt-2 text-gray-800">What would you like to know about? 🌍</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Suggestions -->
+                    <div class="mb-4">
+                        <p class="text-sm font-medium text-gray-700 mb-3">Quick Questions:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="askQuestion('What are the best cultural experiences in Japan?')" class="suggestion-btn bg-ubuntu-light text-white px-3 py-2 rounded-lg text-sm hover:bg-ubuntu-blue transition duration-200">
+                                🗾 Japan Culture
+                            </button>
+                            <button onclick="askQuestion('Tell me about South African cuisine')" class="suggestion-btn bg-ubuntu-light text-white px-3 py-2 rounded-lg text-sm hover:bg-ubuntu-blue transition duration-200">
+                                🍲 SA Cuisine
+                            </button>
+                            <button onclick="askQuestion('What should I know before visiting Brazil?')" class="suggestion-btn bg-ubuntu-light text-white px-3 py-2 rounded-lg text-sm hover:bg-ubuntu-blue transition duration-200">
+                                🇧🇷 Brazil Tips
+                            </button>
+                            <button onclick="askQuestion('Best time to visit India')" class="suggestion-btn bg-ubuntu-light text-white px-3 py-2 rounded-lg text-sm hover:bg-ubuntu-blue transition duration-200">
+                                🇮🇳 India Travel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="flex space-x-3">
+                        <input 
+                            type="text" 
+                            id="chatInput" 
+                            placeholder="Ask me anything about G20 destinations..." 
+                            class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ubuntu-blue focus:border-ubuntu-blue"
+                            onkeypress="handleKeyPress(event)"
+                        >
+                        <button 
+                            onclick="sendMessage()" 
+                            class="bg-ubuntu-blue hover:bg-ubuntu-dark text-white px-6 py-3 rounded-lg transition duration-200 flex items-center"
+                        >
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Features Sidebar -->
+            <div class="space-y-6">
+                <!-- AI Capabilities -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">AI Capabilities</h3>
+                    <div class="space-y-4">
+                        <div class="feature-card p-4 rounded-lg bg-gray-50">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-map-marked-alt text-ubuntu-blue mr-3"></i>
+                                <h4 class="font-medium text-gray-900">Smart Recommendations</h4>
+                            </div>
+                            <p class="text-sm text-gray-600">Personalized suggestions based on your interests and travel style</p>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-lg bg-gray-50">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-globe-asia text-ubuntu-blue mr-3"></i>
+                                <h4 class="font-medium text-gray-900">Cultural Intelligence</h4>
+                            </div>
+                            <p class="text-sm text-gray-600">Deep insights into local customs, etiquette, and traditions</p>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-lg bg-gray-50">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-clock text-ubuntu-blue mr-3"></i>
+                                <h4 class="font-medium text-gray-900">Real-time Updates</h4>
+                            </div>
+                            <p class="text-sm text-gray-600">Current travel conditions, weather, and safety information</p>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-lg bg-gray-50">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-language text-ubuntu-blue mr-3"></i>
+                                <h4 class="font-medium text-gray-900">Multi-language Support</h4>
+                            </div>
+                            <p class="text-sm text-gray-600">Communicate in multiple languages for seamless travel</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular Topics -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Popular Topics</h3>
+                    <div class="space-y-3">
+                        <button onclick="askQuestion('What are the must-visit places in the G20 countries?')" class="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-ubuntu-light hover:text-white transition duration-200">
+                            <i class="fas fa-star text-ubuntu-gold mr-2"></i>
+                            Must-visit G20 destinations
+                        </button>
+                        <button onclick="askQuestion('Tell me about business etiquette in different cultures')" class="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-ubuntu-light hover:text-white transition duration-200">
+                            <i class="fas fa-handshake text-ubuntu-gold mr-2"></i>
+                            Business etiquette tips
+                        </button>
+                        <button onclick="askQuestion('What are some authentic local foods to try?')" class="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-ubuntu-light hover:text-white transition duration-200">
+                            <i class="fas fa-utensils text-ubuntu-gold mr-2"></i>
+                            Local cuisine recommendations
+                        </button>
+                        <button onclick="askQuestion('How to respect local customs and traditions?')" class="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-ubuntu-light hover:text-white transition duration-200">
+                            <i class="fas fa-heart text-ubuntu-gold mr-2"></i>
+                            Cultural respect guide
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">AI Performance</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Questions Answered</span>
+                            <span class="font-semibold text-ubuntu-blue">50,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Accuracy Rate</span>
+                            <span class="font-semibold text-green-600">97.5%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Response Time</span>
+                            <span class="font-semibold text-ubuntu-blue">&lt; 2 seconds</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Supported Languages</span>
+                            <span class="font-semibold text-ubuntu-blue">20+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Panic Button -->
+    <div class="panic-button fixed bottom-6 left-6 z-50">
+        <button id="panicBtn" class="w-16 h-16 bg-red-600 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform animate-pulse">
+            <i class="fas fa-exclamation-triangle text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="emergency-modal" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-red-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-red-600 text-white p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-3xl mr-3"></i>
+                        <h3 class="text-lg font-bold">EMERGENCY ASSISTANCE</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-6">
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold mb-3 text-red-800">Choose Your Emergency Contact:</h4>
+                        
+                        <!-- Local Emergency Numbers -->
+                        <div class="space-y-3 mb-6">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h5 class="font-semibold text-red-800 mb-2">Local Emergency Services</h5>
+                                <div class="space-y-2">
+                                    <button onclick="callEmergency('911')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        📞 CALL 911 (USA/Canada)
+                                    </button>
+                                    <button onclick="callEmergency('999')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        📞 CALL 999 (UK)
+                                    </button>
+                                    <button onclick="callEmergency('112')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        📞 CALL 112 (Europe/International)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ubuntu Explorer Emergency Support -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <h5 class="font-semibold text-blue-800 mb-2">Ubuntu Explorer 24/7 Support</h5>
+                            <button onclick="callEmergency('ubuntu-support')" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-semibold transition duration-200">
+                                📞 CALL +27-11-123-4567
+                            </button>
+                            <p class="text-sm text-blue-600 mt-2">Multi-language support available</p>
+                        </div>
+
+                        <!-- Embassy Contacts -->
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                            <h5 class="font-semibold text-green-800 mb-2">Embassy/Consulate Support</h5>
+                            <div class="space-y-2">
+                                <button onclick="callEmergency('us-embassy')" class="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg transition duration-200">
+                                    🇺🇸 US Embassy: +1-555-EMBASSY
+                                </button>
+                                <button onclick="callEmergency('uk-embassy')" class="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg transition duration-200">
+                                    🇬🇧 UK Embassy: +44-555-EMBASSY
+                                </button>
+                                <button onclick="callEmergency('embassy-general')" class="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg transition duration-200">
+                                    🌍 Find My Embassy
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-yellow-800 mb-2">Quick Actions</h5>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="shareLocation()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-2 rounded-lg text-sm transition duration-200">
+                                    📍 Share Location
+                                </button>
+                                <button onclick="sendSOS()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-2 rounded-lg text-sm transition duration-200">
+                                    📱 Send SOS SMS
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            <p><strong>Your current location will be shared with emergency services</strong></p>
+                            <p class="mt-1">Stay calm. Help is on the way.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-3 flex justify-between">
+                    <button onclick="closeEmergencyModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="callEmergency('auto-detect')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition duration-200">
+                        🚨 AUTO-DETECT LOCAL EMERGENCY
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hardcoded AI responses for demo
+        const aiResponses = {
+            'japan': {
+                keywords: ['japan', 'japanese', 'tokyo', 'kyoto', 'culture', 'cultural experiences'],
+                response: "🗾 **Japan Cultural Experiences**\n\n**Traditional Arts:**\n• Tea ceremony (Chanoyu) - Learn the ancient art of Japanese tea preparation\n• Calligraphy (Shodō) - Practice beautiful Japanese writing\n• Origami workshops - Master the art of paper folding\n\n**Cultural Sites:**\n• Fushimi Inari Shrine in Kyoto - Famous for thousands of red torii gates\n• Senso-ji Temple in Tokyo - Tokyo's oldest temple\n• Arashiyama Bamboo Grove - Walk through enchanting bamboo forests\n\n**Etiquette Tips:**\n• Bow when greeting\n• Remove shoes when entering homes or temples\n• Don't tip - it's not customary in Japan\n• Use both hands when giving/receiving business cards"
+            },
+            'south africa': {
+                keywords: ['south africa', 'african', 'cuisine', 'food', 'sa', 'south african'],
+                response: "🍲 **South African Cuisine**\n\n**Must-Try Dishes:**\n• **Braai** - Traditional barbecue, central to SA culture\n• **Bobotie** - Sweet and savory mince curry with egg topping\n• **Biltong** - Dried cured meat, similar to jerky\n• **Potjiekos** - Slow-cooked stew in cast iron pot\n• **Koeksisters** - Sweet syrupy twisted pastry\n\n**Local Beverages:**\n• Rooibos tea - Caffeine-free red bush tea\n• Amarula - Cream liqueur made from marula fruit\n• South African wines - World-renowned from Stellenbosch region\n\n**Dining Etiquette:**\n• Wait for the host to start eating\n• Keep hands visible on the table\n• Tipping 10-15% is customary"
+            },
+            'brazil': {
+                keywords: ['brazil', 'brazilian', 'visiting brazil', 'travel brazil'],
+                response: "🇧🇷 **Essential Brazil Travel Tips**\n\n**Before You Go:**\n• Learn basic Portuguese phrases - English isn't widely spoken\n• Get vaccinations for yellow fever if traveling to certain regions\n• Brazil uses different electrical outlets (Type N)\n• Bring sunscreen - UV levels are intense year-round\n\n**Cultural Tips:**\n• Brazilians are warm and touchy - expect hugs and cheek kisses\n• Personal space is smaller than in North America/Europe\n• Punctuality is flexible - being 15-30 minutes late is normal\n• Beach culture is huge - invest in good swimwear\n\n**Safety Guidelines:**\n• Don't wear expensive jewelry or flash cash\n• Use registered taxis or ride-sharing apps\n• Stay in well-lit, populated areas at night\n• Keep copies of important documents\n\n**Must Experience:**\n• Carnival (if visiting during season)\n• Samba dancing lessons\n• Capoeira performances\n• Beach culture in Rio or Salvador"
+            },
+            'india': {
+                keywords: ['india', 'indian', 'visit india', 'best time', 'travel india'],
+                response: "🇮🇳 **Best Time to Visit India**\n\n**Optimal Seasons:**\n• **October to March** - Cool, dry weather (best overall time)\n• **April to June** - Hot season (avoid plains, good for mountains)\n• **July to September** - Monsoon season (lush but wet)\n\n**Regional Variations:**\n• **North India** (Delhi, Agra, Rajasthan): Oct-Mar ideal\n• **South India** (Kerala, Tamil Nadu): Nov-Feb best\n• **Himalayas**: May-Sep for trekking\n• **Goa**: Nov-Mar for beaches\n\n**Cultural Preparation:**\n• Dress modestly, especially at religious sites\n• Remove shoes before entering temples and homes\n• Use right hand for eating and greeting\n• Respect cows - they're sacred\n\n**Health Tips:**\n• Drink bottled water\n• Eat at busy, popular restaurants\n• Get travel insurance\n• Carry hand sanitizer\n\n**Must-See:**\n• Taj Mahal in Agra\n• Rajasthan's palaces\n• Kerala backwaters\n• Goa beaches"
+            },
+            'g20': {
+                keywords: ['g20', 'must-visit', 'destinations', 'places', 'countries'],
+                response: "🌍 **Must-Visit G20 Destinations**\n\n**Asia-Pacific:**\n• **Japan** - Tokyo's neon lights, Kyoto's temples\n• **South Korea** - Seoul's K-culture, Jeju Island\n• **China** - Great Wall, Forbidden City\n• **India** - Taj Mahal, Kerala backwaters\n• **Indonesia** - Bali temples, Jakarta culture\n• **Australia** - Sydney Opera House, Great Barrier Reef\n\n**Europe:**\n• **Italy** - Rome's history, Tuscany's landscapes\n• **France** - Paris romance, Provence lavender\n• **Germany** - Berlin's history, Bavarian castles\n• **UK** - London's royalty, Scottish Highlands\n\n**Americas:**\n• **Brazil** - Rio's beaches, Amazon rainforest\n• **Argentina** - Buenos Aires tango, Patagonia\n• **Canada** - Niagara Falls, Rocky Mountains\n• **USA** - New York skyline, Grand Canyon\n• **Mexico** - Mayan ruins, vibrant markets\n\n**Africa & Middle East:**\n• **South Africa** - Cape Town vineyards, safari adventures\n• **Saudi Arabia** - Riyadh's modernity, cultural heritage\n\n**Russia:**\n• **Moscow** - Red Square, Kremlin palaces\n• **St. Petersburg** - Hermitage, White Nights"
+            },
+            'business': {
+                keywords: ['business', 'etiquette', 'professional', 'work', 'meeting'],
+                response: "🤝 **International Business Etiquette**\n\n**General Principles:**\n• Research local customs before meetings\n• Dress conservatively and professionally\n• Arrive on time or slightly early\n• Bring business cards with local language translation\n\n**Regional Differences:**\n\n**East Asia (Japan, Korea, China):**\n• Bow slightly when greeting\n• Exchange business cards with both hands\n• Avoid direct eye contact initially\n• Hierarchy is very important\n\n**Middle East (Saudi Arabia):**\n• Conservative dress essential\n• Right hand for handshakes\n• Respect for prayer times\n• Gender-specific considerations\n\n**Latin America (Brazil, Argentina, Mexico):**\n• Warm greetings, possible embrace\n• Relationship-building is crucial\n• Flexible timing expectations\n• Family topics welcome in conversation\n\n**Europe (Germany, France, Italy, UK):**\n• Firm handshakes\n• Punctuality highly valued\n• Direct communication style\n• Professional titles important\n\n**Key Success Tips:**\n• Learn basic greetings in local language\n• Understand gift-giving customs\n• Be patient with different decision-making styles\n• Respect religious and cultural holidays"
+            },
+            'food': {
+                keywords: ['food', 'cuisine', 'local', 'authentic', 'eat', 'dishes'],
+                response: "🍽️ **Authentic G20 Cuisine Guide**\n\n**Asia:**\n• **Japan** - Sushi, Ramen, Tempura, Kaiseki\n• **China** - Peking Duck, Dim Sum, Hot Pot\n• **India** - Curry, Biryani, Dosa, Tandoori\n• **South Korea** - Kimchi, Bulgogi, Bibimbap\n• **Indonesia** - Nasi Goreng, Satay, Rendang\n\n**Europe:**\n• **Italy** - Pasta, Pizza, Gelato, Risotto\n• **France** - Croissants, Coq au Vin, Cheese\n• **Germany** - Sausages, Pretzels, Schnitzel\n• **UK** - Fish & Chips, Sunday Roast, Tea\n\n**Americas:**\n• **Brazil** - Feijoada, Açaí, Churrasco\n• **Argentina** - Empanadas, Asado, Mate tea\n• **Mexico** - Tacos, Mole, Mezcal\n• **USA** - BBQ, Burgers, Apple Pie\n• **Canada** - Poutine, Maple Syrup, Tourtière\n\n**Others:**\n• **South Africa** - Bobotie, Biltong, Boerewors\n• **Australia** - Meat Pies, Vegemite, Barramundi\n• **Russia** - Borscht, Beef Stroganoff, Caviar\n• **Saudi Arabia** - Kabsa, Shawarma, Arabic Coffee\n\n**Foodie Tips:**\n• Try street food for authentic flavors\n• Ask locals for hidden gem restaurants\n• Learn basic food vocabulary\n• Respect dietary restrictions and customs"
+            },
+            'culture': {
+                keywords: ['culture', 'customs', 'traditions', 'respect', 'local'],
+                response: "❤️ **Cultural Respect Guide**\n\n**Universal Principles:**\n• Observe before participating\n• Ask permission before taking photos of people\n• Learn basic greetings in local language\n• Dress appropriately for religious sites\n• Respect personal space preferences\n\n**Religious Sensitivity:**\n• Remove shoes when required\n• Cover shoulders and knees in sacred places\n• Turn off phones in places of worship\n• Don't point feet toward altars or people (Asia)\n• Understand photography restrictions\n\n**Social Customs:**\n• **Gift Giving** - Research appropriate gifts and wrapping\n• **Dining** - Learn eating etiquette and table manners\n• **Greetings** - Handshakes, bows, cheek kisses vary by culture\n• **Personal Topics** - Some cultures are more private than others\n\n**Cultural Faux Pas to Avoid:**\n• Using left hand in Middle Eastern/South Asian cultures\n• Showing sole of foot in Thailand/Buddhist countries\n• Refusing hospitality in Arab cultures\n• Being too direct in indirect communication cultures\n• Ignoring hierarchy in formal societies\n\n**Positive Engagement:**\n• Show genuine interest in local traditions\n• Participate respectfully when invited\n• Support local artisans and businesses\n• Learn about historical context\n• Be patient with language barriers\n\n**Remember:** When in doubt, observe locals and ask politely. Most people appreciate genuine effort to understand their culture! 🌍"
+            },
+            'default': {
+                keywords: [],
+                response: "I'd be happy to help you with information about G20 destinations! I can assist with:\n\n🗺️ **Travel Planning**\n• Destination recommendations\n• Best times to visit\n• Cultural experiences\n\n🍽️ **Local Culture**\n• Traditional cuisine\n• Customs and etiquette\n• Language tips\n\n🏛️ **Attractions**\n• Must-see landmarks\n• Hidden gems\n• Local activities\n\n💼 **Business Travel**\n• Professional etiquette\n• Meeting customs\n• Networking tips\n\nTry asking me something specific like 'What should I know about Japanese culture?' or 'Tell me about Italian cuisine!' 😊"
+            }
+        };
+
+        function findResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            for (const [key, data] of Object.entries(aiResponses)) {
+                if (key === 'default') continue;
+                
+                for (const keyword of data.keywords) {
+                    if (lowerMessage.includes(keyword)) {
+                        return data.response;
+                    }
+                }
+            }
+            
+            return aiResponses.default.response;
+        }
+
+        function addMessage(message, isUser = false) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message flex items-start';
+            
+            if (isUser) {
+                messageDiv.innerHTML = `
+                    <div class="flex-1"></div>
+                    <div class="bg-ubuntu-blue text-white rounded-lg px-4 py-3 shadow-sm max-w-md ml-auto">
+                        <p>${message}</p>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center ml-3 flex-shrink-0">
+                        <i class="fas fa-user text-gray-600 text-sm"></i>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="ai-avatar w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                        <i class="fas fa-robot text-white text-sm"></i>
+                    </div>
+                    <div class="bg-white rounded-lg px-4 py-3 shadow-sm max-w-md">
+                        <div class="prose prose-sm">${formatMessage(message)}</div>
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function formatMessage(message) {
+            // Convert markdown-style formatting to HTML
+            return message
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>')
+                .replace(/•/g, '&bull;');
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message flex items-start';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="ai-avatar w-8 h-8 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <i class="fas fa-robot text-white text-sm"></i>
+                </div>
+                <div class="bg-white rounded-lg px-4 py-3 shadow-sm">
+                    <div class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Add user message
+                addMessage(message, true);
+                input.value = '';
+                
+                // Show typing indicator
+                showTypingIndicator();
+                
+                // Simulate AI thinking time
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    const response = findResponse(message);
+                    addMessage(response, false);
+                }, 1000 + Math.random() * 1000); // 1-2 seconds delay
+            }
+        }
+
+        function askQuestion(question) {
+            document.getElementById('chatInput').value = question;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Auto-focus on chat input when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('chatInput').focus();
+            
+            // Panic Button Functionality
+            document.getElementById('panicBtn').addEventListener('click', function() {
+                showEmergencyModal();
+            });
+        });
+
+        // Emergency Modal Functions
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('hidden');
+            // Add a small delay to show loading of user location
+            setTimeout(() => {
+                detectUserLocation();
+            }, 500);
+        }
+
+        function closeEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('hidden');
+        }
+
+        function detectUserLocation() {
+            // Simulate location detection for demo
+            const demoLocations = [
+                { country: 'United States', city: 'New York', emergency: '911' },
+                { country: 'United Kingdom', city: 'London', emergency: '999' },
+                { country: 'South Africa', city: 'Cape Town', emergency: '10177' },
+                { country: 'Japan', city: 'Tokyo', emergency: '110/119' },
+                { country: 'Germany', city: 'Berlin', emergency: '112' },
+                { country: 'Australia', city: 'Sydney', emergency: '000' }
+            ];
+            
+            const randomLocation = demoLocations[Math.floor(Math.random() * demoLocations.length)];
+            
+            // Update the auto-detect button with location-specific info
+            const autoDetectBtn = document.querySelector('button[onclick="callEmergency(\'auto-detect\')"]');
+            autoDetectBtn.innerHTML = `🚨 CALL ${randomLocation.emergency} (${randomLocation.city})`;
+            autoDetectBtn.setAttribute('onclick', `callEmergency('${randomLocation.emergency}')`);
+        }
+
+        function callEmergency(type) {
+            // Demo function - in real app this would initiate actual emergency calls
+            let message = '';
+            let phoneNumber = '';
+            
+            switch(type) {
+                case '911':
+                    phoneNumber = '911';
+                    message = 'Calling 911 Emergency Services (USA/Canada)';
+                    break;
+                case '999':
+                    phoneNumber = '999';
+                    message = 'Calling 999 Emergency Services (UK)';
+                    break;
+                case '112':
+                    phoneNumber = '112';
+                    message = 'Calling 112 Emergency Services (Europe)';
+                    break;
+                case 'ubuntu-support':
+                    phoneNumber = '+27-11-123-4567';
+                    message = 'Calling Ubuntu Explorer 24/7 Emergency Support';
+                    break;
+                case 'us-embassy':
+                    phoneNumber = '+1-555-EMBASSY';
+                    message = 'Calling US Embassy Emergency Line';
+                    break;
+                case 'uk-embassy':
+                    phoneNumber = '+44-555-EMBASSY';
+                    message = 'Calling UK Embassy Emergency Line';
+                    break;
+                case 'embassy-general':
+                    message = 'Opening Embassy Locator Service';
+                    break;
+                case 'auto-detect':
+                    message = 'Calling Local Emergency Services';
+                    break;
+                default:
+                    phoneNumber = type;
+                    message = `Calling ${type}`;
+            }
+
+            // Show demo alert
+            alert(`🚨 EMERGENCY CALL INITIATED 🚨\n\n${message}\n\nPhone: ${phoneNumber}\n\n📍 Your location has been shared with emergency services.\n\n⏰ Call connecting... (This is a demo - in real emergency, call actual emergency services)`);
+            
+            // In a real app, this would:
+            // 1. Get user's actual location
+            // 2. Initiate phone call using tel: protocol
+            // 3. Send location data to emergency services
+            // 4. Log the emergency request
+            
+            closeEmergencyModal();
+        }
+
+        function shareLocation() {
+            // Demo function for location sharing
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    alert(`📍 LOCATION SHARED\n\nLatitude: ${lat}\nLongitude: ${lng}\n\nYour location has been shared with:\n• Emergency contacts\n• Ubuntu Explorer Support\n• Local authorities\n\n(This is a demo)`);
+                }, function() {
+                    alert('📍 DEMO LOCATION SHARED\n\nDemo coordinates: 40.7128° N, 74.0060° W\n(New York City)\n\nIn real emergency, actual GPS coordinates would be shared.');
+                });
+            } else {
+                alert('📍 DEMO LOCATION SHARED\n\nDemo coordinates: 40.7128° N, 74.0060° W\n(New York City)\n\nIn real emergency, actual GPS coordinates would be shared.');
+            }
+        }
+
+        function sendSOS() {
+            // Demo function for SOS SMS
+            const sosMessage = `🆘 EMERGENCY SOS from Ubuntu Explorer\n\nI need immediate assistance.\n\nLocation: [GPS coordinates would be here]\nTime: ${new Date().toLocaleString()}\nUser ID: DEMO123\n\nThis message was sent automatically via Ubuntu Explorer panic button.`;
+            
+            alert(`📱 SOS MESSAGE SENT\n\n${sosMessage}\n\nSent to:\n• Emergency contacts\n• Ubuntu Explorer Support\n• Local authorities\n\n(This is a demo)`);
+            
+            // In real app, this would send actual SMS messages
+        }
+
+        // Close emergency modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('emergencyModal');
+            if (event.target === modal) {
+                closeEmergencyModal();
+            }
+        });
+
+        // ESC key to close emergency modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeEmergencyModal();
+            }
+        });
+    </script>
+</body>
+</html>

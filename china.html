@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">China Travel Guide - Ubuntu Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ubuntu-blue': '#1e40af',
+                        'ubuntu-dark': '#1e3a8a',
+                        'ubuntu-light': '#3b82f6',
+                        'ubuntu-gold': '#f59e0b',
+                        'china-red': '#dc2626',
+                        'china-gold': '#fbbf24',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #dc2626 0%, #fbbf24 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .language-switch {
+            transition: all 0.2s ease;
+        }
+        
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            border-radius: 2px;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .china-flag {
+            background: linear-gradient(to bottom, #dc2626 0%, #dc2626 100%);
+            position: relative;
+        }
+        
+        .china-flag::before {
+            content: '★';
+            position: absolute;
+            color: #fbbf24;
+            font-size: 8px;
+            top: 2px;
+            left: 3px;
+        }
+        
+        .section-divider {
+            background: linear-gradient(90deg, transparent, #dc2626, transparent);
+            height: 2px;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b-2 border-china-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img class="h-8 w-8 mr-3" src="images/ubuntuexploreroutline.png" alt="Ubuntu Explorer Logo">
+                        <span class="text-ubuntu-blue font-bold text-xl">Ubuntu<span class="text-ubuntu-gold">Explorer</span></span>
+                    </a>
+                    <div class="ml-6 flex items-center">
+                        <span class="china-flag flag-icon"></span>
+                        <span id="navTitle" class="text-gray-700 font-medium">China Travel Guide</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <button id="languageBtn" class="language-switch flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-china-red border border-gray-300 rounded-md hover:border-china-red">
+                            <span class="china-flag flag-icon"></span>
+                            <span id="currentLang">English</span>
+                            <i class="fas fa-chevron-down ml-2"></i>
+                        </button>
+                        <div id="languageMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border">
+                            <button onclick="switchLanguage('en')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="inline-block w-6 h-4 mr-2 bg-blue-600 relative">
+                                    <span class="absolute inset-0 bg-red-600" style="clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%)"></span>
+                                    <span class="absolute inset-0 bg-white" style="clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%)"></span>
+                                    <span class="absolute inset-0 bg-red-600" style="clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%)"></span>
+                                </span>
+                                English
+                            </button>
+                            <button onclick="switchLanguage('zh')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <span class="china-flag flag-icon"></span>
+                                中文 (Chinese)
+                            </button>
+                        </div>
+                    </div>
+                    <a href="index.html" class="text-gray-600 hover:text-china-red">Back to Home</a>
+                    <a href="signup.html" class="bg-china-red hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 id="heroTitle" class="text-5xl font-bold mb-4">Discover China</h1>
+            <p id="heroSubtitle" class="text-xl mb-8 max-w-3xl mx-auto">Experience 5,000 years of history, breathtaking landscapes, and rich cultural heritage in the Middle Kingdom</p>
+            <div class="flex justify-center space-x-4">
+                <button id="planTripBtn" class="bg-white text-china-red px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">Plan Your Trip</button>
+                <button id="emergencyBtn" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-china-red transition duration-200">Emergency Info</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="bg-white py-12 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-china-red">1.4B</div>
+                    <div id="stat1" class="text-gray-600">Population</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-china-red">56</div>
+                    <div id="stat2" class="text-gray-600">Ethnic Groups</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-china-red">55</div>
+                    <div id="stat3" class="text-gray-600">UNESCO Sites</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-china-red">CNY</div>
+                    <div id="stat4" class="text-gray-600">Currency (Yuan)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Must-Visit Destinations -->
+        <section class="mb-16">
+            <h2 id="destinationsTitle" class="text-3xl font-bold text-gray-900 mb-8 text-center">Must-Visit Destinations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-china-red to-china-gold flex items-center justify-center">
+                        <i class="fas fa-university text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest1Title" class="text-xl font-semibold mb-2">Great Wall of China</h3>
+                        <p id="dest1Desc" class="text-gray-600 mb-4">Marvel at this ancient wonder stretching over 13,000 miles across northern China. Best sections: Badaling, Mutianyu, and Jinshanling.</p>
+                        <div class="flex items-center text-china-red">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest1Location">Beijing & Northern China</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-china-gold to-china-red flex items-center justify-center">
+                        <i class="fas fa-dragon text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest2Title" class="text-xl font-semibold mb-2">Forbidden City</h3>
+                        <p id="dest2Desc" class="text-gray-600 mb-4">Explore the world's largest palace complex, home to 24 emperors during Ming and Qing dynasties. Over 9,000 rooms of imperial splendor.</p>
+                        <div class="flex items-center text-china-red">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest2Location">Beijing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-china-red to-china-gold flex items-center justify-center">
+                        <i class="fas fa-mountain text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest3Title" class="text-xl font-semibold mb-2">Terracotta Army</h3>
+                        <p id="dest3Desc" class="text-gray-600 mb-4">Witness 8,000 life-sized terracotta soldiers guarding China's first emperor. Each warrior has unique facial features and expressions.</p>
+                        <div class="flex items-center text-china-red">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest3Location">Xi'an</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-china-gold to-china-red flex items-center justify-center">
+                        <i class="fas fa-water text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest4Title" class="text-xl font-semibold mb-2">Li River</h3>
+                        <p id="dest4Desc" class="text-gray-600 mb-4">Cruise through stunning karst landscapes between Guilin and Yangshuo. The scenery appears on the 20 yuan banknote.</p>
+                        <div class="flex items-center text-china-red">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest4Location">Guilin, Guangxi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-china-red to-china-gold flex items-center justify-center">
+                        <i class="fas fa-pray text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest5Title" class="text-xl font-semibold mb-2">Temple of Heaven</h3>
+                        <p id="dest5Desc" class="text-gray-600 mb-4">Visit this masterpiece of Ming architecture where emperors prayed for good harvests. Perfect example of Chinese cosmology in design.</p>
+                        <div class="flex items-center text-china-red">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest5Location">Beijing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-48 bg-gradient-to-r from-china-gold to-china-red flex items-center justify-center">
+                        <i class="fas fa-city text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 id="dest6Title" class="text-xl font-semibold mb-2">Shanghai Skyline</h3>
+                        <p id="dest6Desc" class="text-gray-600 mb-4">Experience modern China in this global financial hub. Visit the Bund for colonial architecture and Pudong for futuristic skyscrapers.</p>
+                        <div class="flex items-center text-china-red">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span id="dest6Location">Shanghai</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Cultural Experiences -->
+        <section class="mb-16">
+            <h2 id="cultureTitle" class="text-3xl font-bold text-gray-900 mb-8 text-center">Cultural Experiences</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-china-red rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-utensils text-white text-xl"></i>
+                        </div>
+                        <h3 id="culture1Title" class="text-xl font-semibold">Chinese Cuisine</h3>
+                    </div>
+                    <ul id="culture1List" class="space-y-2 text-gray-600">
+                        <li>• <strong>Peking Duck</strong> - Crispy skin duck served with pancakes</li>
+                        <li>• <strong>Dim Sum</strong> - Small plates perfect for sharing</li>
+                        <li>• <strong>Hot Pot</strong> - Interactive dining experience</li>
+                        <li>• <strong>Kung Pao Chicken</strong> - Spicy Sichuan classic</li>
+                        <li>• <strong>Xiaolongbao</strong> - Soup dumplings from Shanghai</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-china-gold rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-theater-masks text-white text-xl"></i>
+                        </div>
+                        <h3 id="culture2Title" class="text-xl font-semibold">Traditional Arts</h3>
+                    </div>
+                    <ul id="culture2List" class="space-y-2 text-gray-600">
+                        <li>• <strong>Beijing Opera</strong> - Traditional Chinese theater</li>
+                        <li>• <strong>Calligraphy</strong> - Art of beautiful writing</li>
+                        <li>• <strong>Tai Chi</strong> - Morning exercise in parks</li>
+                        <li>• <strong>Tea Ceremony</strong> - Ancient ritual of tea preparation</li>
+                        <li>• <strong>Paper Cutting</strong> - Intricate folk art</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-china-red rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-calendar-alt text-white text-xl"></i>
+                        </div>
+                        <h3 id="culture3Title" class="text-xl font-semibold">Festivals</h3>
+                    </div>
+                    <ul id="culture3List" class="space-y-2 text-gray-600">
+                        <li>• <strong>Chinese New Year</strong> - Most important celebration</li>
+                        <li>• <strong>Mid-Autumn Festival</strong> - Moon viewing and mooncakes</li>
+                        <li>• <strong>Dragon Boat Festival</strong> - Racing and rice dumplings</li>
+                        <li>• <strong>Lantern Festival</strong> - Beautiful lantern displays</li>
+                        <li>• <strong>Qingming Festival</strong> - Tomb sweeping day</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-china-gold rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-handshake text-white text-xl"></i>
+                        </div>
+                        <h3 id="culture4Title" class="text-xl font-semibold">Etiquette Tips</h3>
+                    </div>
+                    <ul id="culture4List" class="space-y-2 text-gray-600">
+                        <li>• <strong>Greetings</strong> - Slight bow or handshake</li>
+                        <li>• <strong>Business Cards</strong> - Receive with both hands</li>
+                        <li>• <strong>Dining</strong> - Wait for host to start eating</li>
+                        <li>• <strong>Gifts</strong> - Avoid clocks and white flowers</li>
+                        <li>• <strong>Face</strong> - Respect concept of "saving face"</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Practical Information -->
+        <section class="mb-16">
+            <h2 id="practicalTitle" class="text-3xl font-bold text-gray-900 mb-8 text-center">Practical Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 id="visa1Title" class="text-xl font-semibold mb-4 text-china-red">Visa Requirements</h3>
+                    <ul id="visa1List" class="space-y-2 text-gray-600">
+                        <li>• Tourist visa required for most countries</li>
+                        <li>• 72-144 hour transit visa available</li>
+                        <li>• Apply at Chinese consulate/embassy</li>
+                        <li>• Passport valid for 6+ months</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 id="visa2Title" class="text-xl font-semibold mb-4 text-china-red">Currency & Payments</h3>
+                    <ul id="visa2List" class="space-y-2 text-gray-600">
+                        <li>• Chinese Yuan (CNY/RMB)</li>
+                        <li>• Mobile payments dominant (WeChat, Alipay)</li>
+                        <li>• Cash still needed in rural areas</li>
+                        <li>• Credit cards in major hotels/malls</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 id="visa3Title" class="text-xl font-semibold mb-4 text-china-red">Internet & Communication</h3>
+                    <ul id="visa3List" class="space-y-2 text-gray-600">
+                        <li>• VPN needed for many Western sites</li>
+                        <li>• WeChat essential for communication</li>
+                        <li>• China Telecom/Unicom for SIM cards</li>
+                        <li>• Free WiFi in most hotels/cafes</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Information -->
+        <section class="bg-red-50 rounded-lg p-8 mb-16">
+            <h2 id="emergencyTitle" class="text-2xl font-bold text-china-red mb-6 flex items-center">
+                <i class="fas fa-exclamation-triangle mr-3"></i>
+                Emergency Information
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 id="emergency1Title" class="text-lg font-semibold mb-3">Emergency Numbers</h3>
+                    <ul id="emergency1List" class="space-y-2">
+                        <li><strong>Police:</strong> 110</li>
+                        <li><strong>Fire:</strong> 119</li>
+                        <li><strong>Medical:</strong> 120</li>
+                        <li><strong>Tourist Hotline:</strong> 12301</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 id="emergency2Title" class="text-lg font-semibold mb-3">Important Phrases</h3>
+                    <ul id="emergency2List" class="space-y-2">
+                        <li><strong>Help:</strong> 救命 (jiù mìng)</li>
+                        <li><strong>Police:</strong> 警察 (jǐng chá)</li>
+                        <li><strong>Hospital:</strong> 医院 (yī yuàn)</li>
+                        <li><strong>I don't speak Chinese:</strong> 我不会说中文 (wǒ bù huì shuō zhōng wén)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Emergency Panic Button -->
+    <div class="panic-button fixed bottom-6 left-6 z-50">
+        <button id="panicBtn" class="w-16 h-16 bg-red-600 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform animate-pulse">
+            <i class="fas fa-exclamation-triangle text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="emergency-modal" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-red-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-red-600 text-white p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-3xl mr-3"></i>
+                        <h3 class="text-lg font-bold">EMERGENCY ASSISTANCE - CHINA</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-6">
+                    <div class="mb-6">
+                        <h4 class="text-lg font-semibold mb-3 text-red-800">China Emergency Contacts:</h4>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h5 class="font-semibold text-red-800 mb-2">China Emergency Services</h5>
+                                <div class="space-y-2">
+                                    <button onclick="callEmergency('110')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        🚔 CALL 110 (Police)
+                                    </button>
+                                    <button onclick="callEmergency('119')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        🚒 CALL 119 (Fire)
+                                    </button>
+                                    <button onclick="callEmergency('120')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold text-lg transition duration-200">
+                                        🚑 CALL 120 (Medical)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <h5 class="font-semibold text-blue-800 mb-2">Tourist Support</h5>
+                            <button onclick="callEmergency('12301')" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-semibold transition duration-200">
+                                📞 CALL 12301 (Tourist Hotline)
+                            </button>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-yellow-800 mb-2">Key Phrases</h5>
+                            <div class="text-sm space-y-1">
+                                <p><strong>Help:</strong> 救命 (jiù mìng)</p>
+                                <p><strong>Emergency:</strong> 紧急情况 (jǐn jí qíng kuàng)</p>
+                                <p><strong>I need help:</strong> 我需要帮助 (wǒ xū yào bāng zhù)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-3 flex justify-between">
+                    <button onclick="closeEmergencyModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="callEmergency('110')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition duration-200">
+                        🚨 CALL 110 (Police)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language content
+        const content = {
+            en: {
+                pageTitle: "China Travel Guide - Ubuntu Explorer",
+                navTitle: "China Travel Guide",
+                currentLang: "English",
+                heroTitle: "Discover China",
+                heroSubtitle: "Experience 5,000 years of history, breathtaking landscapes, and rich cultural heritage in the Middle Kingdom",
+                planTripBtn: "Plan Your Trip",
+                emergencyBtn: "Emergency Info",
+                stat1: "Population",
+                stat2: "Ethnic Groups", 
+                stat3: "UNESCO Sites",
+                stat4: "Currency (Yuan)",
+                destinationsTitle: "Must-Visit Destinations",
+                dest1Title: "Great Wall of China",
+                dest1Desc: "Marvel at this ancient wonder stretching over 13,000 miles across northern China. Best sections: Badaling, Mutianyu, and Jinshanling.",
+                dest1Location: "Beijing & Northern China",
+                dest2Title: "Forbidden City",
+                dest2Desc: "Explore the world's largest palace complex, home to 24 emperors during Ming and Qing dynasties. Over 9,000 rooms of imperial splendor.",
+                dest2Location: "Beijing",
+                dest3Title: "Terracotta Army",
+                dest3Desc: "Witness 8,000 life-sized terracotta soldiers guarding China's first emperor. Each warrior has unique facial features and expressions.",
+                dest3Location: "Xi'an",
+                dest4Title: "Li River",
+                dest4Desc: "Cruise through stunning karst landscapes between Guilin and Yangshuo. The scenery appears on the 20 yuan banknote.",
+                dest4Location: "Guilin, Guangxi",
+                dest5Title: "Temple of Heaven",
+                dest5Desc: "Visit this masterpiece of Ming architecture where emperors prayed for good harvests. Perfect example of Chinese cosmology in design.",
+                dest5Location: "Beijing",
+                dest6Title: "Shanghai Skyline",
+                dest6Desc: "Experience modern China in this global financial hub. Visit the Bund for colonial architecture and Pudong for futuristic skyscrapers.",
+                dest6Location: "Shanghai",
+                cultureTitle: "Cultural Experiences",
+                culture1Title: "Chinese Cuisine",
+                culture1List: `<li>• <strong>Peking Duck</strong> - Crispy skin duck served with pancakes</li>
+                               <li>• <strong>Dim Sum</strong> - Small plates perfect for sharing</li>
+                               <li>• <strong>Hot Pot</strong> - Interactive dining experience</li>
+                               <li>• <strong>Kung Pao Chicken</strong> - Spicy Sichuan classic</li>
+                               <li>• <strong>Xiaolongbao</strong> - Soup dumplings from Shanghai</li>`,
+                culture2Title: "Traditional Arts",
+                culture2List: `<li>• <strong>Beijing Opera</strong> - Traditional Chinese theater</li>
+                               <li>• <strong>Calligraphy</strong> - Art of beautiful writing</li>
+                               <li>• <strong>Tai Chi</strong> - Morning exercise in parks</li>
+                               <li>• <strong>Tea Ceremony</strong> - Ancient ritual of tea preparation</li>
+                               <li>• <strong>Paper Cutting</strong> - Intricate folk art</li>`,
+                culture3Title: "Festivals",
+                culture3List: `<li>• <strong>Chinese New Year</strong> - Most important celebration</li>
+                               <li>• <strong>Mid-Autumn Festival</strong> - Moon viewing and mooncakes</li>
+                               <li>• <strong>Dragon Boat Festival</strong> - Racing and rice dumplings</li>
+                               <li>• <strong>Lantern Festival</strong> - Beautiful lantern displays</li>
+                               <li>• <strong>Qingming Festival</strong> - Tomb sweeping day</li>`,
+                culture4Title: "Etiquette Tips",
+                culture4List: `<li>• <strong>Greetings</strong> - Slight bow or handshake</li>
+                               <li>• <strong>Business Cards</strong> - Receive with both hands</li>
+                               <li>• <strong>Dining</strong> - Wait for host to start eating</li>
+                               <li>• <strong>Gifts</strong> - Avoid clocks and white flowers</li>
+                               <li>• <strong>Face</strong> - Respect concept of "saving face"</li>`,
+                practicalTitle: "Practical Information",
+                visa1Title: "Visa Requirements",
+                visa1List: `<li>• Tourist visa required for most countries</li>
+                            <li>• 72-144 hour transit visa available</li>
+                            <li>• Apply at Chinese consulate/embassy</li>
+                            <li>• Passport valid for 6+ months</li>`,
+                visa2Title: "Currency & Payments",
+                visa2List: `<li>• Chinese Yuan (CNY/RMB)</li>
+                            <li>• Mobile payments dominant (WeChat, Alipay)</li>
+                            <li>• Cash still needed in rural areas</li>
+                            <li>• Credit cards in major hotels/malls</li>`,
+                visa3Title: "Internet & Communication",
+                visa3List: `<li>• VPN needed for many Western sites</li>
+                            <li>• WeChat essential for communication</li>
+                            <li>• China Telecom/Unicom for SIM cards</li>
+                            <li>• Free WiFi in most hotels/cafes</li>`,
+                emergencyTitle: "Emergency Information",
+                emergency1Title: "Emergency Numbers",
+                emergency1List: `<li><strong>Police:</strong> 110</li>
+                                 <li><strong>Fire:</strong> 119</li>
+                                 <li><strong>Medical:</strong> 120</li>
+                                 <li><strong>Tourist Hotline:</strong> 12301</li>`,
+                emergency2Title: "Important Phrases",
+                emergency2List: `<li><strong>Help:</strong> 救命 (jiù mìng)</li>
+                                 <li><strong>Police:</strong> 警察 (jǐng chá)</li>
+                                 <li><strong>Hospital:</strong> 医院 (yī yuàn)</li>
+                                 <li><strong>I don't speak Chinese:</strong> 我不会说中文 (wǒ bù huì shuō zhōng wén)</li>`
+            },
+            zh: {
+                pageTitle: "中国旅游指南 - Ubuntu Explorer",
+                navTitle: "中国旅游指南",
+                currentLang: "中文",
+                heroTitle: "发现中国",
+                heroSubtitle: "体验五千年历史、壮丽景观和丰富的中华文化遗产",
+                planTripBtn: "计划您的旅行",
+                emergencyBtn: "紧急信息",
+                stat1: "人口",
+                stat2: "民族",
+                stat3: "世界遗产",
+                stat4: "货币（人民币）",
+                destinationsTitle: "必游目的地",
+                dest1Title: "万里长城",
+                dest1Desc: "惊叹于这横跨中国北部13000多英里的古代奇迹。最佳观赏段：八达岭、慕田峪和金山岭。",
+                dest1Location: "北京及华北地区",
+                dest2Title: "紫禁城",
+                dest2Desc: "探索世界最大的宫殿建筑群，明清两朝24位皇帝的居所。拥有超过9000间房间的皇家宏伟建筑。",
+                dest2Location: "北京",
+                dest3Title: "兵马俑",
+                dest3Desc: "见证8000尊真人大小的兵马俑守护中国第一位皇帝。每个兵俑都有独特的面部特征和表情。",
+                dest3Location: "西安",
+                dest4Title: "漓江",
+                dest4Desc: "在桂林和阳朔之间巡游欣赏壮丽的喀斯特地貌。这里的风景印在20元人民币上。",
+                dest4Location: "广西桂林",
+                dest5Title: "天坛",
+                dest5Desc: "参观这座明代建筑杰作，皇帝在此祈求丰收。是中国宇宙观在设计中的完美体现。",
+                dest5Location: "北京",
+                dest6Title: "上海天际线",
+                dest6Desc: "在这个全球金融中心体验现代中国。游览外滩欣赏殖民建筑，到浦东看未来派摩天大楼。",
+                dest6Location: "上海",
+                cultureTitle: "文化体验",
+                culture1Title: "中华美食",
+                culture1List: `<li>• <strong>北京烤鸭</strong> - 酥脆鸭皮配薄饼</li>
+                               <li>• <strong>点心</strong> - 适合分享的小食</li>
+                               <li>• <strong>火锅</strong> - 互动式用餐体验</li>
+                               <li>• <strong>宫保鸡丁</strong> - 四川经典辣菜</li>
+                               <li>• <strong>小笼包</strong> - 上海灌汤包</li>`,
+                culture2Title: "传统艺术",
+                culture2List: `<li>• <strong>京剧</strong> - 传统中国戏曲</li>
+                               <li>• <strong>书法</strong> - 美丽的书写艺术</li>
+                               <li>• <strong>太极</strong> - 公园里的晨练</li>
+                               <li>• <strong>茶艺</strong> - 古老的泡茶仪式</li>
+                               <li>• <strong>剪纸</strong> - 精美的民间艺术</li>`,
+                culture3Title: "传统节日",
+                culture3List: `<li>• <strong>春节</strong> - 最重要的庆祝活动</li>
+                               <li>• <strong>中秋节</strong> - 赏月和月饼</li>
+                               <li>• <strong>端午节</strong> - 赛龙舟和粽子</li>
+                               <li>• <strong>元宵节</strong> - 美丽的灯笼展示</li>
+                               <li>• <strong>清明节</strong> - 扫墓祭祖</li>`,
+                culture4Title: "礼仪贴士",
+                culture4List: `<li>• <strong>问候</strong> - 轻微鞠躬或握手</li>
+                               <li>• <strong>名片</strong> - 双手接收</li>
+                               <li>• <strong>用餐</strong> - 等主人开始用餐</li>
+                               <li>• <strong>礼品</strong> - 避免钟表和白花</li>
+                               <li>• <strong>面子</strong> - 尊重"给面子"的概念</li>`,
+                practicalTitle: "实用信息",
+                visa1Title: "签证要求",
+                visa1List: `<li>• 大多数国家需要旅游签证</li>
+                            <li>• 72-144小时过境免签</li>
+                            <li>• 在中国领事馆/大使馆申请</li>
+                            <li>• 护照有效期6个月以上</li>`,
+                visa2Title: "货币和支付",
+                visa2List: `<li>• 人民币（CNY/RMB）</li>
+                            <li>• 移动支付主导（微信、支付宝）</li>
+                            <li>• 农村地区仍需现金</li>
+                            <li>• 大型酒店/商场接受信用卡</li>`,
+                visa3Title: "网络和通讯",
+                visa3List: `<li>• 访问西方网站需要VPN</li>
+                            <li>• 微信是必备通讯工具</li>
+                            <li>• 中国电信/联通手机卡</li>
+                            <li>• 大多数酒店/咖啡厅有免费WiFi</li>`,
+                emergencyTitle: "紧急信息",
+                emergency1Title: "紧急电话",
+                emergency1List: `<li><strong>报警：</strong> 110</li>
+                                 <li><strong>火警：</strong> 119</li>
+                                 <li><strong>急救：</strong> 120</li>
+                                 <li><strong>旅游热线：</strong> 12301</li>`,
+                emergency2Title: "重要短语",
+                emergency2List: `<li><strong>救命：</strong> 救命 (jiù mìng)</li>
+                                 <li><strong>警察：</strong> 警察 (jǐng chá)</li>
+                                 <li><strong>医院：</strong> 医院 (yī yuàn)</li>
+                                 <li><strong>我不会说中文：</strong> 我不会说中文 (wǒ bù huì shuō zhōng wén)</li>`
+            }
+        };
+
+        // Language switching functionality
+        function switchLanguage(lang) {
+            const langContent = content[lang];
+            
+            // Update page title
+            document.title = langContent.pageTitle;
+            
+            // Update all content
+            Object.keys(langContent).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (key.includes('List')) {
+                        element.innerHTML = langContent[key];
+                    } else {
+                        element.textContent = langContent[key];
+                    }
+                }
+            });
+            
+            // Update HTML lang attribute
+            document.getElementById('htmlRoot').lang = lang === 'zh' ? 'zh-CN' : 'en';
+            
+            // Hide language menu
+            document.getElementById('languageMenu').classList.add('hidden');
+        }
+
+        // Toggle language menu
+        document.getElementById('languageBtn').addEventListener('click', function() {
+            document.getElementById('languageMenu').classList.toggle('hidden');
+        });
+
+        // Close language menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const languageBtn = document.getElementById('languageBtn');
+            const languageMenu = document.getElementById('languageMenu');
+            
+            if (!languageBtn.contains(event.target) && !languageMenu.contains(event.target)) {
+                languageMenu.classList.add('hidden');
+            }
+        });
+
+        // Emergency modal functions
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('hidden');
+        }
+
+        function closeEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('hidden');
+        }
+
+        function callEmergency(number) {
+            alert(`🚨 EMERGENCY CALL INITIATED 🚨\n\nCalling: ${number}\n\n📍 Your location has been shared with emergency services.\n\n⏰ Call connecting... (This is a demo - in real emergency, call actual emergency services)`);
+            closeEmergencyModal();
+        }
+
+        // Panic button
+        document.getElementById('panicBtn').addEventListener('click', showEmergencyModal);
+
+        // Emergency button in hero
+        document.getElementById('emergencyBtn').addEventListener('click', showEmergencyModal);
+
+        // Plan trip button
+        document.getElementById('planTripBtn').addEventListener('click', function() {
+            alert('This would connect to the Ubuntu Explorer trip planning system!');
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeEmergencyModal();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('emergencyModal');
+            if (event.target === modal) {
+                closeEmergencyModal();
+            }
+        });
+    </script>
+</body>
+</html>
